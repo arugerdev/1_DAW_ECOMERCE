@@ -36,7 +36,7 @@ Start the server
 
 or double click the file *start.bat* on file explorer.
 
-**If you want expose or not in the local nethwork, edit the "start.bat" file and change *"localhost"* to local ip or change the local ip by *"localhost"*:**
+**If you want expose or not in the local network, edit the "start.bat" file and change *"localhost"* to local ip or change the local ip by *"localhost"*:**
 
 *EXPOSED:*
 ```bach
