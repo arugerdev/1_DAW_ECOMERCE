@@ -23,9 +23,10 @@ if ($option == "?") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <title>EviMerce</title>
 
-    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
     <script>
         <?php
         include "./assets/plugins/jquery-3.7.1.min.js";
@@ -34,29 +35,41 @@ if ($option == "?") {
     <script>
         <?php
         include "./assets/js/db_utils.js";
-        
+
         include "./assets/js/utils.js";
         ?>
     </script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/2.3.6/css/dataTables.dataTables.min.css">
+    <script src="http://cdn.datatables.net/2.3.6/js/dataTables.min.js"></script>
 </head>
 
 <body>
+
     <?php
     if ($_REQUEST["user"]->is_authenticated) {
         include "./templates/admin/navbar.php";
     }
     ?>
 
-    <main>
+    <section>
+
         <?php
-        // if ($_REQUEST["user"]->is_authenticated) {
-        //     include "./templates/admin_routes.php";
-        // } else {
-        // include "./templates/routes.php";
-        // }
-        include "./templates/routes.php";
+        if ($_REQUEST["user"]->is_authenticated) {
+            include "./templates/admin/sidebar.php";
+        }
         ?>
-    </main>
+
+        <main>
+            <?php
+            // if ($_REQUEST["user"]->is_authenticated) {
+            //     include "./templates/admin_routes.php";
+            // } else {
+            // include "./templates/routes.php";
+            // }
+            include "./templates/routes.php";
+            ?>
+        </main>
+    </section>
 
 
 </body>

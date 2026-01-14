@@ -9,21 +9,35 @@
             </a>
         </div>
 
-        <form action="">
-            <input type="text" placeholder="Nombre del producto" require>
-            <input type="number" placeholder="Precio del producto (€)" require>
-            <input type="number" placeholder="Cantidad stock" require>
+        <form action="javacript:void(0)">
+            <section class="form_input_group">
+                <label for="product_name">Nombre del producto: </label>
+                <input type="text" id="product_name" placeholder="Nombre del producto" require="">
+            </section>
+            <section class="form_input_group">
+                <label for="product_price">Precio del producto: </label>
+                <input type="currency" data-type='currency' id="product_price" placeholder="0,00€" require="">
+            </section>
+            <section class="form_input_group">
+                <label for="product_stock">Stock del producto: </label>
+                <input type="number" id="product_stock" placeholder="0 productos" require="">
+            </section>
+            <section class="form_input_group">
+                <label for="product_description">Descripción: </label>
+                <textarea id="product_description" cols="100" rows="10" placeholder="Descripcion"></textarea>
+            </section>
+            <section class="form_input_group">
+                <label for="product_category">Categoria: </label>
+                <select id="product_category" cols="100" rows="10" placeholder="Descripcion">
+                    <option value="">Sin categoria</option>
+                </select>
+            </section>
 
-            <textarea rows="10" name="" id="" placeholder="Descripción del producto"></textarea>
-
-            <input type="text" placeholder="Nombre del producto" require>
-
+            <section class="buttons-group">
+                <a href="#" type="submit" role="button" class="button danger">Cancelar</a>
+                <button class="success">Crear</button>
+            </section>
         </form>
-
-        <section class="buttons-group">
-            <a href="#" role="button" class="button danger">Cancelar</a>
-            <button class="success">Crear</button>
-        </section>
     </div>
     <a href="#" class="outside-trigger"></a>
 </div>
@@ -104,6 +118,7 @@
         position: fixed;
         right: 0;
         top: 0;
+        z-index: 1;
     }
 
     .modal {
@@ -167,4 +182,23 @@
         outline: none;
         border: 1px solid black;
     }
+
+    .form_input_group {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        place-items: start;
+        justify-content: start;
+    }
 </style>
+
+<script defer>
+    $("input[data-type='currency']").on({
+        keyup: function() {
+            formatCurrency($(this));
+        },
+        blur: function() {
+            formatCurrency($(this), "blur");
+        }
+    });
+</script>

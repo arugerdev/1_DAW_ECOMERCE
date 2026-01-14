@@ -6,7 +6,7 @@
     <a href="#modal-product-creator" class="button button__link">Crear Producto</a>
 
     <section id="products-table-container">
-
+        <table id="products-table" class="stripe hover order-column row-border compact cell-border"></table>
     </section>
 
 
@@ -29,33 +29,11 @@
         color: black;
     }
 
-    table {
-
-        margin: 1rem;
-    }
-
-    table,
-    th,
-    td {
-        padding: 12px;
-        border: 1px solid black;
-        border-collapse: collapse;
-
-        place-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .actions {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-    }
-
     #products-table-container {
         display: flex;
         width: 100%;
         flex-direction: column;
+        z-index: 0;
 
     }
 </style>
@@ -73,37 +51,39 @@
         console.log(modal)
     })
 
-    selectData("*", "products", "", (data) => {
-        renderProductsTable(data)
+    $(document).ready(function() {
+        selectData("*", "products", "", (data) => {
+            console.log(data)
+
+            if (data.length > 0) {
+
+                $('#products-table').DataTable({
+                    columns: Object.keys(data[0]).map((key) => {
+                        return {
+                            title: capitalizeFirstLetter(key)
+                        }
+                    }).concat({
+                        title: "Actions"
+                    }),
+                    data: data.map((row) => {
+                        return Object.values(row).concat("")
+                    }),
+                    columnsDef: [{
+                            targets: 0,
+                            visible: false,
+                            searchable: false
+                        },
+                        {
+                            targets: [2],
+                            render: function(data, type, row) {
+                                return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number(',', '.', 2, '$', '').display(data)
+                            }
+                        },
+                    ],
+
+                });
+
+            }
+        });
     })
-
-
-
-    function renderProductsTable(products) {
-        let tableHtml = "<table><thead><tr>";
-        let columns = Object.keys(products[0]);
-
-        columns.forEach(column => {
-            tableHtml += `<th>${capitalizeFirstLetter(column)}</th>`;
-        });
-
-        tableHtml += "<th>Acciones</th></tr></thead><tbody>";
-
-        products.forEach(product => {
-            tableHtml += "<tr>";
-            columns.forEach(column => {
-                tableHtml += `<td>${htmlspecialchars(product[column]) }</td>`;
-            });
-            tableHtml += `
-                <td class="actions">
-                    <button class="edit-btn">Editar</button>
-                    <button class="delete-btn danger">Eliminar</button>
-                </td>
-            </tr>`;
-        });
-
-        tableHtml += "</tbody></table>";
-
-        $("#products-table-container").html(tableHtml);
-    }
 </script>
