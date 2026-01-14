@@ -2,6 +2,7 @@
 ini_set('display_errors', 'Off');
 
 // DEBUG
+// CAMBIA ENTRE MODO ADMIN Y MODO CLIENTE (COMENTA PARA DESACTIVAR)
 $_REQUEST["user"] = (object) ['is_authenticated' => true];
 // 
 
