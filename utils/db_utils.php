@@ -9,6 +9,9 @@ switch ($option) {
     case "delete":
         deleteData();
         break;
+    case "insert":
+        insertData();
+        break;
 }
 
 function selectData()
@@ -30,11 +33,28 @@ function deleteData()
 {
     require "../includes/database.php";
 
-    $select = $_POST["select"];
-    $table = $_POST["table"];
-    $extra = $_POST["extra"];
+    $select = $_REQUEST["select"];
+    $table = $_REQUEST["table"];
+    $extra = $_REQUEST["extra"];
 
     $query = $pdo->prepare("DELETE FROM $table WHERE $filterParam = '$filterValue' $extra");
+    $query->execute();
+    $result = $query->fetchAll();
+
+    return $result;
+}
+
+function insertData()
+{
+    require "../includes/database.php";
+
+    $table = $_REQUEST["table"];
+    $keys = $_REQUEST["keys"];
+    $values = $_REQUEST["values"];
+    $extra = $_REQUEST["extra"];
+
+    $query = $pdo->prepare("INSERT INTO $table ($keys) VALUES ($values) $extra");
+
     $query->execute();
     $result = $query->fetchAll();
 

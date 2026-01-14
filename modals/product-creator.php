@@ -9,18 +9,18 @@
             </a>
         </div>
 
-        <form action="javacript:void(0)">
+        <form action="javascript:void(0)" class="create_product_form">
             <section class="form_input_group">
                 <label for="product_name">Nombre del producto: </label>
                 <input type="text" id="product_name" placeholder="Nombre del producto" require="">
             </section>
             <section class="form_input_group">
                 <label for="product_price">Precio del producto: </label>
-                <input type="currency" data-type='currency' id="product_price" placeholder="0,00€" require="">
+                <input type="currency" data-type='currency' id="product_price" placeholder="0,00€" value="0" require="">
             </section>
             <section class="form_input_group">
                 <label for="product_stock">Stock del producto: </label>
-                <input type="number" id="product_stock" placeholder="0 productos" require="">
+                <input type="number" id="product_stock" placeholder="0 productos" value="0" require="">
             </section>
             <section class="form_input_group">
                 <label for="product_description">Descripción: </label>
@@ -28,8 +28,8 @@
             </section>
             <section class="form_input_group">
                 <label for="product_category">Categoria: </label>
-                <select id="product_category" cols="100" rows="10" placeholder="Descripcion">
-                    <option value="">Sin categoria</option>
+                <select id="product_category" placeholder="Descripcion">
+                    <option value="0">Sin categoria</option>
                 </select>
             </section>
 
@@ -201,4 +201,18 @@
             formatCurrency($(this), "blur");
         }
     });
+
+    $(".create_product_form").on('submit', () => {
+
+        const name = $("#product_name").val()
+        const price = $("#product_price").val()
+        const stock = $("#product_stock").val()
+        const description = $("#product_description").val()
+        const category = $("#product_category").val()
+
+        insertData("products", "name, price, stock, description, category", `'${name}', ${price}, ${stock}, '${description}', ${category}`, "", (data) => {
+            console.log(data)
+        })
+
+    })
 </script>
