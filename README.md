@@ -3,6 +3,7 @@
 
 A ECommerce web, for 1ºDAW practices.
 
+![Logo](https://i.ibb.co/cKn9bDpC/logo.png)
 ## Tech Stack
 
 **Front:** ```HTML, CSS, JavaScript, JQuery 3.7.1.```
