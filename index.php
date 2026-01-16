@@ -28,11 +28,9 @@ if ($option == "?") {
     <title>EviMerce</title>
 
     <link rel="stylesheet" href="/assets/css/index.css">
-    <script>
-        <?php
-        include "./assets/plugins/jquery-3.7.1.min.js";
-        ?>
-    </script>
+
+    <?php include "./includes/dependencies.php"; ?>
+
     <script>
         <?php
         include "./assets/js/db_utils.js";
@@ -40,38 +38,17 @@ if ($option == "?") {
         include "./assets/js/utils.js";
         ?>
     </script>
-    <link rel="stylesheet" href="http://cdn.datatables.net/2.3.6/css/dataTables.dataTables.min.css">
-    <script src="http://cdn.datatables.net/2.3.6/js/dataTables.min.js"></script>
 </head>
 
-<body>
+<body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse">
 
-    <?php
-    if ($_REQUEST["user"]->is_authenticated) {
-        include "./templates/admin/navbar.php";
-    }
-    ?>
 
-    <section>
-
+    <main>
         <?php
-        if ($_REQUEST["user"]->is_authenticated) {
-            include "./templates/admin/sidebar.php";
-        }
+        include "./templates/routes.php";
         ?>
-
-        <main>
-            <?php
-            // if ($_REQUEST["user"]->is_authenticated) {
-            //     include "./templates/admin_routes.php";
-            // } else {
-            // include "./templates/routes.php";
-            // }
-            include "./templates/routes.php";
-            ?>
-        </main>
+    </main>
     </section>
-
 
 </body>
 

@@ -6,7 +6,7 @@ A ECommerce web, for 1ºDAW practices.
 ![Logo](https://i.ibb.co/cKn9bDpC/logo.png)
 ## Tech Stack
 
-**Front:** ```HTML, CSS, JavaScript, JQuery 3.7.1.```
+**Front:** ```HTML, CSS, JavaScript, JQuery 3.7.1,  JQueryUI, JQueryKnob, AdminLTE, BootStrap 5, Font Awesome, JVectorMap, DateTimePicker, DateRangePicker, DataTables, ChartJS, Moment, .```
 
 **Back:** ```PHP 8.5.1 , PDO (PHP), MySQL 8.0.44.```
 
@@ -27,6 +27,16 @@ Go to the project directory
 Before running you need a ***MySQL server*** with ***"root" as username and password***.
 
 Also need ***php installed at C:/php/php.exe***.
+
+Before start the server, PHP need use pod_mysql.
+Remember activate in php.ini:
+
+*(Remove **;**)*
+```bach
+/php/php.ini :
+
+  ;pod_mysql -> pod_mysql
+```
 
 Start the server
 

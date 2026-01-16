@@ -1,8 +1,4 @@
 <?php
-define("SERVER", "localhost");
-define("SERVER_NAME", "root");
-define("SERVER_PASSWORD", "root");
-
 $bd_host = "localhost"; //localhost
 $bd_usuario = "root";
 $bd_password = "root";
@@ -15,5 +11,5 @@ try {
     $pdo->exec("SET lc_time_names = 'es_ES';");
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 } catch (PDOException $e) {
-    echo "Se ha producido un error al conectar";
+    echo "Se ha producido un error al conectar: " . $e->getMessage();
 }

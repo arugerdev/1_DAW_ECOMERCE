@@ -4,13 +4,13 @@ $option = $_REQUEST["action"];
 
 switch ($option) {
     case "select":
-        selectData();
+        echo json_encode(selectData());
         break;
     case "delete":
-        deleteData();
+        echo json_encode(deleteData());
         break;
     case "insert":
-        insertData();
+        echo json_encode(insertData());
         break;
 }
 
@@ -26,7 +26,7 @@ function selectData()
     $query->execute();
     $result = $query->fetchAll();
 
-    echo json_encode($result);
+    return $result;
 }
 
 function deleteData()

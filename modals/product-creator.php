@@ -1,198 +1,53 @@
-<div class="modal-wrapper modal" id="modal-product-creator">
-    <div class="modal-body card">
-        <div class="modal-header">
-            <h2 class="heading">Crear producto</h2>
-            <a href="#" role="button" class="close" aria-label="close this modal">
-                <svg viewBox="0 0 24 24">
-                    <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
-                </svg>
-            </a>
+<div class="modal fade" data-backdrop="static" id="modal-product-creator" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir nuevo producto</h4>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:void(0)" class="create_product_form" id="create_product_form">
+                    <section class="form_input_group">
+                        <label for="product_name">Nombre del producto: </label>
+                        <input type="text" id="product_name" placeholder="Nombre del producto" require="">
+                    </section>
+                    <section class="form_input_group">
+                        <label for="product_price">Precio del producto: </label>
+                        <input type="currency" data-type='currency' id="product_price" placeholder="0,00€" value="0" require="">
+                    </section>
+                    <section class="form_input_group">
+                        <label for="product_stock">Stock del producto: </label>
+                        <input type="number" id="product_stock" placeholder="0 productos" value="0" require="">
+                    </section>
+                    <section class="form_input_group">
+                        <label for="product_description">Descripción: </label>
+                        <textarea id="product_description" cols="100" rows="10" placeholder="Descripcion"></textarea>
+                    </section>
+                    <section class="form_input_group">
+                        <label for="product_category">Categoria: </label>
+                        <select id="product_category" placeholder="Descripcion">
+                            <option value="0">Sin categoria</option>
+                        </select>
+                    </section>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn-cancel btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="create_product_form" class="btn btn-success">Añadir producto</button>
+            </div>
         </div>
-
-        <form action="javascript:void(0)" class="create_product_form">
-            <section class="form_input_group">
-                <label for="product_name">Nombre del producto: </label>
-                <input type="text" id="product_name" placeholder="Nombre del producto" require="">
-            </section>
-            <section class="form_input_group">
-                <label for="product_price">Precio del producto: </label>
-                <input type="currency" data-type='currency' id="product_price" placeholder="0,00€" value="0" require="">
-            </section>
-            <section class="form_input_group">
-                <label for="product_stock">Stock del producto: </label>
-                <input type="number" id="product_stock" placeholder="0 productos" value="0" require="">
-            </section>
-            <section class="form_input_group">
-                <label for="product_description">Descripción: </label>
-                <textarea id="product_description" cols="100" rows="10" placeholder="Descripcion"></textarea>
-            </section>
-            <section class="form_input_group">
-                <label for="product_category">Categoria: </label>
-                <select id="product_category" placeholder="Descripcion">
-                    <option value="0">Sin categoria</option>
-                </select>
-            </section>
-
-            <section class="buttons-group">
-                <a href="#" type="submit" role="button" class="button danger">Cancelar</a>
-                <button class="success">Crear</button>
-            </section>
-        </form>
+        <!-- /.modal-content -->
     </div>
-    <a href="#" class="outside-trigger"></a>
+    <!-- /.modal-dialog -->
 </div>
 
-<style>
-    .buttons-group {
-        display: flex;
-        flex-direction: row;
-        padding: 1rem;
-        gap: 24px;
-        justify-content: end;
-    }
-
-    button,
-    .button {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        display: flex;
-        padding: 8px 16px;
-        outline: none;
-        border: 2px solid black;
-        border-radius: 12px;
-        background-color: transparent;
-        cursor: pointer;
-        margin: 0;
-        text-decoration: none;
-        text-align: center;
-        font-size: medium;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .success {
-        border: 2px solid rgb(80, 192, 130);
-        color: rgb(80, 192, 130);
-
-    }
-
-    .success:hover {
-        background-color: rgb(214, 248, 229);
-    }
-
-    .danger {
-        border: 2px solid rgb(192, 80, 80);
-        color: rgb(192, 80, 80);
-
-    }
-
-    .danger:hover {
-        background-color: rgb(248, 214, 214);
-    }
-
-    .modal-header {
-        align-items: baseline;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .close {
-        background: none;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        height: 16px;
-        text-decoration: none;
-        width: 16px;
-    }
-
-    .close svg {
-        width: 16px;
-    }
-
-    .modal-wrapper {
-        align-items: center;
-        background: rgba(0, 0, 0, 0.7);
-        bottom: 0;
-        display: flex;
-        justify-content: center;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        z-index: 1;
-    }
-
-    .modal {
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-        visibility: hidden;
-    }
-
-    .modal:target {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .modal:target .modal-body {
-        opacity: 1;
-        transform: translateY(1);
-    }
-
-    .modal .modal-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        max-width: 60vw;
-        opacity: 0;
-        transform: translateY(-100px);
-        transition: opacity 0.3s ease-in-out;
-        width: 100%;
-        z-index: 1;
-        background-color: white;
-        padding: 2rem;
-        border-radius: 24px;
-        max-height: 70vh;
-        height: 100%;
-    }
-
-    .modal .modal-body form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        gap: 12px;
-    }
-
-    .outside-trigger {
-        bottom: 0;
-        cursor: default;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-    }
-
-    .button__link {
-        text-decoration: none;
-    }
-
-    input {
-        display: flex;
-        padding: 8px 12px;
-        border-radius: 24px;
-        outline: none;
-        border: 1px solid black;
-    }
-
-    .form_input_group {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        place-items: start;
-        justify-content: start;
-    }
-</style>
-
 <script defer>
+    //Close modal on click cancel or a close button
+    $('.btn-cancel, .btn-close').on('click', () => {
+        $('#modal-product-creator').modal('hide')
+    })
+
     $("input[data-type='currency']").on({
         keyup: function() {
             formatCurrency($(this));
@@ -205,13 +60,13 @@
     $(".create_product_form").on('submit', () => {
 
         const name = $("#product_name").val()
-        const price = $("#product_price").val()
+        const price = Number($("#product_price").val().replace(/[^0-9.-]+/g, ""));
         const stock = $("#product_stock").val()
         const description = $("#product_description").val()
         const category = $("#product_category").val()
 
         insertData("products", "name, price, stock, description, category", `'${name}', ${price}, ${stock}, '${description}', ${category}`, "", (data) => {
-            console.log(data)
+            location.reload();
         })
 
     })
