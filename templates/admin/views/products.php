@@ -103,13 +103,20 @@
                             }
                         },
                         {
-                            targets: [3],
+                            targets: [4,5],
+                            render: function(data, type, row) {
+                                return `<p class="elipsis">${data}</p>`;
+
+                            }
+                        },
+                        {
+                            targets: 3,
                             render: function(data, type, row) {
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
                             }
                         },
                         {
-                            targets: [7],
+                            targets: 10,
                             render: function(data, type, row) {
                                 const id = row[0]
 

@@ -50,15 +50,15 @@ $data = $recibe->data[0];
         <div class="row">
             <div class="col-12 col-sm-6">
                 <h3 class="d-inline-block d-sm-none"><?php $data->name ?></h3>
-                <div class="col-12">
-                    <img src="../../dist/img/prod-1.jpg" class="product-image" alt="Product Image">
+                <div class="col-12" style="place-items:center; justify-content:center; display:flex;">
+                    <img src="https://placehold.co/512" style=" max-width: 512px;" class="product-image" alt="Product Image">
                 </div>
-                <div class="col-12 product-image-thumbs">
-                    <div class="product-image-thumb active"><img src="../../dist/img/prod-1.jpg" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="../../dist/img/prod-2.jpg" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="../../dist/img/prod-3.jpg" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="../../dist/img/prod-4.jpg" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="../../dist/img/prod-5.jpg" alt="Product Image"></div>
+                <div class="col-12 product-image-thumbs" style="display: flex; place-items:center; justify-content:center">
+                    <div class="product-image-thumb active"><img src="https://placehold.co/100" alt="Product Image"></div>
+                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
+                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
+                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
+                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -164,7 +164,7 @@ $data = $recibe->data[0];
         </div>
         <div class="row mt-4">
             <h2>Descripcion</h2>
-            <p style="max-width: 100ch;" class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><?php echo $data->description ?></p>
+            <p style="max-width: 200ch;" class="tab-pane p-4 text-justify fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><?php echo $data->description ?></p>
         </div>
     </div>
     <!-- /.card-body -->
