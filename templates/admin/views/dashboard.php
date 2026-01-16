@@ -1,95 +1,96 @@
-        <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Inicio</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item active">Inicio</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
-        <!-- Main content -->
+
+
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>0</h3>
+                <section class="connectedSortable ui-sortable">
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
 
-                                <p>Nuevos pedidos</p>
+                            <div class="small-box bg-info ui-sortable-handle" style="cursor: move;">
+                                <div class="inner">
+                                    <h3>0</h3>
+
+                                    <p>Nuevos pedidos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-bag"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>5</h3>
 
-                                <p>Productos activos</p>
+                        <div class="col-lg-3 col-6">
+
+                            <div class="small-box bg-warning ui-sortable-handle" style="cursor: move;">
+                                <div class="inner">
+                                    <h3>5</h3>
+
+                                    <p>Productos activos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>0.00<sup style="font-size: 20px">€</sup></h3>
 
-                                <p>Ingresos Totales</p>
+                        <div class="col-lg-3 col-6 ui-sortable-handle" style="cursor: move;">
+
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>0.00<sup style="font-size: 20px">€</sup></h3>
+
+                                    <p>Ingresos Totales</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>0</h3>
 
-                                <p>Devoluciones</p>
+                        <div class="col-lg-3 col-6 ui-sortable-handle" style="cursor: move;">
+
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>0</h3>
+
+                                    <p>Devoluciones</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <!-- ./col -->
-                </div>
-                <!-- /.row -->
 
-                <div class="row">
-                    <!-- Left col -->
+                    </div>
+
+                </section>
+
+                <!-- <div class="row">
+
                     <section class="col-lg-7 connectedSortable ui-sortable">
-                        <!-- Custom tabs (Charts with tabs)-->
 
-                        <!-- /.card -->
 
-                        <!-- DIRECT CHAT -->
+
+
+
                         <div class="card" style="position: relative; left: 0px; top: 0px;">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
@@ -106,10 +107,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div><!-- /.card-header -->
+                            </div>
                             <div class="card-body">
                                 <div class="tab-content p-0">
-                                    <!-- Morris chart - Sales -->
+
                                     <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
                                         <div class="chartjs-size-monitor">
                                             <div class="chartjs-size-monitor-expand">
@@ -125,7 +126,7 @@
                                         <canvas id="sales-chart-canvas" height="0" style="height: 0px; display: block; width: 0px;" class="chartjs-render-monitor" width="0"></canvas>
                                     </div>
                                 </div>
-                            </div><!-- /.card-body -->
+                            </div>
                         </div>
                         <div class="card direct-chat direct-chat-primary">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
@@ -144,78 +145,78 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- /.card-header -->
+
                             <div class="card-body">
-                                <!-- Conversations are loaded here -->
+
                                 <div class="direct-chat-messages">
-                                    <!-- Message. Default to the left -->
+
                                     <div class="direct-chat-msg">
                                         <div class="direct-chat-infos clearfix">
                                             <span class="direct-chat-name float-left">Alexander Pierce</span>
                                             <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                                         </div>
-                                        <!-- /.direct-chat-infos -->
+
                                         <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
+
                                         <div class="direct-chat-text">
                                             Is this template really for free? That's unbelievable!
                                         </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
 
-                                    <!-- Message to the right -->
+                                    </div>
+
+
+
                                     <div class="direct-chat-msg right">
                                         <div class="direct-chat-infos clearfix">
                                             <span class="direct-chat-name float-right">Sarah Bullock</span>
                                             <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
                                         </div>
-                                        <!-- /.direct-chat-infos -->
+
                                         <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
+
                                         <div class="direct-chat-text">
                                             You better believe it!
                                         </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
 
-                                    <!-- Message. Default to the left -->
+                                    </div>
+
+
+
                                     <div class="direct-chat-msg">
                                         <div class="direct-chat-infos clearfix">
                                             <span class="direct-chat-name float-left">Alexander Pierce</span>
                                             <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
                                         </div>
-                                        <!-- /.direct-chat-infos -->
+
                                         <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
+
                                         <div class="direct-chat-text">
                                             Working with AdminLTE on a great new app! Wanna join?
                                         </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
 
-                                    <!-- Message to the right -->
+                                    </div>
+
+
+
                                     <div class="direct-chat-msg right">
                                         <div class="direct-chat-infos clearfix">
                                             <span class="direct-chat-name float-right">Sarah Bullock</span>
                                             <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
                                         </div>
-                                        <!-- /.direct-chat-infos -->
+
                                         <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
+
                                         <div class="direct-chat-text">
                                             I would love to.
                                         </div>
-                                        <!-- /.direct-chat-text -->
+
                                     </div>
-                                    <!-- /.direct-chat-msg -->
+
 
                                 </div>
-                                <!--/.direct-chat-messages-->
 
-                                <!-- Contacts are loaded here -->
+
+
                                 <div class="direct-chat-contacts">
                                     <ul class="contacts-list">
                                         <li>
@@ -229,10 +230,10 @@
                                                     </span>
                                                     <span class="contacts-list-msg">How have you been? I was...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                         <li>
                                             <a href="#">
                                                 <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar">
@@ -244,10 +245,10 @@
                                                     </span>
                                                     <span class="contacts-list-msg">I will be waiting for...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                         <li>
                                             <a href="#">
                                                 <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar">
@@ -259,10 +260,10 @@
                                                     </span>
                                                     <span class="contacts-list-msg">I'll call you back at...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                         <li>
                                             <a href="#">
                                                 <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar">
@@ -274,10 +275,10 @@
                                                     </span>
                                                     <span class="contacts-list-msg">Where is your new...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                         <li>
                                             <a href="#">
                                                 <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar">
@@ -289,10 +290,10 @@
                                                     </span>
                                                     <span class="contacts-list-msg">Can I take a look at...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                         <li>
                                             <a href="#">
                                                 <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar">
@@ -304,16 +305,16 @@
                                                     </span>
                                                     <span class="contacts-list-msg">Never mind I found...</span>
                                                 </div>
-                                                <!-- /.contacts-list-info -->
+
                                             </a>
                                         </li>
-                                        <!-- End Contact Item -->
+
                                     </ul>
-                                    <!-- /.contacts-list -->
+
                                 </div>
-                                <!-- /.direct-chat-pane -->
+
                             </div>
-                            <!-- /.card-body -->
+
                             <div class="card-footer">
                                 <form action="#" method="post">
                                     <div class="input-group">
@@ -324,11 +325,11 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- /.card-footer-->
-                        </div>
-                        <!--/.direct-chat -->
 
-                        <!-- TO DO List -->
+                        </div>
+
+
+
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
@@ -346,25 +347,25 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /.card-header -->
+
                             <div class="card-body">
                                 <ul class="todo-list ui-sortable" data-widget="todo-list">
                                     <li>
-                                        <!-- drag handle -->
+
                                         <span class="handle ui-sortable-handle">
                                             <i class="fas fa-ellipsis-v"></i>
                                             <i class="fas fa-ellipsis-v"></i>
                                         </span>
-                                        <!-- checkbox -->
+
                                         <div class="icheck-primary d-inline ml-2">
                                             <input type="checkbox" value="" name="todo1" id="todoCheck1">
                                             <label for="todoCheck1"></label>
                                         </div>
-                                        <!-- todo text -->
+
                                         <span class="text">Design a nice theme</span>
-                                        <!-- Emphasis label -->
+
                                         <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                                        <!-- General tools such as edit or delete-->
+
                                         <div class="tools">
                                             <i class="fas fa-edit"></i>
                                             <i class="fas fa-trash-o"></i>
@@ -452,25 +453,25 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.card-body -->
+
                             <div class="card-footer clearfix">
                                 <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
                             </div>
                         </div>
-                        <!-- /.card -->
+
                     </section>
-                    <!-- /.Left col -->
-                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+
                     <section class="col-lg-5 connectedSortable ui-sortable">
 
-                        <!-- Map card -->
+
                         <div class="card bg-gradient-primary">
                             <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
                                     <i class="fas fa-map-marker-alt mr-1"></i>
                                     Visitors
                                 </h3>
-                                <!-- card tools -->
+
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
                                         <i class="far fa-calendar-alt"></i>
@@ -479,7 +480,7 @@
                                         <i class="fas fa-minus"></i>
                                     </button>
                                 </div>
-                                <!-- /.card-tools -->
+
                             </div>
                             <div class="card-body">
                                 <div id="world-map" style="height: 250px; width: 100%; position: relative; overflow: hidden; background-color: transparent;">
@@ -488,9 +489,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card -->
 
-                        <!-- solid sales graph -->
+
+
                         <div class="card bg-gradient-info">
                             <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
@@ -518,7 +519,7 @@
                                 </div>
                                 <canvas class="chart chartjs-render-monitor" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 291px;" width="291" height="250"></canvas>
                             </div>
-                            <!-- /.card-body -->
+
                             <div class="card-footer bg-transparent">
                                 <div class="row">
                                     <div class="col-4 text-center">
@@ -526,27 +527,27 @@
 
                                         <div class="text-white">Mail-Orders</div>
                                     </div>
-                                    <!-- ./col -->
+
                                     <div class="col-4 text-center">
                                         <div style="display:inline;width:60px;height:60px;"><canvas width="60" height="60"></canvas><input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly" style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;"></div>
 
                                         <div class="text-white">Online</div>
                                     </div>
-                                    <!-- ./col -->
+
                                     <div class="col-4 text-center">
                                         <div style="display:inline;width:60px;height:60px;"><canvas width="60" height="60"></canvas><input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly" style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;"></div>
 
                                         <div class="text-white">In-Store</div>
                                     </div>
-                                    <!-- ./col -->
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /.card-footer -->
-                        </div>
-                        <!-- /.card -->
 
-                        <!-- Calendar -->
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
                         <div class="card bg-gradient-success">
                             <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
 
@@ -554,9 +555,9 @@
                                     <i class="far fa-calendar-alt"></i>
                                     Calendar
                                 </h3>
-                                <!-- tools card -->
+
                                 <div class="card-tools">
-                                    <!-- button with a dropdown -->
+
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
                                             <i class="fas fa-bars"></i>
@@ -575,11 +576,11 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
-                                <!-- /. tools -->
+
                             </div>
-                            <!-- /.card-header -->
+
                             <div class="card-body pt-0">
-                                <!--The calendar -->
+
                                 <div id="calendar" style="width: 100%">
                                     <div class="bootstrap-datetimepicker-widget usetwentyfour">
                                         <ul class="list-unstyled">
@@ -716,261 +717,237 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
+
                         </div>
-                        <!-- /.card -->
+
                     </section>
-                    <!-- right col -->
-                </div>
-            </div><!-- /.container-fluid -->
+
+                </div> -->
+            </div>
         </div>
-        <!-- /.content -->
 
 
-        <script type="module">
-            $(function() {
-                'use strict'
 
-                // Make the dashboard widgets sortable Using jquery UI
-                $('.connectedSortable').sortable({
-                    placeholder: 'sort-highlight',
-                    connectWith: '.connectedSortable',
-                    handle: '.card-header, .nav-tabs',
-                    forcePlaceholderSize: true,
-                    zIndex: 999999
-                })
-                $('.connectedSortable .card-header').css('cursor', 'move')
+        <script defer>
+            // $('.connectedSortable').sortable({
+            //     placeholder: 'sort-highlight',
+            //     connectWith: '.connectedSortable',
+            //     handle: '.card-header, .nav-tabs',
+            //     forcePlaceholderSize: true,
+            //     zIndex: 999999
+            // })
+            // $('.connectedSortable .card-header').css('cursor', 'move')
 
-                // jQuery UI sortable for the todo list
-                $('.todo-list').sortable({
-                    placeholder: 'sort-highlight',
-                    handle: '.handle',
-                    forcePlaceholderSize: true,
-                    zIndex: 999999
-                })
+            // $('.todo-list').sortable({
+            //     placeholder: 'sort-highlight',
+            //     handle: '.handle',
+            //     forcePlaceholderSize: true,
+            //     zIndex: 999999
+            // })
 
-                // bootstrap WYSIHTML5 - text editor
-                // $('.textarea').summernote()
+            // $('.daterange').daterangepicker({
+            //     ranges: {
+            //         Today: [moment(), moment()],
+            //         Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            //         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            //         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            //         'This Month': [moment().startOf('month'), moment().endOf('month')],
+            //         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            //     },
+            //     startDate: moment().subtract(29, 'days'),
+            //     endDate: moment()
+            // }, function(start, end) {
 
-                $('.daterange').daterangepicker({
-                    ranges: {
-                        Today: [moment(), moment()],
-                        Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                    },
-                    startDate: moment().subtract(29, 'days'),
-                    endDate: moment()
-                }, function(start, end) {
-                    // eslint-disable-next-line no-alert
-                    alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                })
+            //     alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            // })
 
-                /* jQueryKnob */
-                $('.knob').knob()
+            // $('.knob').knob()
 
-                // jvectormap data
-                var visitorsData = {
-                    US: 398, // USA
-                    SA: 400, // Saudi Arabia
-                    CA: 1000, // Canada
-                    DE: 500, // Germany
-                    FR: 760, // France
-                    CN: 300, // China
-                    AU: 700, // Australia
-                    BR: 600, // Brazil
-                    IN: 800, // India
-                    GB: 320, // Great Britain
-                    RU: 3000 // Russia
-                }
-                // World map by jvectormap
+            // var visitorsData = {
+            //     US: 398,
+            //     SA: 400,
+            //     CA: 1000,
+            //     DE: 500,
+            //     FR: 760,
+            //     CN: 300,
+            //     AU: 700,
+            //     BR: 600,
+            //     IN: 800,
+            //     GB: 320,
+            //     RU: 3000
+            // }
 
-                const map = new jsVectorMap({
-                    selector: '#world-map',
-                    map: 'world',
-                    backgroundColor: 'transparent',
-                    regionStyle: {
-                        initial: {
-                            fill: 'rgba(255, 255, 255, 0.7)',
-                            'fill-opacity': 1,
-                            stroke: 'rgba(0,0,0,.2)',
-                            'stroke-width': 1,
-                            'stroke-opacity': 1
-                        }
-                    },
-                    series: {
-                        regions: [{
-                            values: visitorsData,
-                            scale: ['#ffffff', '#0154ad'],
-                            normalizeFunction: 'polynomial'
-                        }]
-                    },
-                    visualizeData: {
-                        scale: ['#eeeeee', '#999999'],
-                        values: visitorsData,
-                        normalizeFunction: 'linear'
-                    },
-                    onRegionTooltipShow(event, tooltip, code) {
-                        tooltip.text(`${tooltip.text()}: ${visitorsData[code] || 0} visitors`)
-                    },
-                })
+            // const map = new jsVectorMap({
+            //     selector: '#world-map',
+            //     map: 'world',
+            //     backgroundColor: 'transparent',
+            //     regionStyle: {
+            //         initial: {
+            //             fill: 'rgba(255, 255, 255, 0.7)',
+            //             'fill-opacity': 1,
+            //             stroke: 'rgba(0,0,0,.2)',
+            //             'stroke-width': 1,
+            //             'stroke-opacity': 1
+            //         }
+            //     },
+            //     series: {
+            //         regions: [{
+            //             values: visitorsData,
+            //             scale: ['#ffffff', '#0154ad'],
+            //             normalizeFunction: 'polynomial'
+            //         }]
+            //     },
+            //     visualizeData: {
+            //         scale: ['#eeeeee', '#999999'],
+            //         values: visitorsData,
+            //         normalizeFunction: 'linear'
+            //     },
+            //     onRegionTooltipShow(event, tooltip, code) {
+            //         tooltip.text(`${tooltip.text()}: ${visitorsData[code] || 0} visitors`)
+            //     },
+            // })
+
+            // $('#calendar').datetimepicker({
+            //     format: 'L',
+            //     inline: true
+            // })
+
+            // var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+
+            // var salesChartData = {
+            //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            //     datasets: [{
+            //             label: 'Digital Goods',
+            //             backgroundColor: 'rgba(60,141,188,0.9)',
+            //             borderColor: 'rgba(60,141,188,0.8)',
+            //             pointRadius: false,
+            //             pointColor: '#3b8bba',
+            //             pointStrokeColor: 'rgba(60,141,188,1)',
+            //             pointHighlightFill: '#fff',
+            //             pointHighlightStroke: 'rgba(60,141,188,1)',
+            //             data: [28, 48, 40, 19, 86, 27, 90]
+            //         },
+            //         {
+            //             label: 'Electronics',
+            //             backgroundColor: 'rgba(210, 214, 222, 1)',
+            //             borderColor: 'rgba(210, 214, 222, 1)',
+            //             pointRadius: false,
+            //             pointColor: 'rgba(210, 214, 222, 1)',
+            //             pointStrokeColor: '#c1c7d1',
+            //             pointHighlightFill: '#fff',
+            //             pointHighlightStroke: 'rgba(220,220,220,1)',
+            //             data: [65, 59, 80, 81, 56, 55, 40]
+            //         }
+            //     ]
+            // }
+
+            // var salesChartOptions = {
+            //     maintainAspectRatio: false,
+            //     responsive: true,
+            //     legend: {
+            //         display: false
+            //     },
+            //     scales: {
+            //         xAxes: [{
+            //             gridLines: {
+            //                 display: false
+            //             }
+            //         }],
+            //         yAxes: [{
+            //             gridLines: {
+            //                 display: false
+            //             }
+            //         }]
+            //     }
+            // }
+
+            // var salesChart = new Chart(salesChartCanvas, {
+            //     type: 'line',
+            //     data: salesChartData,
+            //     options: salesChartOptions
+            // })
+
+            // var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+            // var pieData = {
+            //     labels: [
+            //         'Instore Sales',
+            //         'Download Sales',
+            //         'Mail-Order Sales'
+            //     ],
+            //     datasets: [{
+            //         data: [30, 12, 20],
+            //         backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+            //     }]
+            // }
+            // var pieOptions = {
+            //     legend: {
+            //         display: false
+            //     },
+            //     maintainAspectRatio: false,
+            //     responsive: true
+            // }
+
+            // var pieChart = new Chart(pieChartCanvas, {
+            //     type: 'doughnut',
+            //     data: pieData,
+            //     options: pieOptions
+            // })
+
+            // var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+
+            // var salesGraphChartData = {
+            //     labels: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4', '2013 Q1', '2013 Q2'],
+            //     datasets: [{
+            //         label: 'Digital Goods',
+            //         fill: false,
+            //         borderWidth: 2,
+            //         lineTension: 0,
+            //         spanGaps: true,
+            //         borderColor: '#efefef',
+            //         pointRadius: 3,
+            //         pointHoverRadius: 7,
+            //         pointColor: '#efefef',
+            //         pointBackgroundColor: '#efefef',
+            //         data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+            //     }]
+            // }
+
+            // var salesGraphChartOptions = {
+            //     maintainAspectRatio: false,
+            //     responsive: true,
+            //     legend: {
+            //         display: false
+            //     },
+            //     scales: {
+            //         xAxes: [{
+            //             ticks: {
+            //                 fontColor: '#efefef'
+            //             },
+            //             gridLines: {
+            //                 display: false,
+            //                 color: '#efefef',
+            //                 drawBorder: false
+            //             }
+            //         }],
+            //         yAxes: [{
+            //             ticks: {
+            //                 stepSize: 5000,
+            //                 fontColor: '#efefef'
+            //             },
+            //             gridLines: {
+            //                 display: true,
+            //                 color: '#efefef',
+            //                 drawBorder: false
+            //             }
+            //         }]
+            //     }
+            // }
 
 
-                // The Calender
-                $('#calendar').datetimepicker({
-                    format: 'L',
-                    inline: true
-                })
 
-                /* Chart.js Charts */
-                // Sales chart
-                var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
-                // $('#revenue-chart').get(0).getContext('2d');
-
-                var salesChartData = {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                    datasets: [{
-                            label: 'Digital Goods',
-                            backgroundColor: 'rgba(60,141,188,0.9)',
-                            borderColor: 'rgba(60,141,188,0.8)',
-                            pointRadius: false,
-                            pointColor: '#3b8bba',
-                            pointStrokeColor: 'rgba(60,141,188,1)',
-                            pointHighlightFill: '#fff',
-                            pointHighlightStroke: 'rgba(60,141,188,1)',
-                            data: [28, 48, 40, 19, 86, 27, 90]
-                        },
-                        {
-                            label: 'Electronics',
-                            backgroundColor: 'rgba(210, 214, 222, 1)',
-                            borderColor: 'rgba(210, 214, 222, 1)',
-                            pointRadius: false,
-                            pointColor: 'rgba(210, 214, 222, 1)',
-                            pointStrokeColor: '#c1c7d1',
-                            pointHighlightFill: '#fff',
-                            pointHighlightStroke: 'rgba(220,220,220,1)',
-                            data: [65, 59, 80, 81, 56, 55, 40]
-                        }
-                    ]
-                }
-
-                var salesChartOptions = {
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            gridLines: {
-                                display: false
-                            }
-                        }],
-                        yAxes: [{
-                            gridLines: {
-                                display: false
-                            }
-                        }]
-                    }
-                }
-
-                // This will get the first returned node in the jQuery collection.
-                // eslint-disable-next-line no-unused-vars
-                var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
-                    type: 'line',
-                    data: salesChartData,
-                    options: salesChartOptions
-                })
-
-                // Donut Chart
-                var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-                var pieData = {
-                    labels: [
-                        'Instore Sales',
-                        'Download Sales',
-                        'Mail-Order Sales'
-                    ],
-                    datasets: [{
-                        data: [30, 12, 20],
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-                    }]
-                }
-                var pieOptions = {
-                    legend: {
-                        display: false
-                    },
-                    maintainAspectRatio: false,
-                    responsive: true
-                }
-                // Create pie or douhnut chart
-                // You can switch between pie and douhnut using the method below.
-                // eslint-disable-next-line no-unused-vars
-                var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
-                    type: 'doughnut',
-                    data: pieData,
-                    options: pieOptions
-                })
-
-                // Sales graph chart
-                var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
-                // $('#revenue-chart').get(0).getContext('2d');
-
-                var salesGraphChartData = {
-                    labels: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4', '2013 Q1', '2013 Q2'],
-                    datasets: [{
-                        label: 'Digital Goods',
-                        fill: false,
-                        borderWidth: 2,
-                        lineTension: 0,
-                        spanGaps: true,
-                        borderColor: '#efefef',
-                        pointRadius: 3,
-                        pointHoverRadius: 7,
-                        pointColor: '#efefef',
-                        pointBackgroundColor: '#efefef',
-                        data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
-                    }]
-                }
-
-                var salesGraphChartOptions = {
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                fontColor: '#efefef'
-                            },
-                            gridLines: {
-                                display: false,
-                                color: '#efefef',
-                                drawBorder: false
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                stepSize: 5000,
-                                fontColor: '#efefef'
-                            },
-                            gridLines: {
-                                display: true,
-                                color: '#efefef',
-                                drawBorder: false
-                            }
-                        }]
-                    }
-                }
-
-                // This will get the first returned node in the jQuery collection.
-                // eslint-disable-next-line no-unused-vars
-                var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
-                    type: 'line',
-                    data: salesGraphChartData,
-                    options: salesGraphChartOptions
-                })
-            })
+            // var salesGraphChart = new Chart(salesGraphChartCanvas, {
+            //     type: 'line',
+            //     data: salesGraphChartData,
+            //     options: salesGraphChartOptions
+            // })
         </script>

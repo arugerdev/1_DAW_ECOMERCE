@@ -1,22 +1,16 @@
 <?php include "./modals/product-creator.php"; ?>
 
-<script>
-    function updateVisible(id, value) {
-        updateData('products', `isVisible = ${value}`, `WHERE id = ${id}`)
-    }
-</script>
-
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Productos</h1>
+                <h1 class="m-0">Pedidos</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/">Inicio</a></li>
-                    <li class="breadcrumb-item active">Productos</li>
+                    <li class="breadcrumb-item active">Pedidos</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,7 +26,7 @@
 
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="card-title">Todos los productos</h3>
+                    <h3 class="card-title">Todos los pedidos</h3>
                     <div class="card-tools">
                         <a href="#" class="btn btn-tool btn-sm">
                             <i class="fas fa-download"></i>
@@ -47,7 +41,7 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table id="products-table" class="table table-striped table-valign-middle">
+                    <table id="orders-table" class="table table-striped table-valign-middle">
 
                     </table>
                 </div>
@@ -62,24 +56,18 @@
 
 
 <script defer>
-    let tempToken = null;
-
     $('.btn-modal-product-creator').on('click', () => {
         $('#modal-product-creator').modal('show')
     })
 
-    $('#modal-product-creator').on('show.bs.modal', () => {
-
-        tempToken = uuidv4();
-    });
 
     $(document).ready(function() {
-        selectData("*", "products", "", (recibed) => {
-            const data = recibed.data
+        selectData("*", "orders", "", (data) => {
+            console.log(data)
 
             if (data.length > 0) {
 
-                const productTable = $('#products-table').DataTable({
+                $('#orders-table').DataTable({
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -96,27 +84,11 @@
                             searchable: false
                         },
                         {
-                            targets: 1,
-                            render: function(data, type, row) {
-                                return getCheckBox(row);
-
-                            }
-                        },
-                        {
-                            targets: [3],
+                            targets: [2],
                             render: function(data, type, row) {
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
                             }
                         },
-                        {
-                            targets: [7],
-                            render: function(data, type, row) {
-                                const id = row[0]
-
-                                return getRowActions(id);
-
-                            }
-                        }
                     ],
                     ordering: true,
                     searchable: true,
@@ -128,13 +100,5 @@
 
             }
         });
-
-        function getRowActions(row) {
-            return `<button class="${row}-editer btn-primary">Editar</button><button class="${row}-remover btn-danger" onClick="deleteData('products','id',${row},'',location.reload())">Eliminar</button>`;
-        }
-
-        function getCheckBox(row) {
-            return `<input type='checkbox' value='${row[0]}' onChange="updateVisible(this.value, this.checked)" ${row[1] == 1 ? 'checked' : ''}>`
-        }
     })
 </script>

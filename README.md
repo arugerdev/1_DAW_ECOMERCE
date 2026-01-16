@@ -76,10 +76,12 @@ Is a simple project and the first created by me with this technologies.
 - Separate Admin / Customer UI ✅
 - Custom PHP router ✅
 - List products ✅
-- Create products ❌
-- Remove products ❌
+- Create products ✅
+- Remove products ✅
 - Edit products ❌
-- Beauty products see as customer ❌
+- Upload images for products ⚠️
+- Load images for products❌
+- Beauty products see as customer ⚠️
 - Buy function ❌
 - Shipping function ❌
 - Login admin ❌
@@ -87,7 +89,7 @@ Is a simple project and the first created by me with this technologies.
 - Token access ❌
 - Shopping cart ❌
 
-**Progress: 5% █▒▒▒▒▒▒▒░░░░░░░░░░░░**
+**Progress: 10% ██▒▒▒▒▒▒░░░░░░░░░░░░**
 
 ## License
 

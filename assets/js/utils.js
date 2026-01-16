@@ -85,3 +85,31 @@ function formatCurrency(input, blur) {
     caret_pos = updated_len - original_len + caret_pos;
     input[0].setSelectionRange(caret_pos, caret_pos);
 }
+
+
+function encodeStringUrl(url) {
+    var encodedUrl = null;
+    try {
+        encodedUrl = URLEncoder.encode(url, "UTF-8");
+    } catch (e) {
+        return encodedUrl;
+    }
+    return decodedUrl;
+}
+
+function decodeStringUrl(encodedUrl) {
+    var decodedUrl = null;
+    try {
+        decodedUrl = URLDecoder.decode(encodedUrl, "UTF-8");
+    } catch (e) {
+        return decodedUrl;
+    }
+
+    return decodedUrl;
+}
+
+function uuidv4() {
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
+}

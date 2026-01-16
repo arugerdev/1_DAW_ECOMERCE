@@ -11,6 +11,7 @@ $assets = [
         '/assets/plugins/daterangepicker/daterangepicker.min.css',
         '/assets/plugins/jvectormap/jsvectormap.min.css',
         '/assets/plugins/adminlte/adminlte.min.css',
+        '/assets/plugins/dropzonejs/dropzonejs.min.css',
     ],
 
     'js' => [
@@ -29,6 +30,8 @@ $assets = [
         '/assets/plugins/jvectormap/jsvectormap.min.js',
         '/assets/plugins/jvectormap/world.js',
         '/assets/plugins/adminlte/adminlte.min.js',
+        '/assets/plugins/dropzonejs/dropzonejs.min.js',
+        '/assets/plugins/iframejs/iframejs.js',
     ]
 ];
 

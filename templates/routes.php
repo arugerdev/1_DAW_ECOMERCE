@@ -9,11 +9,15 @@ if (is_admin_route()) {
 
 switch ($url) {
     case "/":
-        include "./templates/main.php";
+        include "./templates/index.php";
         break;
 
     case "/products":
         include "./templates/products.php";
+        break;
+
+    case "/product":
+        include "./templates/product.php";
         break;
 
     default:

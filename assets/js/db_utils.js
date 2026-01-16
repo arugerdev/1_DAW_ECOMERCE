@@ -1,4 +1,4 @@
-function selectData(select, table, extra = "", callback) {
+function selectData(select, table, extra = "", callback = () => { }) {
     $.ajax({
         url: "../../utils/db_utils.php",
         type: "POST",
@@ -9,6 +9,7 @@ function selectData(select, table, extra = "", callback) {
             "extra": extra
         },
         success: (data) => {
+            console.log(data)
             callback(JSON.parse(data))
         }
     });
@@ -16,7 +17,27 @@ function selectData(select, table, extra = "", callback) {
 }
 
 
-function insertData(table, keys, values, extra = "", callback) {
+
+function deleteData(table, filterParam, filterValue, extra = "", callback = () => { }) {
+    $.ajax({
+        url: "../../utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "delete",
+            "table": table,
+            "filterParam": filterParam,
+            "filterValue": filterValue,
+            "extra": extra,
+        },
+        success: (data) => {
+            console.log(data)
+            callback(JSON.parse(data))
+        }
+    });
+
+}
+
+function insertData(table, keys, values, extra = "", callback = () => { }) {
     $.ajax({
         url: "../../utils/db_utils.php",
         type: "POST",
@@ -24,6 +45,23 @@ function insertData(table, keys, values, extra = "", callback) {
             "action": "insert",
             "table": table,
             "keys": keys,
+            "values": values,
+            "extra": extra
+        },
+        success: (data) => {
+            callback(JSON.parse(data))
+        }
+    });
+
+}
+
+function updateData(table, values, extra = "", callback = () => { }) {
+    $.ajax({
+        url: "../../utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "update",
+            "table": table,
             "values": values,
             "extra": extra
         },
