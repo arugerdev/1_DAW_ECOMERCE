@@ -23,14 +23,14 @@
 
                             <div class="small-box bg-info ui-sortable-handle" style="cursor: move;">
                                 <div class="inner">
-                                    <h3>0</h3>
+                                    <h3 id="recently-orders"></h3>
 
                                     <p>Nuevos pedidos</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="/admin/orders" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -38,7 +38,7 @@
 
                             <div class="small-box bg-warning ui-sortable-handle" style="cursor: move;">
                                 <div class="inner">
-                                    <h3>5</h3>
+                                    <h3 id="current-active-products"></h3>
 
                                     <p>Productos activos</p>
                                 </div>
@@ -729,6 +729,24 @@
 
 
         <script defer>
+            $(document).ready(function() {
+                selectData("id", "products", "WHERE is_visible = TRUE", (recibed) => {
+                    const data = recibed.data
+
+                    $('#current-active-products').html(data.length)
+
+                });
+
+                selectData("id", "orders", "", (recibed) => {
+                    const data = recibed.data
+
+                    $('#recently-orders').html(data.length)
+
+                });
+            })
+
+
+
             // $('.connectedSortable').sortable({
             //     placeholder: 'sort-highlight',
             //     connectWith: '.connectedSortable',

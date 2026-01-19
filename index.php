@@ -31,12 +31,9 @@ if ($option == "?") {
 
     <?php include "./includes/dependencies.php"; ?>
 
-    <script>
-        <?php
-        include "./assets/js/db_utils.js";
+    <script src="/assets/js/db_utils.js"></script>
+    <script src="/assets/js/utils.js"></script>
 
-        include "./assets/js/utils.js";
-        ?>
     </script>
 </head>
 

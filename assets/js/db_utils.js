@@ -72,3 +72,38 @@ function updateData(table, values, extra = "", callback = () => { }) {
     });
 
 }
+
+
+function loginAdmin(username, password, callback = () => { }) {
+    $.ajax({
+        url: "../../utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "loginAdmin",
+            "username": username,
+            "password": password
+        },
+        success: (data) => {
+            console.log(data)
+            callback(JSON.parse(data))
+        }
+    });
+
+}
+
+
+function clearSession() {
+    $.ajax({
+        url: "../../utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "clearSession"
+        },
+        success: (data) => {
+            console.log(data)
+            callback(JSON.parse(data))
+        }
+    });
+
+
+}

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $option = $_REQUEST["action"];
 
@@ -14,6 +15,12 @@ switch ($option) {
         break;
     case "insert":
         echo (insertData());
+        break;
+    case "loginAdmin":
+        echo (loginAdmin());
+        break;
+    case "clearSession":
+        echo (clearSession());
         break;
 }
 
@@ -141,4 +148,85 @@ function updateData()
         ]);
         exit;
     }
+}
+
+function loginAdmin()
+{
+    try {
+        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        $maxCharactersUsername = "20";
+        $maxCharactersPassword = "60";
+
+        if (strlen($username) > $maxCharactersUsername) {
+            return json_encode([
+                "success" => false,
+                "error" => 'El nombre de usuario no puede superar los ' . $maxCharactersUsername . ' caracteres'
+            ]);
+        };
+
+        if (strlen($password) > $maxCharactersPassword) {
+            return json_encode([
+                "success" => false,
+                "error" => 'La contraseña no puede superar los ' . $maxCharactersPassword . ' caracteres'
+            ]);
+        };
+
+        $query = $pdo->prepare("SELECT * FROM `users` WHERE username = :username");
+        $query->bindParam(':username', $username);
+        $query->execute();
+
+        $result = $query->fetchAll();
+
+        if (count($result) > 0) {
+            $userBD = $result[0]->username;
+            $passwordBD = $result[0]->password;
+
+            if ($userBD == $username && password_verify($password, $passwordBD)) {
+
+                $_SESSION['user'] = $result[0]->username;
+                $_SESSION['state'] = 'authenticated';
+                $_SESSION['last_activity'] = time();
+
+                http_response_code(200);
+                return json_encode([
+                    "success" => true,
+                    "message" => "Login exitoso",
+                    "redirect" => "/admin/"
+                ]);
+            }
+        }
+
+        http_response_code(401);
+        return json_encode([
+            "success" => false,
+            "error" => "Los datos de acceso son incorrectos"
+        ]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        return json_encode([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
+    }
+}
+
+
+function clearSession()
+{
+
+    session_start();
+
+    unset($_SESSION);
+
+    session_destroy();
+
+    header("Location: /admin/");
+
+    return json_encode([
+        "success" => true
+    ]);
 }

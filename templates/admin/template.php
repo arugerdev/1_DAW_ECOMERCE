@@ -4,7 +4,7 @@
     <?php include __DIR__ . "/components/sidebar.php"; ?>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="min-height: 792px;">
+    <div class="content-wrapper" style="min-height: 792px; max-width: 95.5vw;">
         <?php include __DIR__ . "/views/" . $view; ?>
     </div>
     <!-- /.content-wrapper -->

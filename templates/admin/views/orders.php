@@ -1,4 +1,3 @@
-<?php include "./modals/product-creator.php"; ?>
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -34,10 +33,7 @@
                         <a href="#" class="btn btn-tool btn-sm">
                             <i class="fas fa-bars"></i>
                         </a>
-                        <button class="btn-modal-product-creator btn btn-sm btn-outline-success" data-toggle="modal">
-                            <i class="fas fa-plus "></i>
 
-                        </button>
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
@@ -56,10 +52,6 @@
 
 
 <script defer>
-    $('.btn-modal-product-creator').on('click', () => {
-        $('#modal-product-creator').modal('show')
-    })
-
 
     $(document).ready(function() {
         selectData("*", "orders", "", (data) => {

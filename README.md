@@ -79,17 +79,17 @@ Is a simple project and the first created by me with this technologies.
 - Create products ✅
 - Remove products ✅
 - Edit products ❌
-- Upload images for products ⚠️
-- Load images for products❌
+- Upload images for products ✅
+- Load images for products ✅
 - Beauty products see as customer ⚠️
 - Buy function ❌
 - Shipping function ❌
-- Login admin ❌
+- Login admin ✅
 - Login and Register ❌
 - Token access ❌
-- Shopping cart ❌
+- Shopping cart ⚠️
 
-**Progress: 10% ██▒▒▒▒▒▒░░░░░░░░░░░░**
+**Progress: 20% ████▒▒▒▒▒▒▒░░░░░░░░░**
 
 ## License
 

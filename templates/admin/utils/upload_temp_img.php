@@ -11,6 +11,7 @@ if (!is_dir($targetDir)) {
 }
 
 $allowedExt = ['jpg', 'jpeg', 'png', 'webp'];
+$uploadeds = [];
 
 foreach ($_FILES['images']['name'] as $i => $name) {
     $tmp  = $_FILES['images']['tmp_name'][$i];
@@ -19,6 +20,10 @@ foreach ($_FILES['images']['name'] as $i => $name) {
     if (!in_array($ext, $allowedExt)) continue;
     if (!is_uploaded_file($tmp)) continue;
 
-    $safeName = uniqid() . '.' . $ext;
+    $safeName = uniqid('img_', true) . '.' . $ext;
     move_uploaded_file($tmp, $targetDir . $safeName);
+
+    array_push($uploadeds, $targetDir . $safeName);
 }
+
+echo json_encode($uploadeds);

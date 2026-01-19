@@ -2,7 +2,7 @@
 
 <script>
     function updateVisible(id, value) {
-        updateData('products', `isVisible = ${value}`, `WHERE id = ${id}`)
+        updateData('products', `is_visible = ${value}`, `WHERE id = ${id}`)
     }
 </script>
 
@@ -46,8 +46,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table id="products-table" class="table table-striped table-valign-middle">
+                <div class="card-body table-responsive pl-0 pr-2">
+                    <table id="products-table" class="table table-striped table-valign-middle m-0 p-0">
 
                     </table>
                 </div>
@@ -141,7 +141,7 @@
         }
 
         function getCheckBox(row) {
-            return `<input type='checkbox' value='${row[0]}' onChange="updateVisible(this.value, this.checked)" ${row[1] == 1 ? 'checked' : ''}>`
+            return `<input style="margin-left:32px" type='checkbox' value='${row[0]}' onChange="updateVisible(this.value, this.checked)" ${row[1] == 1 ? 'checked' : ''}>`
         }
     })
 </script>

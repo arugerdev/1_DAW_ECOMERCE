@@ -52,5 +52,24 @@
                   </li>
               </ul>
           </nav>
+          <nav class="mt-2">
+            <div class="separator"></div>
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                  <li class="nav-item" >
+                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger color-danger text-danger" >
+                          <i class=" fa-solid fa-right-from-bracket nav-icon"></i>
+                      <p>Desconectar</p>
+                      </a>
+                  </li>
+
+              </ul>
+          </nav>
       </div>
   </aside>
+
+  <script defer>
+    $('.disconnect-button').on('click', () => {
+        clearSession();
+    })
+  </script>
+

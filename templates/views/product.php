@@ -14,8 +14,6 @@ $data = $recibe->data[0];
 
 ?>
 
-
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/">Plantilla EviMerce</a>
@@ -24,9 +22,9 @@ $data = $recibe->data[0];
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Inicio</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/products" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Todos los productos</a></li>
+                        <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
@@ -36,11 +34,11 @@ $data = $recibe->data[0];
                 </li>
             </ul>
             <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+                <a class="btn btn-outline-dark" type="submit" href="/cart">
                     <i class="bi-cart-fill me-1"></i>
                     Carrito
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
+                </a>
             </form>
         </div>
     </div>
@@ -51,19 +49,31 @@ $data = $recibe->data[0];
             <div class="col-12 col-sm-6">
                 <h3 class="d-inline-block d-sm-none"><?php $data->name ?></h3>
                 <div class="col-12" style="place-items:center; justify-content:center; display:flex;">
-                    <img src="https://placehold.co/512" style=" max-width: 512px;" class="product-image" alt="Product Image">
+                    <?php
+                    echo '<img src="/uploads/img/products/' . $id . '/0.png" onerror="this.onerror=null; this.src=\'https://placehold.co/512\'" style=" max-width: 512px; max-height: 512px; aspect-ratio: 1/1; object-fit: contain;" class="product-image" alt="Product Image">'
+                    ?>
                 </div>
                 <div class="col-12 product-image-thumbs" style="display: flex; place-items:center; justify-content:center">
-                    <div class="product-image-thumb active"><img src="https://placehold.co/100" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
-                    <div class="product-image-thumb"><img src="https://placehold.co/100" alt="Product Image"></div>
+                    <?php
+
+                    $dir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/" . $id . "/";
+                    $files = array_diff(scandir($dir), array('.', '..'));
+
+
+                    foreach ($files as $fil) {
+                        echo '
+                        <div class="product-image-thumb cursor-pointer">
+                        <img src="/uploads/img/products/' . $id  . '/' . $fil . '" onerror="this.onerror=null; this.src=\'https://placehold.co/100\'" alt="Product Image">
+                        </div>
+                        ';
+                    }
+
+                    ?>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
                 <h3 class="my-3"><?php echo $data->name; ?></h3>
-                <p><?php echo $data->shortDescription ?></p>
+                <p><?php echo $data->short_description ?></p>
 
                 <hr>
                 <!-- <h4>Colores permitidos</h4>
@@ -129,12 +139,16 @@ $data = $recibe->data[0];
                 </div> -->
 
                 <div class="text-success py-0 px-0 mt-4">
-                    <h2 class="mb-0">
-                        <?php echo $data->price ?> €
-                    </h2>
-                    <h4 class="mt-0">
-                        <small>IVA Incl.</small>
-                    </h4>
+
+                    <?php
+
+                    echo '<h2 class="mb-0 '  . ($data->on_sale ? 'text-md text-danger danger color-danger" style="text-decoration: line-through;"' : 'text-success success color-success " ') . '>' . number_format($data->price, 2) . ' €</h2>' .
+                        ($data->on_sale ? ('<h2 class="mb-0 text-xl text-success success color-success" >' . number_format($data->price - ($data->price * $data->sale_discound / 100), 2) . ' €</h2>') : '') .
+                        '<h4 class="mt-0">
+                <small>IVA Incl.</small>
+                </h4>
+                '
+                    ?>
                 </div>
 
                 <div class="mt-4">
@@ -169,3 +183,14 @@ $data = $recibe->data[0];
     </div>
     <!-- /.card-body -->
 </div>
+
+
+<script>
+    const mainImg = $(".product-image")
+    const imgs = $(".product-image-thumb")
+
+    imgs.on('click', (event) => {
+        console.log(event)
+        mainImg.attr("src", event.target.src);
+    })
+</script>

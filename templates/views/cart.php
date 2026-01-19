@@ -1,3 +1,35 @@
+<?php
+// Add shopping cart 
+
+// $option = $_REQUEST["action"];
+
+// switch ($option) {
+//     case "add":
+//         if (!empty($_POST["quantity"])) {
+//             // $productByCode = $db_handle->runQuery("SELECT * FROM tblproduct WHERE code='" . . "'");
+//             // $itemArray = array($productByCode[0]["code"] => array('name' => $productByCode[0]["name"], 'code' => $productByCode[0]["code"], 'quantity' => $_POST["quantity"], 'price' => $productByCode[0]["price"], 'image' => $productByCode[0]["image"]));
+
+//             if (!empty($_SESSION["cart_item"])) {
+//                 if (in_array($productByCode[0]["code"], array_keys($_SESSION["cart_item"]))) {
+//                     foreach ($_SESSION["cart_item"] as $k => $v) {
+//                         if ($productByCode[0]["code"] == $k) {
+//                             if (empty($_SESSION["cart_item"][$k]["quantity"])) {
+//                                 $_SESSION["cart_item"][$k]["quantity"] = 0;
+//                             }
+//                             $_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
+//                         }
+//                     }
+//                 } else {
+//                     $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $itemArray);
+//                 }
+//             } else {
+//                 $_SESSION["cart_item"] = $itemArray;
+//             }
+//         }
+//         break;
+// }
+?>
+
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
@@ -7,7 +39,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Inicio</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/products" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/productos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
                         <li>
@@ -28,24 +60,17 @@
         </div>
     </div>
 </nav>
-<!-- Header-->
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Plantilla EviMerce</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Esto es el inicio de una tienda</p>
-        </div>
-    </div>
-</header>
+
 <!-- Section-->
-<section class="card p-4 w-100 min-vh-100">
+<section class="card p-4">
 
     <section class="card-header">
-        <h1>Productos Destacados</h1>
+        <h1>Carrito de compra</h1>
     </section>
-    <section class="card-body py-5 w-100">
-        <div class="px-4 px-lg-5 mt-5 w-100">
-            <div class="product-list-container w-100 row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
+    <section class="card-body py-5">
+
+        <div class="mt-4">
+            <div class="product-list-container row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
             </div>
         </div>
     </section>
@@ -58,10 +83,11 @@
 </footer>
 
 
+<!-- 
 <script defer>
     const container = $('.product-list-container')
 
-    selectData('*', 'products', 'WHERE is_visible = TRUE LIMIT 10', (result) => {
+    selectData('*', 'products', 'WHERE is_visible = TRUE', (result) => {
         const data = result.data;
         console.log(result)
 
@@ -82,4 +108,4 @@
         })
         console.log(data)
     });
-</script>
+</script> -->

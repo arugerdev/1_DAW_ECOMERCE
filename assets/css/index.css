@@ -32,3 +32,7 @@ main {
     text-overflow: ellipsis;
     display: inline-block;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

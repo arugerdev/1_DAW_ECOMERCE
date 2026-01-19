@@ -4,7 +4,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/admin/">Admin</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <li class="breadcrumb-item active">404 Error Page</li>
                     </ol>
                 </div>
@@ -21,7 +21,7 @@
 
                 <p>
                     No hemos podido encontrar lo que buscabas!
-                    Puedes <a href="/admin"> volver al dashboard de admin pinchando aqui</a> o intentar buscar lo que quieres en este formulario.
+                    Puedes <a href="/"> volver al inicio pinchando aqui</a> o intentar buscar lo que quieres en este formulario.
                 </p>
 
                 <form class="search-form">

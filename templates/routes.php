@@ -13,14 +13,19 @@ switch ($url) {
         break;
 
     case "/products":
-        include "./templates/products.php";
+        include "./templates/views/products.php";
         break;
 
     case "/product":
-        include "./templates/product.php";
+        include "./templates/views/product.php";
+        break;
+
+    case "/cart":
+        include "./templates/views/cart.php";
         break;
 
     default:
         http_response_code(404);
-        echo "404";
+        include "./templates/views/404.php";
+        break;
 }
