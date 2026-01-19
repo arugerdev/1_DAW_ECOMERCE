@@ -1,11 +1,6 @@
 <?php
 ini_set('display_errors', 'Off');
 
-// DEBUG
-// CAMBIA ENTRE MODO ADMIN Y MODO CLIENTE (COMENTA PARA DESACTIVAR)
-$_REQUEST["user"] = (object) ['is_authenticated' => true];
-// 
-
 
 include "./utils/router.php";
 include "./utils/db_utils.php";
@@ -25,8 +20,11 @@ if ($option == "?") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <title>EviMerce</title>
 
+    <?php
+
+    echo ("<title>" . (is_admin_route() ? "EviMercer - Admin Panel" : "EviMerce") . "</title>")
+    ?>
     <link rel="stylesheet" href="/assets/css/index.css">
 
     <?php include "./includes/dependencies.php"; ?>
