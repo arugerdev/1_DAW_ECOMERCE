@@ -38,6 +38,12 @@ Remember activate in php.ini:
   ;pod_mysql -> pod_mysql
 ```
 
+**Or copy the custom [*php.ini*](https://raw.githubusercontent.com/arugerdev/1_DAW_ECOMERCE/refs/heads/main/php.ini) in this repo, and paste and replace to the directory where is php installed.**
+
+
+
+
+
 Start the server
 
 ```bach
