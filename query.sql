@@ -46,5 +46,7 @@ ALTER TABLE products MODIFY name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8
 ALTER TABLE products MODIFY description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE products MODIFY short_description TEXT(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- admin:admin
 INSERT INTO users (username, password) VALUES ("admin","st6rObYN0yR42");
+-- enrique:******
 INSERT INTO users (username, password) VALUES ("enrique","st16RxGjFMm8k");
