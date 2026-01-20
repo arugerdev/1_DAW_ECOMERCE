@@ -23,7 +23,7 @@ if ($option == "?") {
 
     <?php
 
-    echo ("<title>" . (is_admin_route() ? "EviMercer - Admin Panel" : "EviMerce") . "</title>")
+    echo ("<title>" . (is_admin_route() ? "EviMerce - Admin Panel" : "EviMerce") . "</title>")
     ?>
     <link rel="stylesheet" href="/assets/css/index.css">
 
