@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/../../utils/sessions.php' ?>
 
 <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light" style="height: 64px;">
-    <div class="container px-4 px-lg-5">
+    <div class="container p-0 m-0" style="width: 100%; justify-content:space-between; place-items:center; max-width:100vw;display: flex; flex-direction: row; align-content: center; align-items: center;">
         <a class="navbar-brand" href="/">Plantilla EviMerce</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
