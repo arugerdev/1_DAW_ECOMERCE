@@ -73,7 +73,7 @@
                             searchable: false
                         },
                         {
-                            targets: [2],
+                            targets: [3],
                             render: function(data, type, row) {
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
                             }
