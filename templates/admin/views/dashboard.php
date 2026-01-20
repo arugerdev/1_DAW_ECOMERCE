@@ -292,7 +292,7 @@
             });
 
             // Productos con bajo stock
-            selectData("id", "products", "WHERE stock < 10 AND stock > 0", (res) => {
+            selectData("id", "products", "WHERE stock < 10", (res) => {
                 $('#low-stock-products').html(res.data.length);
             });
 

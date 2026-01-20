@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once __DIR__ . '/database.php';
 
 $option = $_REQUEST["action"];
 
@@ -21,7 +20,7 @@ switch ($option) {
 
 function login()
 {
-    global $conn;
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
     $email = $_REQUEST["email"];
     $password = $_REQUEST["password"];
@@ -30,7 +29,7 @@ function login()
         return json_encode(["success" => false, "message" => "Email y contraseña requeridos"]);
     }
 
-    $stmt = $conn->prepare("SELECT id, name, last_name, email, password FROM customers WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, name, last_name, email, password FROM customers WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -64,7 +63,7 @@ function login()
 
 function register()
 {
-    global $conn;
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
     $customer = json_decode($_REQUEST["customer"], true);
 
@@ -73,7 +72,7 @@ function register()
     }
 
     // Verificar si el email ya existe
-    $stmt = $conn->prepare("SELECT id FROM customers WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = ?");
     $stmt->bind_param("s", $customer['email']);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -85,7 +84,7 @@ function register()
     // Hashear contraseña
     $hashedPassword = password_hash($customer['password'], PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO customers (name, last_name, email, phone_number, 
+    $stmt = $pdo->prepare("INSERT INTO customers (name, last_name, email, phone_number, 
                              address, city, cp, country, password, created_at) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
 

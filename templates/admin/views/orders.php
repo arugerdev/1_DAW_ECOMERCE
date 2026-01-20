@@ -52,8 +52,8 @@
 
 <script defer>
     $(document).ready(function() {
-        selectData("*", "orders", "", (data) => {
-
+        selectData("*", "orders", "", (res) => {
+            const data = res.data
             if (data.length > 0) {
 
                 $('#orders-table').DataTable({
