@@ -13,7 +13,7 @@ $tempDir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/temp/$token/";
 $finalDir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$productId/";
 
 if (!is_dir($tempDir)) {
-    echo json_encode(["success" => true]); // no imágenes
+    echo json_encode(["success" => true]); 
     exit;
 }
 

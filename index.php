@@ -3,7 +3,7 @@ ini_set('display_errors', 'Off');
 
 
 include "./utils/router.php";
-include "./utils/db_utils.php";
+// include "./utils/db_utils.php";
 
 $option = $_POST['option'];
 
@@ -29,6 +29,7 @@ if ($option == "?") {
 
     <?php include "./includes/dependencies.php"; ?>
 
+    <script src="/assets/js/cart_utils.js"></script>
     <script src="/assets/js/db_utils.js"></script>
     <script src="/assets/js/utils.js"></script>
 

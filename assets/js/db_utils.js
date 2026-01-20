@@ -9,7 +9,6 @@ function selectData(select, table, extra = "", callback = () => { }) {
             "extra": extra
         },
         success: (data) => {
-            console.log(data)
             callback(JSON.parse(data))
         }
     });
@@ -30,7 +29,6 @@ function deleteData(table, filterParam, filterValue, extra = "", callback = () =
             "extra": extra,
         },
         success: (data) => {
-            console.log(data)
             callback(JSON.parse(data))
         }
     });
@@ -66,7 +64,6 @@ function updateData(table, values, extra = "", callback = () => { }) {
             "extra": extra
         },
         success: (data) => {
-            console.log(data)
             callback(JSON.parse(data))
         }
     });
@@ -84,7 +81,22 @@ function loginAdmin(username, password, callback = () => { }) {
             "password": password
         },
         success: (data) => {
-            console.log(data)
+            callback(JSON.parse(data))
+        }
+    });
+
+}
+
+function createUser(username, password, callback = () => { }) {
+    $.ajax({
+        url: "../../utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "createUser",
+            "username": username,
+            "password": password
+        },
+        success: (data) => {
             callback(JSON.parse(data))
         }
     });
@@ -100,7 +112,6 @@ function clearSession() {
             "action": "clearSession"
         },
         success: (data) => {
-            console.log(data)
             callback(JSON.parse(data))
         }
     });

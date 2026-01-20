@@ -1,5 +1,8 @@
 <?php
+require '../../utils/sessions.php';
+
 $data = json_decode($_GET["PROD_DATA"]);
+
 ?>
 
 
@@ -19,11 +22,12 @@ $data = json_decode($_GET["PROD_DATA"]);
                         <h6 class="text-weight-light text-xs p-0 m-0 "><?php echo $data->short_description ?></h6>
 
                         <?php if ($data->on_sale == 1): ?>
-                            <span class="text-muted text-decoration-line-through p-0 m-0"><?php echo $data->price ?> €</span>
-                            <p class="text-success p-0 m-0"><?php echo number_format($data->price - ($data->price * $data->sale_discound / 100), 2)  ?> €</p>
+                            <span class="text-muted text-decoration-line-through p-0 m-0 text-xs"><?php echo number_format($data->price, 2) ?> €</span>
+                            <p class="text-success p-0 m-0 text-md"><?php echo number_format($data->price - ($data->price * $data->sale_discound / 100), 2)  ?> €</p>
                         <?php endif ?>
 
                         <?php if (!$data->on_sale == 1): ?>
+                            <br>
                             <p class="text-success p-0 m-0"><?php echo number_format($data->price, 2) ?> €</p>
                         <?php endif ?>
                     </div>
@@ -31,7 +35,7 @@ $data = json_decode($_GET["PROD_DATA"]);
                 </div>
                 <div class="card-footer border-top-0 bg-transparent p-2" style="width:100%;justify-content: start; place-items:start;">
                     <div class="text-center text-xs">
-                        <a class="btn btn-outline btn-primary text-xs" href="#">
+                        <a id="add-to-cart-<?php echo $data->id ?>" class="btn btn-outline btn-primary text-xs" href="#">
                             <i class="fa-solid fa-cart-arrow-down"></i>
                         </a>
                     </div>
@@ -40,3 +44,19 @@ $data = json_decode($_GET["PROD_DATA"]);
         </a>
     </div>
 </div>
+
+<script defer>
+    $("#add-to-cart-<?php echo $data->id ?>").on("click", (evnt) => {
+        console.log(evnt)
+        addToCart(<?php echo json_encode($data) ?>, (data) => {
+            console.log(data)
+            $(document).Toasts('create', {
+                title: 'Añadido correctamente al carrito',
+                text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+                showHideTransition: 'slide',
+                icon: 'success'
+            })
+
+        })
+    })
+</script>

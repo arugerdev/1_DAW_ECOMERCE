@@ -1,4 +1,6 @@
-    <!-- Content Header (Page header) -->
+    <?php include_once __DIR__ . "/../components/navbar.php" ?>
+
+    
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">

@@ -1,4 +1,4 @@
-  <!-- Main Sidebar Container -->
+  
   <aside class="flex-column main-sidebar sidebar-light-secondary elevation-4">
       <a href="/admin/" class="brand-link bg-warning ">
           <img src="/assets/img/logo.png" alt="EviMerce" class="brand-image " style="opacity: 1" width="128" height="128">
@@ -50,15 +50,33 @@
                           <p>Pedidos</p>
                       </a>
                   </li>
+                  <li class="nav-item">
+                      <a href="/admin/refounds" class="nav-link">
+                          <i class="fa-solid fa-arrow-rotate-left nav-icon"></i>
+                          <p>Devoluciones</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="/admin/categories" class="nav-link">
+                          <i class="fa-solid fa-icons nav-icon"></i>
+                          <p>Categorias</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="/admin/users" class="nav-link">
+                          <i class="fa-solid fa-users nav-icon"></i>
+                          <p>Usuarios</p>
+                      </a>
+                  </li>
               </ul>
           </nav>
           <nav class="mt-2">
-            <div class="separator"></div>
+              <div class="separator"></div>
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                  <li class="nav-item" >
-                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger color-danger text-danger" >
+                  <li class="nav-item">
+                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger color-danger text-danger">
                           <i class=" fa-solid fa-right-from-bracket nav-icon"></i>
-                      <p>Desconectar</p>
+                          <p>Desconectar</p>
                       </a>
                   </li>
 
@@ -68,8 +86,7 @@
   </aside>
 
   <script defer>
-    $('.disconnect-button').on('click', () => {
-        clearSession();
-    })
+      $('.disconnect-button').on('click', () => {
+          clearSession();
+      })
   </script>
-

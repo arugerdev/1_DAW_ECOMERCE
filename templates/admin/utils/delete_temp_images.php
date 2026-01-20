@@ -12,7 +12,7 @@ if (!$token) {
 
 $tempDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/temp/$token/";
 
-// Verificar que el directorio existe
+
 if (!is_dir($tempDir)) {
     echo json_encode(['success' => true, 'message' => 'Directorio no existe']);
     exit;
@@ -20,7 +20,7 @@ if (!is_dir($tempDir)) {
 
 try {
     if ($action === 'delete_all') {
-        // Borrar todos los archivos del directorio temporal
+        
         $files = glob($tempDir . '*');
         foreach ($files as $file) {
             if (is_file($file)) {
@@ -28,20 +28,20 @@ try {
             }
         }
 
-        // Intentar eliminar el directorio
+        
         if (count(glob($tempDir . '*')) === 0) {
             rmdir($tempDir);
         }
 
         echo json_encode(['success' => true, 'message' => 'Todas las imágenes eliminadas']);
     } elseif ($action === 'delete_single' && $filename) {
-        // Borrar una imagen específica
+        
         $filePath = $tempDir . $filename;
 
         if (file_exists($filePath) && is_file($filePath)) {
             unlink($filePath);
 
-            // Verificar si el directorio está vacío y eliminarlo si es así
+            
             $remainingFiles = glob($tempDir . '*');
             if (count($remainingFiles) === 0) {
                 rmdir($tempDir);

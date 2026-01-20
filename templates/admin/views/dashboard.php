@@ -1,971 +1,606 @@
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Inicio</h1>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">Inicio</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <!-- Estadísticas principales -->
+        <section class="connectedSortable ui-sortable">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 id="recently-orders">0</h3>
+                            <p>Pedidos Hoy</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="/admin/orders" class="small-box-footer">Ver pedidos <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active">Inicio</li>
-                        </ol>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3 id="total-revenue">0.00<sup style="font-size: 20px">€</sup></h3>
+                            <p>Ingresos Totales</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="/admin/orders" class="small-box-footer">Ver ventas <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3 id="current-active-products">0</h3>
+                            <p>Productos Activos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cube"></i>
+                        </div>
+                        <a href="/admin/products" class="small-box-footer">Ver productos <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3 id="low-stock-products">0</h3>
+                            <p>Bajo Stock</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-alert-circled"></i>
+                        </div>
+                        <a href="/admin/products" class="small-box-footer">Ver stock <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gráficos y estadísticas -->
+        <div class="row">
+            <!-- Gráfico de ventas mensuales -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-line mr-1"></i>
+                            Ventas Mensuales
+                        </h3>
+                        <div class="card-tools">
+                            <select id="sales-period" class="form-control form-control-sm" style="width: auto;">
+                                <option value="30">Últimos 30 días</option>
+                                <option value="90">Últimos 3 meses</option>
+                                <option value="180">Últimos 6 meses</option>
+                                <option value="365">Último año</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="position-relative mb-4">
+                            <canvas id="sales-chart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas de productos -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Categorías de Productos
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="position-relative mb-4">
+                            <canvas id="categories-chart" height="250"></canvas>
+                        </div>
+                        <div id="categories-legend" class="mt-3"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-        <div class="content">
-            <div class="container-fluid">
-                <section class="connectedSortable ui-sortable">
-                    <div class="row">
-                        <div class="col-lg-3 col-6">
-
-                            <div class="small-box bg-info ui-sortable-handle" style="cursor: move;">
-                                <div class="inner">
-                                    <h3 id="recently-orders"></h3>
-
-                                    <p>Nuevos pedidos</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="/admin/orders" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-
-                            <div class="small-box bg-warning ui-sortable-handle" style="cursor: move;">
-                                <div class="inner">
-                                    <h3 id="current-active-products"></h3>
-
-                                    <p>Productos activos</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                <a href="/admin/products" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6 ui-sortable-handle" style="cursor: move;">
-
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>0.00<sup style="font-size: 20px">€</sup></h3>
-
-                                    <p>Ingresos Totales</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6 ui-sortable-handle" style="cursor: move;">
-
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3>0</h3>
-
-                                    <p>Devoluciones</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
+        <!-- Información adicional -->
+        <div class="row">
+            <!-- Productos más vendidos -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-star mr-1"></i>
+                            Productos Más Vendidos
+                        </h3>
                     </div>
-
-                </section>
-
-                <!-- <div class="row">
-
-                    <section class="col-lg-7 connectedSortable ui-sortable">
-
-
-
-
-
-                        <div class="card" style="position: relative; left: 0px; top: 0px;">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    <i class="fas fa-chart-pie mr-1"></i>
-                                    Sales
-                                </h3>
-                                <div class="card-tools">
-                                    <ul class="nav nav-pills ml-auto">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content p-0">
-
-                                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                                        <div class="chartjs-size-monitor">
-                                            <div class="chartjs-size-monitor-expand">
-                                                <div class=""></div>
-                                            </div>
-                                            <div class="chartjs-size-monitor-shrink">
-                                                <div class=""></div>
-                                            </div>
-                                        </div>
-                                        <canvas id="revenue-chart-canvas" height="300" style="height: 300px; display: block; width: 429px;" width="429" class="chartjs-render-monitor"></canvas>
-                                    </div>
-                                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                                        <canvas id="sales-chart-canvas" height="0" style="height: 0px; display: block; width: 0px;" class="chartjs-render-monitor" width="0"></canvas>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th class="text-center">Ventas</th>
+                                        <th class="text-center">Stock</th>
+                                        <th class="text-center">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="top-products">
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                                            Cargando datos...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="card direct-chat direct-chat-primary">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">Direct Chat</h3>
+                    </div>
+                </div>
+            </div>
 
-                                <div class="card-tools">
-                                    <span title="3 New Messages" class="badge badge-primary">3</span>
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                                        <i class="fas fa-comments"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="direct-chat-messages">
-
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                            <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                                        </div>
-
-                                        <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-
-                                        <div class="direct-chat-text">
-                                            Is this template really for free? That's unbelievable!
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                                        </div>
-
-                                        <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-
-                                        <div class="direct-chat-text">
-                                            You better believe it!
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                            <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                                        </div>
-
-                                        <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-
-                                        <div class="direct-chat-text">
-                                            Working with AdminLTE on a great new app! Wanna join?
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                                        </div>
-
-                                        <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-
-                                        <div class="direct-chat-text">
-                                            I would love to.
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-
-
-
-                                <div class="direct-chat-contacts">
-                                    <ul class="contacts-list">
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Count Dracula
-                                                        <small class="contacts-list-date float-right">2/28/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">How have you been? I was...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Sarah Doe
-                                                        <small class="contacts-list-date float-right">2/23/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">I will be waiting for...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nadia Jolie
-                                                        <small class="contacts-list-date float-right">2/20/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">I'll call you back at...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nora S. Vans
-                                                        <small class="contacts-list-date float-right">2/10/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Where is your new...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        John K.
-                                                        <small class="contacts-list-date float-right">1/27/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Can I take a look at...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar">
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Kenneth M.
-                                                        <small class="contacts-list-date float-right">1/4/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Never mind I found...</span>
-                                                </div>
-
-                                            </a>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-
-                            </div>
-
-                            <div class="card-footer">
-                                <form action="#" method="post">
-                                    <div class="input-group">
-                                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                                        <span class="input-group-append">
-                                            <button type="button" class="btn btn-primary">Send</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
-
+            <!-- Pedidos recientes -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-clock mr-1"></i>
+                            Pedidos Recientes
+                        </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-danger" id="pending-orders">0 pendientes</span>
                         </div>
-
-
-
-                        <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    <i class="ion ion-clipboard mr-1"></i>
-                                    To Do List
-                                </h3>
-
-                                <div class="card-tools">
-                                    <ul class="pagination pagination-sm">
-                                        <li class="page-item"><a href="#" class="page-link">«</a></li>
-                                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                        <li class="page-item"><a href="#" class="page-link">»</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <ul class="todo-list ui-sortable" data-widget="todo-list">
-                                    <li>
-
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                            <label for="todoCheck1"></label>
-                                        </div>
-
-                                        <span class="text">Design a nice theme</span>
-
-                                        <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li class="done">
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo2" id="todoCheck2" checked="">
-                                            <label for="todoCheck2"></label>
-                                        </div>
-                                        <span class="text">Make the theme responsive</span>
-                                        <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                            <label for="todoCheck3"></label>
-                                        </div>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                                            <label for="todoCheck4"></label>
-                                        </div>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                                            <label for="todoCheck5"></label>
-                                        </div>
-                                        <span class="text">Check your messages and notifications</span>
-                                        <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="handle ui-sortable-handle">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </span>
-                                        <div class="icheck-primary d-inline ml-2">
-                                            <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                                            <label for="todoCheck6"></label>
-                                        </div>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                                        <div class="tools">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="fas fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="card-footer clearfix">
-                                <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
-                            </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Pedido #</th>
+                                        <th>Cliente</th>
+                                        <th class="text-center">Total</th>
+                                        <th class="text-center">Estado</th>
+                                        <th class="text-center">Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-orders">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            <i class="fas fa-spinner fa-spin mr-2"></i>
+                                            Cargando datos...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-
-                    </section>
-
-
-                    <section class="col-lg-5 connectedSortable ui-sortable">
-
-
-                        <div class="card bg-gradient-primary">
-                            <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>
-                                    Visitors
-                                </h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-                            <div class="card-body">
-                                <div id="world-map" style="height: 250px; width: 100%; position: relative; overflow: hidden; background-color: transparent;">
-
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="card bg-gradient-info">
-                            <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    <i class="fas fa-th mr-1"></i>
-                                    Sales Graph
-                                </h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas class="chart chartjs-render-monitor" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 291px;" width="291" height="250"></canvas>
-                            </div>
-
-                            <div class="card-footer bg-transparent">
-                                <div class="row">
-                                    <div class="col-4 text-center">
-                                        <div style="display:inline;width:60px;height:60px;"><canvas width="60" height="60"></canvas><input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly" style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;"></div>
-
-                                        <div class="text-white">Mail-Orders</div>
-                                    </div>
-
-                                    <div class="col-4 text-center">
-                                        <div style="display:inline;width:60px;height:60px;"><canvas width="60" height="60"></canvas><input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly" style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;"></div>
-
-                                        <div class="text-white">Online</div>
-                                    </div>
-
-                                    <div class="col-4 text-center">
-                                        <div style="display:inline;width:60px;height:60px;"><canvas width="60" height="60"></canvas><input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgcolor="#39CCCC" readonly="readonly" style="width: 34px; height: 20px; position: absolute; vertical-align: middle; margin-top: 20px; margin-left: -47px; border: 0px; background: none; font: bold 12px Arial; text-align: center; color: rgb(57, 204, 204); padding: 0px; appearance: none;"></div>
-
-                                        <div class="text-white">In-Store</div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="card bg-gradient-success">
-                            <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-
-                                <h3 class="card-title">
-                                    <i class="far fa-calendar-alt"></i>
-                                    Calendar
-                                </h3>
-
-                                <div class="card-tools">
-
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                                            <i class="fas fa-bars"></i>
-                                        </button>
-                                        <div class="dropdown-menu" role="menu">
-                                            <a href="#" class="dropdown-item">Add new event</a>
-                                            <a href="#" class="dropdown-item">Clear events</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item">View calendar</a>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-
-                            <div class="card-body pt-0">
-
-                                <div id="calendar" style="width: 100%">
-                                    <div class="bootstrap-datetimepicker-widget usetwentyfour">
-                                        <ul class="list-unstyled">
-                                            <li class="show">
-                                                <div class="datepicker">
-                                                    <div class="datepicker-days" style="">
-                                                        <table class="table table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th>
-                                                                    <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">January 2026</th>
-                                                                    <th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th class="dow">Su</th>
-                                                                    <th class="dow">Mo</th>
-                                                                    <th class="dow">Tu</th>
-                                                                    <th class="dow">We</th>
-                                                                    <th class="dow">Th</th>
-                                                                    <th class="dow">Fr</th>
-                                                                    <th class="dow">Sa</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="12/28/2025" class="day old weekend">28</td>
-                                                                    <td data-action="selectDay" data-day="12/29/2025" class="day old">29</td>
-                                                                    <td data-action="selectDay" data-day="12/30/2025" class="day old">30</td>
-                                                                    <td data-action="selectDay" data-day="12/31/2025" class="day old">31</td>
-                                                                    <td data-action="selectDay" data-day="01/01/2026" class="day">1</td>
-                                                                    <td data-action="selectDay" data-day="01/02/2026" class="day">2</td>
-                                                                    <td data-action="selectDay" data-day="01/03/2026" class="day weekend">3</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="01/04/2026" class="day weekend">4</td>
-                                                                    <td data-action="selectDay" data-day="01/05/2026" class="day">5</td>
-                                                                    <td data-action="selectDay" data-day="01/06/2026" class="day">6</td>
-                                                                    <td data-action="selectDay" data-day="01/07/2026" class="day">7</td>
-                                                                    <td data-action="selectDay" data-day="01/08/2026" class="day">8</td>
-                                                                    <td data-action="selectDay" data-day="01/09/2026" class="day">9</td>
-                                                                    <td data-action="selectDay" data-day="01/10/2026" class="day weekend">10</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="01/11/2026" class="day weekend">11</td>
-                                                                    <td data-action="selectDay" data-day="01/12/2026" class="day">12</td>
-                                                                    <td data-action="selectDay" data-day="01/13/2026" class="day">13</td>
-                                                                    <td data-action="selectDay" data-day="01/14/2026" class="day">14</td>
-                                                                    <td data-action="selectDay" data-day="01/15/2026" class="day">15</td>
-                                                                    <td data-action="selectDay" data-day="01/16/2026" class="day active today">16</td>
-                                                                    <td data-action="selectDay" data-day="01/17/2026" class="day weekend">17</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="01/18/2026" class="day weekend">18</td>
-                                                                    <td data-action="selectDay" data-day="01/19/2026" class="day">19</td>
-                                                                    <td data-action="selectDay" data-day="01/20/2026" class="day">20</td>
-                                                                    <td data-action="selectDay" data-day="01/21/2026" class="day">21</td>
-                                                                    <td data-action="selectDay" data-day="01/22/2026" class="day">22</td>
-                                                                    <td data-action="selectDay" data-day="01/23/2026" class="day">23</td>
-                                                                    <td data-action="selectDay" data-day="01/24/2026" class="day weekend">24</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="01/25/2026" class="day weekend">25</td>
-                                                                    <td data-action="selectDay" data-day="01/26/2026" class="day">26</td>
-                                                                    <td data-action="selectDay" data-day="01/27/2026" class="day">27</td>
-                                                                    <td data-action="selectDay" data-day="01/28/2026" class="day">28</td>
-                                                                    <td data-action="selectDay" data-day="01/29/2026" class="day">29</td>
-                                                                    <td data-action="selectDay" data-day="01/30/2026" class="day">30</td>
-                                                                    <td data-action="selectDay" data-day="01/31/2026" class="day weekend">31</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td data-action="selectDay" data-day="02/01/2026" class="day new weekend">1</td>
-                                                                    <td data-action="selectDay" data-day="02/02/2026" class="day new">2</td>
-                                                                    <td data-action="selectDay" data-day="02/03/2026" class="day new">3</td>
-                                                                    <td data-action="selectDay" data-day="02/04/2026" class="day new">4</td>
-                                                                    <td data-action="selectDay" data-day="02/05/2026" class="day new">5</td>
-                                                                    <td data-action="selectDay" data-day="02/06/2026" class="day new">6</td>
-                                                                    <td data-action="selectDay" data-day="02/07/2026" class="day new weekend">7</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="datepicker-months" style="display: none;">
-                                                        <table class="table-condensed">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Year"></span></th>
-                                                                    <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Year">2026</th>
-                                                                    <th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Year"></span></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="7"><span data-action="selectMonth" class="month active">Jan</span><span data-action="selectMonth" class="month">Feb</span><span data-action="selectMonth" class="month">Mar</span><span data-action="selectMonth" class="month">Apr</span><span data-action="selectMonth" class="month">May</span><span data-action="selectMonth" class="month">Jun</span><span data-action="selectMonth" class="month">Jul</span><span data-action="selectMonth" class="month">Aug</span><span data-action="selectMonth" class="month">Sep</span><span data-action="selectMonth" class="month">Oct</span><span data-action="selectMonth" class="month">Nov</span><span data-action="selectMonth" class="month">Dec</span></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="datepicker-years" style="display: none;">
-                                                        <table class="table-condensed">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Decade"></span></th>
-                                                                    <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Decade">2020-2029</th>
-                                                                    <th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Decade"></span></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="7"><span data-action="selectYear" class="year old">2019</span><span data-action="selectYear" class="year">2020</span><span data-action="selectYear" class="year">2021</span><span data-action="selectYear" class="year">2022</span><span data-action="selectYear" class="year">2023</span><span data-action="selectYear" class="year">2024</span><span data-action="selectYear" class="year">2025</span><span data-action="selectYear" class="year active">2026</span><span data-action="selectYear" class="year">2027</span><span data-action="selectYear" class="year">2028</span><span data-action="selectYear" class="year">2029</span><span data-action="selectYear" class="year old">2030</span></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="datepicker-decades" style="display: none;">
-                                                        <table class="table-condensed">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Century"></span></th>
-                                                                    <th class="picker-switch" data-action="pickerSwitch" colspan="5">2000-2090</th>
-                                                                    <th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Century"></span></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td colspan="7"><span data-action="selectDecade" class="decade old" data-selection="2006">1990</span><span data-action="selectDecade" class="decade" data-selection="2006">2000</span><span data-action="selectDecade" class="decade" data-selection="2016">2010</span><span data-action="selectDecade" class="decade active" data-selection="2026">2020</span><span data-action="selectDecade" class="decade" data-selection="2036">2030</span><span data-action="selectDecade" class="decade" data-selection="2046">2040</span><span data-action="selectDecade" class="decade" data-selection="2056">2050</span><span data-action="selectDecade" class="decade" data-selection="2066">2060</span><span data-action="selectDecade" class="decade" data-selection="2076">2070</span><span data-action="selectDecade" class="decade" data-selection="2086">2080</span><span data-action="selectDecade" class="decade" data-selection="2096">2090</span><span data-action="selectDecade" class="decade old" data-selection="2106">2100</span></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="picker-switch accordion-toggle"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </section>
-
-                </div> -->
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- Estadísticas rápidas -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="info-box bg-gradient-light">
+                    <span class="info-box-icon bg-info"><i class="fas fa-shopping-cart"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pedidos del Mes</span>
+                        <span class="info-box-number" id="month-orders">0</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" style="width: 0%" id="month-orders-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-lg-3 col-6">
+                <div class="info-box bg-gradient-light">
+                    <span class="info-box-icon bg-success"><i class="fas fa-euro-sign"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Ingresos del Mes</span>
+                        <span class="info-box-number" id="month-revenue">0€</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 0%" id="month-revenue-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <script defer>
-            $(document).ready(function() {
-                selectData("id", "products", "WHERE is_visible = TRUE", (recibed) => {
-                    const data = recibed.data
+            <div class="col-lg-3 col-6">
+                <div class="info-box bg-gradient-light">
+                    <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Clientes Nuevos</span>
+                        <span class="info-box-number" id="new-customers">0</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" style="width: 0%" id="customers-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    $('#current-active-products').html(data.length)
+            <div class="col-lg-3 col-6">
+                <div class="info-box bg-gradient-light">
+                    <span class="info-box-icon bg-danger"><i class="fas fa-chart-bar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Conversión</span>
+                        <span class="info-box-number" id="conversion-rate">0%</span>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" style="width: 0%" id="conversion-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                });
+<script>
+    $(document).ready(function() {
+        // Variables para los gráficos
+        let salesChart = null;
+        let categoriesChart = null;
 
-                selectData("id", "orders", "", (recibed) => {
-                    const data = recibed.data
+        // Cargar estadísticas principales
+        loadDashboardStats();
 
-                    $('#recently-orders').html(data.length)
+        // Cargar gráficos
+        loadSalesChart(30);
+        loadCategoriesChart();
 
-                });
-            })
+        // Cargar productos más vendidos
+        loadTopProducts();
 
+        // Cargar pedidos recientes
+        loadRecentOrders();
 
+        // Evento para cambiar periodo del gráfico de ventas
+        $('#sales-period').on('change', function() {
+            const days = $(this).val();
+            loadSalesChart(days);
+        });
 
-            // $('.connectedSortable').sortable({
-            //     placeholder: 'sort-highlight',
-            //     connectWith: '.connectedSortable',
-            //     handle: '.card-header, .nav-tabs',
-            //     forcePlaceholderSize: true,
-            //     zIndex: 999999
-            // })
-            // $('.connectedSortable .card-header').css('cursor', 'move')
+        // Función para cargar estadísticas del dashboard
+        function loadDashboardStats() {
+            // Productos activos
+            selectData("id", "products", "WHERE is_visible = TRUE", (res) => {
+                $('#current-active-products').html(res.data.length);
+            });
 
-            // $('.todo-list').sortable({
-            //     placeholder: 'sort-highlight',
-            //     handle: '.handle',
-            //     forcePlaceholderSize: true,
-            //     zIndex: 999999
-            // })
+            // Pedidos totales (ajustar según tu estructura de orders)
+            selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "", (res) => {
+                if (res.data.length > 0) {
+                    const order = res.data[0];
+                    $('#recently-orders').html(order.total || 0);
+                    $('#total-revenue').html((order.revenue || 0).toFixed(2) + '€');
+                }
+            });
 
-            // $('.daterange').daterangepicker({
-            //     ranges: {
-            //         Today: [moment(), moment()],
-            //         Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            //         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            //         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            //         'This Month': [moment().startOf('month'), moment().endOf('month')],
-            //         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            //     },
-            //     startDate: moment().subtract(29, 'days'),
-            //     endDate: moment()
-            // }, function(start, end) {
+            // Productos con bajo stock
+            selectData("id", "products", "WHERE stock < 10 AND stock > 0", (res) => {
+                $('#low-stock-products').html(res.data.length);
+            });
 
-            //     alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-            // })
+            // Pedidos del mes actual
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders",
+                `WHERE MONTH(create_at) = ${currentMonth} AND YEAR(create_at) = ${currentYear}`,
+                (res) => {
+                    if (res.data.length > 0) {
+                        const monthData = res.data[0];
+                        $('#month-orders').html(monthData.total || 0);
+                        $('#month-revenue').html((monthData.revenue || 0).toFixed(2) + '€');
 
-            // $('.knob').knob()
+                        // Actualizar barras de progreso
+                        $('#month-orders-progress').css('width', `${Math.min(100, monthData.total || 0)}%`);
+                        $('#month-revenue-progress').css('width', `${Math.min(100, (monthData.revenue || 0) / 1000)}%`);
+                    }
+                }
+            );
+        }
 
-            // var visitorsData = {
-            //     US: 398,
-            //     SA: 400,
-            //     CA: 1000,
-            //     DE: 500,
-            //     FR: 760,
-            //     CN: 300,
-            //     AU: 700,
-            //     BR: 600,
-            //     IN: 800,
-            //     GB: 320,
-            //     RU: 3000
-            // }
+        // Función para cargar gráfico de ventas
+        function loadSalesChart(days) {
+            // Obtener datos de ventas por día
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - days);
 
-            // const map = new jsVectorMap({
-            //     selector: '#world-map',
-            //     map: 'world',
-            //     backgroundColor: 'transparent',
-            //     regionStyle: {
-            //         initial: {
-            //             fill: 'rgba(255, 255, 255, 0.7)',
-            //             'fill-opacity': 1,
-            //             stroke: 'rgba(0,0,0,.2)',
-            //             'stroke-width': 1,
-            //             'stroke-opacity': 1
-            //         }
-            //     },
-            //     series: {
-            //         regions: [{
-            //             values: visitorsData,
-            //             scale: ['#ffffff', '#0154ad'],
-            //             normalizeFunction: 'polynomial'
-            //         }]
-            //     },
-            //     visualizeData: {
-            //         scale: ['#eeeeee', '#999999'],
-            //         values: visitorsData,
-            //         normalizeFunction: 'linear'
-            //     },
-            //     onRegionTooltipShow(event, tooltip, code) {
-            //         tooltip.text(`${tooltip.text()}: ${visitorsData[code] || 0} visitors`)
-            //     },
-            // })
+            // Aquí deberías adaptar la consulta según tu estructura de orders
+            selectData("DATE(create_at) as date, COUNT(*) as orders, SUM(total_amount) as revenue", "orders",
+                `WHERE create_at >= '${startDate.toISOString().split('T')[0]}' 
+             AND create_at <= '${endDate.toISOString().split('T')[0]}'
+             GROUP BY DATE(create_at) ORDER BY date`,
+                (res) => {
+                    if (salesChart) {
+                        salesChart.destroy();
+                    }
 
-            // $('#calendar').datetimepicker({
-            //     format: 'L',
-            //     inline: true
-            // })
+                    const data = res.data;
+                    const dates = [];
+                    const orders = [];
+                    const revenues = [];
 
-            // var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+                    // Generar fechas para todo el periodo
+                    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                        const dateStr = d.toISOString().split('T')[0];
+                        dates.push(new Date(d).toLocaleDateString('es-ES', {
+                            month: 'short',
+                            day: 'numeric'
+                        }));
 
-            // var salesChartData = {
-            //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            //     datasets: [{
-            //             label: 'Digital Goods',
-            //             backgroundColor: 'rgba(60,141,188,0.9)',
-            //             borderColor: 'rgba(60,141,188,0.8)',
-            //             pointRadius: false,
-            //             pointColor: '#3b8bba',
-            //             pointStrokeColor: 'rgba(60,141,188,1)',
-            //             pointHighlightFill: '#fff',
-            //             pointHighlightStroke: 'rgba(60,141,188,1)',
-            //             data: [28, 48, 40, 19, 86, 27, 90]
-            //         },
-            //         {
-            //             label: 'Electronics',
-            //             backgroundColor: 'rgba(210, 214, 222, 1)',
-            //             borderColor: 'rgba(210, 214, 222, 1)',
-            //             pointRadius: false,
-            //             pointColor: 'rgba(210, 214, 222, 1)',
-            //             pointStrokeColor: '#c1c7d1',
-            //             pointHighlightFill: '#fff',
-            //             pointHighlightStroke: 'rgba(220,220,220,1)',
-            //             data: [65, 59, 80, 81, 56, 55, 40]
-            //         }
-            //     ]
-            // }
+                        const dayData = data.find(item => item.date === dateStr);
+                        orders.push(dayData ? parseInt(dayData.orders) : 0);
+                        revenues.push(dayData ? parseFloat(dayData.revenue) : 0);
+                    }
 
-            // var salesChartOptions = {
-            //     maintainAspectRatio: false,
-            //     responsive: true,
-            //     legend: {
-            //         display: false
-            //     },
-            //     scales: {
-            //         xAxes: [{
-            //             gridLines: {
-            //                 display: false
-            //             }
-            //         }],
-            //         yAxes: [{
-            //             gridLines: {
-            //                 display: false
-            //             }
-            //         }]
-            //     }
-            // }
+                    // Crear gráfico
+                    const ctx = document.getElementById('sales-chart').getContext('2d');
+                    salesChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [{
+                                label: 'Ventas (€)',
+                                data: revenues,
+                                borderColor: '#007bff',
+                                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4
+                            }, {
+                                label: 'Pedidos',
+                                data: orders,
+                                borderColor: '#28a745',
+                                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            if (this.datasetIndex === 0) {
+                                                return value + '€';
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            );
+        }
 
-            // var salesChart = new Chart(salesChartCanvas, {
-            //     type: 'line',
-            //     data: salesChartData,
-            //     options: salesChartOptions
-            // })
+        // Función para cargar gráfico de categorías
+        function loadCategoriesChart() {
+            selectData("c.name as category, COUNT(p.id) as count",
+                "products p LEFT JOIN categories c ON p.category = c.id",
+                "WHERE p.is_visible = TRUE GROUP BY p.category",
+                (res) => {
+                    if (categoriesChart) {
+                        categoriesChart.destroy();
+                    }
 
-            // var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-            // var pieData = {
-            //     labels: [
-            //         'Instore Sales',
-            //         'Download Sales',
-            //         'Mail-Order Sales'
-            //     ],
-            //     datasets: [{
-            //         data: [30, 12, 20],
-            //         backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-            //     }]
-            // }
-            // var pieOptions = {
-            //     legend: {
-            //         display: false
-            //     },
-            //     maintainAspectRatio: false,
-            //     responsive: true
-            // }
+                    const data = res.data;
+                    const labels = data.map(item => item.category || 'Sin categoría');
+                    const counts = data.map(item => parseInt(item.count));
 
-            // var pieChart = new Chart(pieChartCanvas, {
-            //     type: 'doughnut',
-            //     data: pieData,
-            //     options: pieOptions
-            // })
+                    const colors = [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
+                    ];
 
-            // var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+                    // Crear gráfico de pastel
+                    const ctx = document.getElementById('categories-chart').getContext('2d');
+                    categoriesChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: counts,
+                                backgroundColor: colors.slice(0, labels.length),
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
 
-            // var salesGraphChartData = {
-            //     labels: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4', '2013 Q1', '2013 Q2'],
-            //     datasets: [{
-            //         label: 'Digital Goods',
-            //         fill: false,
-            //         borderWidth: 2,
-            //         lineTension: 0,
-            //         spanGaps: true,
-            //         borderColor: '#efefef',
-            //         pointRadius: 3,
-            //         pointHoverRadius: 7,
-            //         pointColor: '#efefef',
-            //         pointBackgroundColor: '#efefef',
-            //         data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
-            //     }]
-            // }
+                    // Crear leyenda personalizada
+                    let legendHtml = '';
+                    labels.forEach((label, index) => {
+                        legendHtml += `
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge mr-2" style="background-color: ${colors[index]}; width: 15px; height: 15px;"></span>
+                            <small>${label}</small>
+                            <small class="ml-auto font-weight-bold">${counts[index]}</small>
+                        </div>
+                    `;
+                    });
+                    $('#categories-legend').html(legendHtml);
+                }
+            );
+        }
 
-            // var salesGraphChartOptions = {
-            //     maintainAspectRatio: false,
-            //     responsive: true,
-            //     legend: {
-            //         display: false
-            //     },
-            //     scales: {
-            //         xAxes: [{
-            //             ticks: {
-            //                 fontColor: '#efefef'
-            //             },
-            //             gridLines: {
-            //                 display: false,
-            //                 color: '#efefef',
-            //                 drawBorder: false
-            //             }
-            //         }],
-            //         yAxes: [{
-            //             ticks: {
-            //                 stepSize: 5000,
-            //                 fontColor: '#efefef'
-            //             },
-            //             gridLines: {
-            //                 display: true,
-            //                 color: '#efefef',
-            //                 drawBorder: false
-            //             }
-            //         }]
-            //     }
-            // }
+        // Función para cargar productos más vendidos
+        function loadTopProducts() {
+            selectData("p.name, p.price, p.stock, p.on_sale, p.sale_discound, " +
+                "COUNT(oi.id) as sales",
+                "products p LEFT JOIN prodToOrder oi ON p.id = oi.productId",
+                "WHERE p.is_visible = TRUE GROUP BY p.id ORDER BY sales DESC LIMIT 5",
+                (res) => {
+                    let html = '';
+                    if (res.data.length > 0) {
+                        res.data.forEach((product, index) => {
+                            const badgeColor = index === 0 ? 'bg-warning' :
+                                index === 1 ? 'bg-secondary' :
+                                index === 2 ? 'bg-danger' : 'bg-info';
 
+                            html += `
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge ${badgeColor} mr-2">${index + 1}</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="font-weight-bold">${product.name}</span>
+                                            <small class="text-muted">
+                                                ${product.on_sale == '1' ? 
+                                                    `<span class="text-success">${product.sale_discound}% OFF</span>` : 
+                                                    `<span>${parseFloat(product.price).toFixed(2)}€</span>`
+                                                }
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-primary">${product.sales || 0}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="${product.stock < 10 ? 'text-danger' : 'text-success'}">
+                                        ${product.stock}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge ${product.stock > 0 ? 'badge-success' : 'badge-danger'}">
+                                        ${product.stock > 0 ? 'En stock' : 'Agotado'}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                        });
+                    } else {
+                        html = `
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                <i class="fas fa-box-open mr-2"></i>
+                                No hay datos de ventas disponibles
+                            </td>
+                        </tr>
+                    `;
+                    }
+                    $('#top-products').html(html);
+                }
+            );
+        }
 
+        // Función para cargar pedidos recientes
+        function loadRecentOrders() {
+            selectData("o.id, c.name as customer_name, o.total_amount, o.status, o.create_at",
+                "customers c LEFT JOIN orders o ON c.id = o.customer_id ",
+                "ORDER BY o.create_at DESC LIMIT 5",
+                (res) => {
+                    let html = '';
+                    let pendingCount = 0;
 
-            // var salesGraphChart = new Chart(salesGraphChartCanvas, {
-            //     type: 'line',
-            //     data: salesGraphChartData,
-            //     options: salesGraphChartOptions
-            // })
-        </script>
+                    if (res.data.length > 0) {
+                        res.data.forEach(order => {
+                            if (order.status === 'pending' || order.status === 'processing') {
+                                pendingCount++;
+                            }
+
+                            const statusColors = {
+                                'completed': 'success',
+                                'processing': 'info',
+                                'pending': 'warning',
+                                'cancelled': 'danger',
+                                'shipped': 'primary'
+                            };
+
+                            const statusText = {
+                                'completed': 'Completado',
+                                'processing': 'Procesando',
+                                'pending': 'Pendiente',
+                                'cancelled': 'Cancelado',
+                                'shipped': 'Enviado'
+                            };
+
+                            const date = new Date(order.create_at);
+                            const formattedDate = date.toLocaleDateString('es-ES', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+
+                            html += `
+                            <tr>
+                                <td>
+                                    <a href="/admin/orders/edit/${order.id}" class="font-weight-bold">
+                                        #${order.id.toString().padStart(6, '0')}
+                                    </a>
+                                </td>
+                                <td>${order.customer_name || 'Cliente'}</td>
+                                <td class="text-center font-weight-bold">${parseFloat(order.total_amount).toFixed(2)}€</td>
+                                <td class="text-center">
+                                    <span class="badge badge-${statusColors[order.status] || 'secondary'}">
+                                        ${statusText[order.status] || order.status}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <small class="text-muted">${formattedDate}</small>
+                                </td>
+                            </tr>
+                        `;
+                        });
+                    } else {
+                        html = `
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="fas fa-shopping-bag mr-2"></i>
+                                No hay pedidos recientes
+                            </td>
+                        </tr>
+                    `;
+                    }
+
+                    $('#recent-orders').html(html);
+                    $('#pending-orders').html(`${pendingCount} pendientes`);
+                }
+            );
+        }
+
+        // Actualizar datos cada 60 segundos
+        setInterval(() => {
+            loadDashboardStats();
+            loadRecentOrders();
+        }, 60000);
+    });
+</script>

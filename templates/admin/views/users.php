@@ -1,14 +1,17 @@
+<?php include "./modals/user-creator.php"; ?>
+
+
 
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Pedidos</h1>
+                <h1 class="m-0">Usuarios</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/">Inicio</a></li>
-                    <li class="breadcrumb-item active">Pedidos</li>
+                    <li class="breadcrumb-item active">Usuarios</li>
                 </ol>
             </div>
         </div>
@@ -19,24 +22,22 @@
 
 <div class="content">
     <div class="container-fluid">
-        <section class="orders_editor">
+        <section class="users_editor">
 
 
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="card-title">Todos los pedidos</h3>
+                    <h3 class="card-title">Todos los Usuarios</h3>
                     <div class="card-tools">
-                        <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-download"></i>
-                        </a>
-                        <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-bars"></i>
-                        </a>
 
+                        <button class="btn-modal-user-creator btn btn-sm btn-outline-success" data-toggle="modal">
+                            <i class="fas fa-plus "></i>
+
+                        </button>
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table id="orders-table" class="table table-striped table-valign-middle">
+                    <table id="users-table" class="table table-striped table-valign-middle">
 
                     </table>
                 </div>
@@ -51,18 +52,23 @@
 
 
 <script defer>
+    $('.btn-modal-user-creator').on('click', () => {
+        $('#modal-user-creator').modal('show')
+    })
+
     $(document).ready(function() {
-        selectData("*", "orders", "", (data) => {
+        selectData("id, username", "users", "", (res) => {
+            const data = res.data
 
             if (data.length > 0) {
 
-                $('#orders-table').DataTable({
+                $('#users-table').DataTable({
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
                         }
                     }).concat({
-                        title: "Actions"
+                        title: "Acciones"
                     }),
                     data: data.map((row) => {
                         return Object.values(row).concat("")
@@ -72,12 +78,16 @@
                             visible: false,
                             searchable: false
                         },
+
                         {
-                            targets: [2],
+                            targets: 2,
                             render: function(data, type, row) {
-                                return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
+                                const id = row[0]
+
+                                return getRowActions(id);
+
                             }
-                        },
+                        }
                     ],
                     ordering: true,
                     searchable: true,
@@ -89,5 +99,10 @@
 
             }
         });
+
+        function getRowActions(row) {
+            return `<button class="${row}-remover btn-danger" onClick="deleteData('users','id',${row},'',location.reload())">Eliminar</button>`;
+        }
+
     })
 </script>

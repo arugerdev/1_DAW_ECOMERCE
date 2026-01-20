@@ -1,6 +1,5 @@
 <?php
-
-use function PHPSTORM_META\type;
+require __DIR__ . "/../../utils/db_utils.php";
 
 $id = $_GET['id'];
 
@@ -14,35 +13,8 @@ $data = $recibe->data[0];
 
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Plantilla EviMerce</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Inicio</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/products" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="#!">Productos populares</a></li>
-                        <li><a class="dropdown-item" href="#!">Novedades</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex">
-                <a class="btn btn-outline-dark" type="submit" href="/cart">
-                    <i class="bi-cart-fill me-1"></i>
-                    Carrito
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </a>
-            </form>
-        </div>
-    </div>
-</nav>
+<?php include __DIR__ . "/../components/navbar.php"; ?>
+
 <div class="card card-solid">
     <div class="card-body">
         <div class="row">
@@ -152,10 +124,10 @@ $data = $recibe->data[0];
                 </div>
 
                 <div class="mt-4">
-                    <div class="btn btn-primary btn-lg btn-flat rounded">
+                    <button id="add-to-cart" class="btn btn-primary btn-lg btn-flat rounded">
                         <i class="fas fa-cart-plus fa-lg mr-2"></i>
                         Añadir al carrito
-                    </div>
+                    </button>
 
                 </div>
 
@@ -181,7 +153,7 @@ $data = $recibe->data[0];
             <p style="max-width: 200ch;" class="tab-pane p-4 text-justify fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"><?php echo $data->description ?></p>
         </div>
     </div>
-    <!-- /.card-body -->
+
 </div>
 
 
@@ -190,7 +162,20 @@ $data = $recibe->data[0];
     const imgs = $(".product-image-thumb")
 
     imgs.on('click', (event) => {
-        console.log(event)
         mainImg.attr("src", event.target.src);
+    })
+
+    $("#add-to-cart").on("click", (evnt) => {
+        console.log(evnt)
+        addToCart(<?php echo json_encode($data) ?>, (data) => {
+            console.log(data)
+            $(document).Toasts('create', {
+                title: 'Añadido correctamente al carrito',
+                text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+                showHideTransition: 'slide',
+                icon: 'success'
+            })
+
+        })
     })
 </script>

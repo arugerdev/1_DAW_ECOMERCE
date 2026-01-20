@@ -9,55 +9,138 @@
             <div class="modal-body">
                 <form action="javascript:void(0)" class="create_product_form" id="create_product_form">
 
-                    <section class="mb-3">
-                        <label class="form-label" for="product-name">Nombre del producto: </label>
-                        <input class="form-control" type="text" id="product-name" placeholder="Nombre del producto" require="">
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-price">Precio del producto: </label>
-                        <input class="form-control" type="currency" data-type='currency' id="product-price" placeholder="0,00€" value="0" require="">
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-stock">Stock del producto: </label>
-                        <input class="form-control" type="number" id="product-stock" placeholder="0 productos" value="0" require="">
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-description-short">Descripción corta: </label>
-                        <textarea class="form-control" id="product-description-short" cols="100" rows="2" placeholder="Descripcion corta..."></textarea>
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-description">Descripción: </label>
-                        <textarea class="form-control" id="product-description" cols="100" rows="10" placeholder="Descripcion"></textarea>
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-category">Categoria: </label>
-                        <select class="form-control" id="product-category" placeholder="Descripcion">
-                            <option value="0">Sin categoria</option>
-                        </select>
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label" for="product-category">En oferta: </label>
-                        <div style="display: flex; flex-direction:row; gap:8px; justify-content:start; place-items:center;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">General</h3>
 
-                            <input type="checkbox" id="on-sale" value="0"></input>
-                            <input id="on-sale-discound" type="number" class="p-0 m-0" style="max-width: 60px;" value="0" min="0" max="100" step="0.05">
-                            <p class="p-0 m-0">%</p>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="product-name">Nombre del producto</label>
+                                        <input type="text" id="product-name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-price">Precio del producto</label>
+                                        <input type="currency" data-type="currency" placeholder="0,00€" id="product-price" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-stock">Stock del producto</label>
+                                        <input type="number" placeholder="20" value="0" min="0" step="1" id="product-stock" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-category">Categoria</label>
+                                        <select id="product-category" class="form-control custom-select">
+                                            <?php
+                                            require __DIR__ . "/../utils/db_utils.php";
+
+
+                                            $_REQUEST["select"] = "*";
+                                            $_REQUEST["table"] = "categories";
+                                            $_REQUEST["extra"] = "";
+
+                                            $recibe =  json_decode(selectData());
+
+                                            $data = $recibe->data;
+                                            foreach ($data as $key => $value) {
+                                                echo "<option value=" . $value->id . ">" . $value->name . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </section>
-                    <section class="mb-3">
-                        <label class="form-label">Imágenes del producto</label>
-                        <input type="file" id="product_images" multiple accept="image/*">
-                        <section class="currentUploadedImages">
+                        <div class="col-md-6">
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h3 class="card-title">Info</h3>
 
-                        </section>
-                    </section>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="product-description-short">Descripción corta del producto</label>
+                                        <textarea id="product-description-short" class="form-control" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-description">Descripción del producto</label>
+                                        <textarea id="product-description" class="form-control" rows="10"></textarea>
+                                    </div>
 
+                                </div>
 
-                </form>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-secondary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Ofertas</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="on-sale">En Oferta</label>
+                                        <input type="checkbox" id="on-sale">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="on-sale-discound">% de oferta</label>
+                                        <input type="number" step="0.05" min="0" max="100" value="0" id="on-sale-discound" class="form-control">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-info">
+                                <div class="card-header">
+                                    <h3 class="card-title">Imagenes</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input type="file" id="product_images" multiple accept="image/*">
+                                        <section class="currentUploadedImages">
+
+                                        </section>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
             </div>
+            </form>
+
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn-cancel btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="create_product_form" class="btn btn-success">Añadir producto</button>
+                <button type="submit" form="create_product_form" id="create_product_bnt" class="btn btn-success">Añadir producto</button>
             </div>
         </div>
     </div>
@@ -201,7 +284,7 @@
         uploadedImages = uploadedImages.filter(img => img.id !== imageId);
     });
 
-    $(".create_product_form").on('submit', () => {
+    const upload = () => {
         const name = $("#product-name").val();
         const price = Number($("#product-price").val().replace(/[^0-9.-]+/g, ""));
         const stock = $("#product-stock").val();
@@ -210,8 +293,6 @@
         const category = $("#product-category").val();
         const on_sale = $("#on-sale").is(":checked");
         const sale_discound = $("#on-sale-discound").val();
-
-        console.log(`"${name}", ${price}, ${stock}, "${short_description}", "${description}", ${category}, ${on_sale ? 1:0}, ${sale_discound}`)
 
         insertData(
             "products",
@@ -228,6 +309,13 @@
                 });
             }
         );
+    }
+
+    $("#create_product_bnt").on('click', () => {
+        $(".create_product_form").submit()
+    })
+    $(".create_product_form").on('submit', () => {
+        upload()
     });
 
     function cancelUpload() {
@@ -240,7 +328,6 @@
                     action: 'delete_all'
                 },
                 success: function(response) {
-                    console.log('Todas las imágenes temporales eliminadas');
                     uploadedImages = [];
                     $('.currentUploadedImages').empty();
                 },
@@ -264,7 +351,6 @@
                     filename: imageToDelete.filename
                 },
                 success: function(response) {
-                    console.log('Imagen eliminada:', imageId);
 
                     $(`#${imageId}`).parent().remove();
                 },

@@ -1,12 +1,7 @@
-<?php
-
-
-?>
-
 <main class="min-vh-100 " style="display: flex; justify-content:center; place-items:center; overflow:hidden;">
 
     <div class="login-box">
-        <!-- /.login-logo -->
+        
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="/" class="h1"><b>EviMerce</b></a>
@@ -33,11 +28,11 @@
                     </div>
                     <div class="row">
 
-                        <!-- /.col -->
+                        
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
-                        <!-- /.col -->
+                        
                     </div>
                 </form>
 
@@ -49,7 +44,7 @@
                         <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                     </a>
                 </div> -->
-                <!-- /.social-auth-links -->
+                
                 <!-- 
                 <p class="mb-1">
                     <a href="forgot-password.html">I forgot my password</a>
@@ -58,9 +53,9 @@
                     <a href="register.html" class="text-center">Register a new membership</a>
                 </p> -->
             </div>
-            <!-- /.card-body -->
+            
         </div>
-        <!-- /.card -->
+        
     </div>
 </main>
 
@@ -70,12 +65,11 @@
         const password = $(".loginAdminForm_password").val();
 
         loginAdmin(username, password, (data) => {
-            console.log(data);
             if (data.success) {
-                // Redirigir a la página de admin
+                
                 window.location.href = data.redirect || '/admin/';
             } else {
-                // Mostrar error al usuario
+                
                 alert(data.error || 'Error en el login');
             }
         });

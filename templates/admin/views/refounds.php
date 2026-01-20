@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Pedidos</h1>
+                <h1 class="m-0">Devoluciones</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/">Inicio</a></li>
-                    <li class="breadcrumb-item active">Pedidos</li>
+                    <li class="breadcrumb-item active">Devoluciones</li>
                 </ol>
             </div>
         </div>
@@ -24,7 +24,7 @@
 
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="card-title">Todos los pedidos</h3>
+                    <h3 class="card-title">Todas las devoluciones</h3>
                     <div class="card-tools">
                         <a href="#" class="btn btn-tool btn-sm">
                             <i class="fas fa-download"></i>

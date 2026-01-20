@@ -88,14 +88,14 @@ Is a simple project and the first created by me with this technologies.
 - Upload images for products ✅
 - Load images for products ✅
 - Beauty products see as customer ⚠️
-- Buy function ❌
-- Shipping function ❌
+- Buy function ✅
+- Shipping function ✅
 - Login admin ✅
-- Login and Register ❌
+- Login and Register ⚠️
 - Token access ❌
-- Shopping cart ⚠️
+- Shopping cart ✅
 
-**Progress: 20% ████▒▒▒▒▒▒▒░░░░░░░░░**
+**Progress: 35% ███████▒▒▒▒▒▒▒░░░░░░**
 
 ## License
 
