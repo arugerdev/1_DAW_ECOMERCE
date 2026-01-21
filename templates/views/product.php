@@ -124,9 +124,10 @@ $data = $recibe->data[0];
                 </div>
 
                 <div class="mt-4">
-                    <button id="add-to-cart" class="btn btn-primary btn-lg btn-flat rounded">
+                    <button id="add-to-cart" <?php echo ($data->stock <= 0) ? 'disabled' : '' ?> class=" <?php echo ($data->stock <= 0) ? 'btn-secondary btn-light disabled text-danger' : '' ?> btn btn-primary btn-lg btn-flat rounded">
                         <i class="fas fa-cart-plus fa-lg mr-2"></i>
-                        Añadir al carrito
+
+                        <?php echo ($data->stock <= 0) ? 'Fuera de stock' : ' Añadir al carrito' ?>
                     </button>
 
                 </div>
@@ -165,13 +166,15 @@ $data = $recibe->data[0];
         mainImg.attr("src", event.target.src);
     })
 
+
     $("#add-to-cart").on("click", (evnt) => {
         console.log(evnt)
         addToCart(<?php echo json_encode($data) ?>, (data) => {
             console.log(data)
             $(document).Toasts('create', {
+                position: "bottomRight",
                 title: 'Añadido correctamente al carrito',
-                text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+                class: "toasts-success text-succes color-success success bg-success",
                 showHideTransition: 'slide',
                 icon: 'success'
             })

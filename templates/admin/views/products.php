@@ -95,7 +95,7 @@
                             }
                         },
                         {
-                            targets: [4,5],
+                            targets: [4, 5],
                             render: function(data, type, row) {
                                 return `<p class="elipsis">${data}</p>`;
 
@@ -129,11 +129,21 @@
         });
 
         function getRowActions(row) {
-            return `<button class="${row}-editer btn-primary">Editar</button><button class="${row}-remover btn-danger" onClick="deleteData('products','id',${row},'',location.reload())">Eliminar</button>`;
+            return `<button class="${row}-editer btn-primary">Editar</button><button class="${row}-remover btn-danger" onClick="deleteProduct(${row})">Eliminar</button>`;
         }
 
         function getCheckBox(row) {
             return `<input style="margin-left:32px" type='checkbox' value='${row[0]}' onChange="updateVisible(this.value, this.checked)" ${row[1] == 1 ? 'checked' : ''}>`
         }
     })
+
+    function deleteProduct(row) {
+        console.log(row)
+        deleteData('products', 'id', row, '', () => {
+            deleteImages(row, (data) => {
+                console.log(data)
+                window.location.reload();
+            })
+        })
+    }
 </script>

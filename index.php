@@ -31,6 +31,7 @@ if ($option == "?") {
 
     <script src="/assets/js/cart_utils.js"></script>
     <script src="/assets/js/db_utils.js"></script>
+    <script src="/assets/js/images_utils.js"></script>
     <script src="/assets/js/utils.js"></script>
 
     </script>

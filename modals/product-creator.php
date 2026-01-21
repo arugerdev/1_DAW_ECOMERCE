@@ -220,33 +220,22 @@
         const files = this.files;
         if (!files.length) return;
 
-        const fd = new FormData();
-        fd.append('token', tempToken);
+        uploadTempImage({
+            files,
+            token: tempToken
+        }, (data) => {
+            data.files.forEach((src, index) => {
+                const imageId = 'img_' + Date.now() + '_' + index;
+                const imageObj = {
+                    id: imageId,
+                    path: src,
+                    filename: src.split('/').pop()
+                };
 
-        for (const file of files) {
-            fd.append('images[]', file);
-        }
+                uploadedImages.push(imageObj);
 
-        $.ajax({
-            url: '../templates/admin/utils/upload_temp_img.php',
-            type: 'POST',
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: (data) => {
-                data = JSON.parse(data);
-                data.forEach((src, index) => {
-                    const imageId = 'img_' + Date.now() + '_' + index;
-                    const imageObj = {
-                        id: imageId,
-                        path: src,
-                        filename: src.split('/').pop()
-                    };
-
-                    uploadedImages.push(imageObj);
-
-                    $('.currentUploadedImages').append(
-                        `<div class="image-container" style="position: relative; display: inline-block; margin: 5px;">
+                $('.currentUploadedImages').append(
+                    `<div class="image-container" style="position: relative; display: inline-block; margin: 5px;">
                             <img id="${imageId}" 
                                  src="${"/uploads" + src.split('/uploads')[1]}" 
                                  style="max-width: 64px; max-height:64px; object-fit:contain; aspect-ratio:1/1; cursor: pointer;" 
@@ -257,29 +246,32 @@
                                     style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;"
                                     data-id="${imageId}">×</button>
                         </div>`
-                    );
-                });
+                );
+            });
 
-                $(this).val('');
-            },
-            error: function() {
-                alert('Error al subir las imágenes');
-            }
+            $(this).val('');
         });
+
     });
 
     $(document).on('click', '.btn-remove-image', function(e) {
         e.stopPropagation();
 
         const imageId = $(this).data('id');
-        removeSingleImage(imageId);
+        deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
+            $(this).parent('.image-container').addClass('removing');
+            $(this).parent('.image-container').remove();
+        });
 
         uploadedImages = uploadedImages.filter(img => img.id !== imageId);
     });
 
     $(document).on('click', '.preview-image', function() {
         const imageId = $(this).attr('id');
-        removeSingleImage(imageId);
+        deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
+            $(this).parent('.image-container').addClass('removing');
+            $(this).parent('.image-container').remove();
+        });
 
         uploadedImages = uploadedImages.filter(img => img.id !== imageId);
     });
@@ -300,10 +292,7 @@
             `"${name}", ${price}, ${stock}, "${short_description}", "${description}", ${category}, ${on_sale ? 1:0}, ${sale_discound}`,
             "",
             (data) => {
-                $.post('../templates/admin/utils/finalize_product_images.php', {
-                    product_id: data.newId,
-                    token: tempToken
-                }, () => {
+                finalizeProductImages(data.newId, tempToken, () => {
                     uploadedImages = [];
                     location.reload();
                 });
@@ -311,53 +300,22 @@
         );
     }
 
-    $("#create_product_bnt").on('click', () => {
-        $(".create_product_form").submit()
-    })
     $(".create_product_form").on('submit', () => {
         upload()
     });
 
     function cancelUpload() {
         if (uploadedImages.length > 0) {
-            $.ajax({
-                url: '../templates/admin/utils/delete_temp_images.php',
-                type: 'POST',
-                data: {
-                    token: tempToken,
-                    action: 'delete_all'
-                },
-                success: function(response) {
-                    uploadedImages = [];
-                    $('.currentUploadedImages').empty();
-                },
-                error: function() {
-                    console.error('Error al eliminar las imágenes');
-                }
+
+            deleteAllTempImages(tempToken, () => {
+                uploadedImages = [];
+                $('.currentUploadedImages').empty();
             });
         }
     }
 
-    function removeSingleImage(imageId) {
-        const imageToDelete = uploadedImages.find(img => img.id === imageId);
-
-        if (imageToDelete) {
-            $.ajax({
-                url: '../templates/admin/utils/delete_temp_images.php',
-                type: 'POST',
-                data: {
-                    token: tempToken,
-                    action: 'delete_single',
-                    filename: imageToDelete.filename
-                },
-                success: function(response) {
-
-                    $(`#${imageId}`).parent().remove();
-                },
-                error: function() {
-                    console.error('Error al eliminar la imagen');
-                }
-            });
-        }
-    }
+    // On reload clear any temp images that might be left
+    $(document).ready(() => {
+        clearTemp(() => {});
+    });
 </script>
