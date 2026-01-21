@@ -17,8 +17,6 @@
                         <label class="form-label" for="user-password">Contraseña del usuario: </label>
                         <input class="form-control" type="password" data-type='password' id="user-password" placeholder="******" require="">
                     </section>
-
-
                 </form>
             </div>
             <div class="modal-footer justify-content-between">

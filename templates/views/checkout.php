@@ -8,21 +8,21 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="text-center flex-fill">
-                            <span class="badge bg-primary rounded-circle p-2"  style="width: 28px; height:28px">1</span>
+                            <span class="badge bg-primary rounded-circle p-2" style="width: 28px; height:28px">1</span>
                             <p class="mt-2 mb-0 small fw-bold">Información</p>
                         </div>
                         <div class="flex-fill">
                             <hr class="my-0">
                         </div>
                         <div class="text-center flex-fill">
-                            <span class="badge bg-secondary rounded-circle p-2"  style="width: 28px; height:28px">2</span>
+                            <span class="badge bg-secondary rounded-circle p-2" style="width: 28px; height:28px">2</span>
                             <p class="mt-2 mb-0 small text-muted">Confirmación</p>
                         </div>
                         <div class="flex-fill">
                             <hr class="my-0">
                         </div>
                         <div class="text-center flex-fill">
-                            <span class="badge bg-secondary rounded-circle p-2"  style="width: 28px; height:28px">3</span>
+                            <span class="badge bg-secondary rounded-circle p-2" style="width: 28px; height:28px">3</span>
                             <p class="mt-2 mb-0 small text-muted">Pago</p>
                         </div>
                     </div>
@@ -261,6 +261,13 @@
                 }
             }
 
+            if ($('#create_account').is(':checked')) {
+                $.post("../../utils/auth_utils.php", {
+                    action: "register",
+                    customer: JSON.stringify(data)
+                });
+            }
+
             // Guardar datos del cliente en sesión
             $.ajax({
                 url: "../../utils/checkout_utils.php",
@@ -286,6 +293,8 @@
 
             const email = $('#login_email').val();
             const password = $('#login_password').val();
+
+
 
             $.ajax({
                 url: "../../utils/auth_utils.php",

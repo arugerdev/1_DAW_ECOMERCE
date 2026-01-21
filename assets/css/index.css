@@ -14,17 +14,12 @@ body>section {
     display: flex;
     flex-direction: row;
 }
-
-
 main {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 }
-
-
-
 .elipsis {
     max-width: 300px;
     overflow: hidden;

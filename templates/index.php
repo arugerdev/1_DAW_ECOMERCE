@@ -1,9 +1,52 @@
 <?php require 'utils/sessions.php'; ?>
-
-
-
 <?php include_once __DIR__ . "/components/navbar.php" ?>
 
+<?php
+
+session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/utils/sessions.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+
+if (!isset($_SESSION["cart_products"]) || gettype($_SESSION["cart_products"]) != "array") {
+    $_SESSION["cart_products"] = [];
+    return;
+}
+
+$groupedProducts = [];
+foreach ($_SESSION["cart_products"] as $product) {
+    $id = $product['id'];
+    if (!isset($groupedProducts[$id])) {
+        $groupedProducts[$id] = [
+            'product' => $product,
+            'quantity' => 0
+        ];
+    }
+    $groupedProducts[$id]['quantity'] += 1;
+}
+
+$validatedCart = [];
+
+foreach ($groupedProducts as $id => $data) {
+    $query = $pdo->prepare("SELECT * FROM products WHERE id = :id");
+    $query->bindParam(':id', $id);
+    $query->execute();
+    $productData = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($productData && $productData['is_visible'] == TRUE) {
+        $updatedProduct = $data['product'];
+        $updatedProduct['price'] = $productData['price'];
+        $updatedProduct['on_sale'] = $productData['on_sale'];
+        $updatedProduct['sale_discound'] = $productData['sale_discound'];
+
+        for ($i = 0; $i < $data['quantity']; $i++) {
+            $validatedCart[] = $updatedProduct;
+        }
+    }
+}
+
+$_SESSION["cart_products"] = $validatedCart;
+?>
 
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
@@ -32,12 +75,10 @@
         <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
     </div>
 </footer>
-
-
 <script defer>
     const container = $('.product-list-container')
 
-    selectData('*', 'products', 'WHERE is_visible = TRUE LIMIT 10', (result) => {
+    selectData('*', 'products', 'WHERE is_visible = TRUE LIMIT 12', (result) => {
         const data = result.data;
 
         data.map((result) => {

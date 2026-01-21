@@ -1,7 +1,5 @@
 <?php
 ini_set('display_errors', 'Off');
-
-
 include "./utils/router.php";
 // include "./utils/db_utils.php";
 
@@ -38,8 +36,6 @@ if ($option == "?") {
 </head>
 
 <body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse">
-
-
     <main>
         <?php
         include "./templates/routes.php";

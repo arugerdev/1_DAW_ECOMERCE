@@ -14,9 +14,6 @@ function selectData(select, table, extra = "", callback = () => { }) {
     });
 
 }
-
-
-
 function deleteData(table, filterParam, filterValue, extra = "", callback = () => { }) {
     $.ajax({
         url: "../../utils/db_utils.php",
@@ -69,8 +66,6 @@ function updateData(table, values, extra = "", callback = () => { }) {
     });
 
 }
-
-
 function loginAdmin(username, password, callback = () => { }) {
     $.ajax({
         url: "../../utils/db_utils.php",
@@ -102,8 +97,6 @@ function createUser(username, password, callback = () => { }) {
     });
 
 }
-
-
 function clearSession() {
     $.ajax({
         url: "../../utils/db_utils.php",
@@ -115,6 +108,4 @@ function clearSession() {
             callback(JSON.parse(data))
         }
     });
-
-
 }

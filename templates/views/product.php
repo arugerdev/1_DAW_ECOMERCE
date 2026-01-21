@@ -22,24 +22,39 @@ $data = $recibe->data[0];
                 <h3 class="d-inline-block d-sm-none"><?php $data->name ?></h3>
                 <div class="col-12" style="place-items:center; justify-content:center; display:flex;">
                     <?php
-                    echo '<img src="/uploads/img/products/' . $id . '/0.png" onerror="this.onerror=null; this.src=\'https://placehold.co/512\'" style=" max-width: 512px; max-height: 512px; aspect-ratio: 1/1; object-fit: contain;" class="product-image" alt="Product Image">'
+                    $dir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/" . $id . "/";
+
+                    if (is_dir($dir)) {
+                        $files = array_diff(scandir($dir), array('.', '..'));
+                        $imgSrc = "/uploads/img/products/" . $id . "/" . array_values($files)[0];
+                    } else {
+                        $imgSrc = "https://placehold.co/512";
+                    }
+                    echo '<img src="' . $imgSrc . '" alt="Product Image" style=" max-width: 512px; max-height: 512px; aspect-ratio: 1/1; object-fit: contain;" class="product-image">';
                     ?>
                 </div>
                 <div class="col-12 product-image-thumbs" style="display: flex; place-items:center; justify-content:center">
                     <?php
 
                     $dir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/" . $id . "/";
-                    $files = array_diff(scandir($dir), array('.', '..'));
 
-
-                    foreach ($files as $fil) {
+                    if (!is_dir($dir)) {
                         echo '
                         <div class="product-image-thumb cursor-pointer">
-                        <img src="/uploads/img/products/' . $id  . '/' . $fil . '" onerror="this.onerror=null; this.src=\'https://placehold.co/100\'" alt="Product Image">
+                        <img src="https://placehold.co/100" alt="Product Image">
                         </div>
                         ';
-                    }
+                    } else {
+                        $files = array_diff(scandir($dir), array('.', '..'));
 
+                        foreach ($files as $fil) {
+                            echo '
+                            <div class="product-image-thumb cursor-pointer">
+                            <img src="/uploads/img/products/' . $id  . '/' . $fil . '" onerror="this.onerror=null; this.src=\'https://placehold.co/100\'" alt="Product Image">
+                            </div>
+                            ';
+                        }
+                    }
                     ?>
                 </div>
             </div>
@@ -156,8 +171,6 @@ $data = $recibe->data[0];
     </div>
 
 </div>
-
-
 <script>
     const mainImg = $(".product-image")
     const imgs = $(".product-image-thumb")
@@ -165,8 +178,6 @@ $data = $recibe->data[0];
     imgs.on('click', (event) => {
         mainImg.attr("src", event.target.src);
     })
-
-
     $("#add-to-cart").on("click", (evnt) => {
         console.log(evnt)
         addToCart(<?php echo json_encode($data) ?>, (data) => {

@@ -89,3 +89,48 @@ function finalizeProductImages(product_id, token, callback = () => { }) {
         }
     })
 }
+
+function finalizeProductImages(product_id, token, callback = () => { }, imagesToUplaod) {
+    $.ajax({
+        url: "../../utils/images_utils.php",
+        type: "POST",
+        data: {
+            "action": "finalizeProductImages",
+            "product_id": product_id,
+            "token": token,
+            "imagesToUplaod": imagesToUplaod
+        },
+        success: (data) => {
+            callback(JSON.parse(data))
+        }
+    })
+}
+
+function getProductImages(id, callback = () => { }) {
+    $.ajax({
+        url: "../../utils/images_utils.php",
+        type: "POST",
+        data: {
+            "action": "getProductImages",
+            "id": id
+        },
+        success: (data) => {
+            callback(JSON.parse(data))
+        }
+    })
+}
+
+function moveImagesToTemp(product_id, token, callback = () => { }) {
+    $.ajax({
+        url: "../../utils/images_utils.php",
+        type: "POST",
+        data: {
+            "action": "moveImagesToTemp",
+            "product_id": product_id,
+            "token": token
+        },
+        success: (data) => {
+            callback(JSON.parse(data))
+        }
+    })
+}

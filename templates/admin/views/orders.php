@@ -1,4 +1,3 @@
-
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -14,14 +13,9 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="content">
     <div class="container-fluid">
         <section class="orders_editor">
-
-
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Todos los pedidos</h3>
@@ -41,14 +35,9 @@
                     </table>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
-
-
-
 
 <script defer>
     $(document).ready(function() {
@@ -62,13 +51,13 @@
                             title: capitalizeFirstLetter(key)
                         }
                     }).concat({
-                        title: "Actions"
+                        title: "Acciones"
                     }),
                     data: data.map((row) => {
                         return Object.values(row).concat("")
                     }),
                     columnDefs: [{
-                            targets: 0,
+                            targets: [0, 8],
                             visible: false,
                             searchable: false
                         },
@@ -78,6 +67,21 @@
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
                             }
                         },
+                        {
+                            targets: [7],
+                            render: function(data, type, row) {
+                                return getCheckBox(data, null);
+                            }
+                        },
+                        {
+                            targets: 9,
+                            render: function(data, type, row) {
+                                const id = row[0]
+
+                                return getRowActions(id, `editOrder(${id})`, `deleteOrder(${id})`);
+
+                            }
+                        }
                     ],
                     ordering: true,
                     searchable: true,
@@ -90,4 +94,12 @@
             }
         });
     })
+
+    function deleteOrder(row) {
+        deleteData('orders', 'id', row, '', location.reload())
+    }
+
+    function editOrder(row) {
+        alert("Funcionalidad en desarrollo")
+    }
 </script>

@@ -103,8 +103,6 @@
         cancelUpload();
         $('#modal-category-creator').modal('hide');
     });
-
-
     $(".create_category_form").on('submit', () => {
         const name = $("#category-name").val();
 

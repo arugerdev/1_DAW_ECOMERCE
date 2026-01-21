@@ -9,6 +9,7 @@ if (isset($_SESSION['user']) && $_SESSION['state'] == 'authenticated') {
     $routes = [
         '/' => 'dashboard.php',
         '/products' => 'products.php',
+        '/products/edit' => 'products_edit.php',
         '/orders' => 'orders.php',
         '/users' => 'users.php',
         '/refounds' => 'refounds.php',

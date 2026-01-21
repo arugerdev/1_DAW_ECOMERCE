@@ -1,4 +1,27 @@
-<?php include_once __DIR__ . "/../components/navbar.php" ?>
+<?php
+session_start();
+
+require __DIR__ . "/../../utils/checkout_utils.php";
+require __DIR__ . "/../../utils/auth_utils.php";
+
+function isLoggedIn()
+{
+    return isset($_SESSION['customer']) && !empty($_SESSION['customer']);
+}
+
+if (isLoggedIn()) {
+    header("Location: /");
+    exit;
+}
+
+?>
+
+<?php include __DIR__ . "/../components/navbar.php"; ?>
+
+<!-- Loggin form similar to checkout form -->
+<?php /*
+
+ <?php include_once __DIR__ . "/../components/navbar.php" ?>
 
 <section class="container py-5">
     <div class="row justify-content-center">
@@ -353,5 +376,61 @@
         // Inicializar
         loadCustomerInfo();
         loadOrderSummary();
+    });
+</script>
+*/ ?>
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Iniciar sesión</h3>
+                </div>
+                <div class="card-body">
+                    <form id="login-form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script defer>
+    $('#login-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const email = $('#email').val();
+        const password = $('#password').val();
+
+        $.ajax({
+            url: '/utils/auth_utils.php',
+            type: 'POST',
+            data: {
+                action: 'login',
+                email: email,
+                password: password
+            },
+            success: (response) => {
+                const result = JSON.parse(response);
+                if (result.success) {
+                    // Redirigir después del login
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirectUrl = urlParams.get('redirect') || '/';
+                    window.location.href = redirectUrl;
+                } else {
+                    alert(result.message || 'Error al iniciar sesión');
+                }
+            }
+        });
     });
 </script>

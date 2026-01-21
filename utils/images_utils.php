@@ -9,6 +9,9 @@ switch ($action) {
     case 'uploadTempImage':
         echo (uploadTempImage());
         break;
+    case 'getProductImages':
+        echo (getProductImages());
+        break;
     case 'deleteTempImage':
         echo (deleteTempImage());
         break;
@@ -18,17 +21,50 @@ switch ($action) {
     case 'finalizeProductImages':
         echo (finalizeProductImages());
         break;
+    case 'moveImagesToTemp':
+        echo (moveImagesToTemp());
+        break;
     case 'clearTemp':
         echo (clearTemp());
         break;
+}
+
+function moveImagesToTemp()
+{
+    try {
+        $productId = intval($_POST['product_id'] ?? 0);
+        $token = preg_replace('/[^a-zA-Z0-9_-]/', '', $_POST['token'] ?? '');
+        if ($productId <= 0 || !$token) {
+            http_response_code(400);
+            exit;
+        }
+        $sourceDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$productId/";
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/temp/$token/";
+        if (!is_dir($sourceDir)) {
+            echo json_encode(['success' => true, 'files' => []]);
+            exit;
+        }
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+        $files = glob($sourceDir . "*.{jpg,png,webp}", GLOB_BRACE);
+        sort($files, SORT_NATURAL);
+        $movedFiles = [];
+        foreach ($files as $file) {
+            $filename = basename($file);
+            rename($file, $targetDir . $filename);
+            $movedFiles[] = $targetDir . $filename;
+        }
+        echo json_encode(['success' => true, 'files' => $movedFiles]);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
 }
 
 function deleteImage()
 {
     $id = intval($_POST['id'] ?? 0);
     $dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$id/";
-
-
     if (!is_dir($dir)) {
         echo json_encode(['success' => true, 'message' => 'Directorio no existe']);
         exit;
@@ -46,6 +82,32 @@ function deleteImage()
         rmdir($dir);
 
         echo json_encode(['success' => true, 'message' => 'Imágenes eliminadas']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+}
+
+function getProductImages()
+{
+
+    $id = intval($_POST['id'] ?? 0);
+    $dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$id/";
+    $images = [];
+
+    if (!is_dir($dir)) {
+        echo json_encode(['success' => true, 'images' => $images]);
+        exit;
+    }
+
+    try {
+        $files = glob($dir . "*.{jpg,png,webp}", GLOB_BRACE);
+        sort($files, SORT_NATURAL);
+
+        foreach ($files as $file) {
+            $images[] = basename($file);
+        }
+
+        echo json_encode(['success' => true, 'images' => $images]);
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
@@ -72,8 +134,6 @@ function uploadTempImage()
             move_uploaded_file($tmp, $targetDir . $safeName);
             array_push($uploadeds, $targetDir . $safeName);
         }
-
-
         echo json_encode(['success' => true, 'message' => 'Temporary image uploaded', 'files' => $uploadeds]);
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
@@ -141,37 +201,64 @@ function deleteAllTempImages()
 function finalizeProductImages()
 {
     try {
-
         $productId = intval($_POST['product_id'] ?? 0);
         $token = preg_replace('/[^a-zA-Z0-9_-]/', '', $_POST['token'] ?? '');
+
+        $tempDir  = $_SERVER['DOCUMENT_ROOT'] . "/uploads/temp/$token/";
+        $finalDir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$productId/";
+
+        $imagesToUpload = $_POST['imagesToUpload'] ??  glob($tempDir . '*');
 
         if ($productId <= 0 || !$token) {
             http_response_code(400);
             exit;
         }
 
-        $tempDir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/temp/$token/";
-        $finalDir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$productId/";
         if (!is_dir($tempDir)) {
-            echo json_encode(["success" => true]);
+            echo json_encode(['success' => true]);
             exit;
         }
-        mkdir($finalDir, 0755, true);
 
-        $files = glob($tempDir . "*.{jpg,png,webp}", GLOB_BRACE);
-        sort($files, SORT_NATURAL);
+        if (!is_dir($finalDir)) {
+            mkdir($finalDir, 0755, true);
+        }
 
-        $i = 0;
+        // Normalizar array
+        if (!is_array($imagesToUpload)) {
+            $imagesToUpload = [];
+        }
 
-        foreach ($files as $file) {
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
-            rename($file, $finalDir . $i . "." . $ext);
-            $i++;
+        $imagesToUpload = array_map(function ($img) {
+            return basename($img); // seguridad
+        }, $imagesToUpload);
+
+        $allowedExt = ['jpg', 'jpeg', 'png', 'webp'];
+        $index = 0;
+
+        // Mover SOLO las imágenes seleccionadas
+        foreach ($imagesToUpload as $image) {
+            $source = $tempDir . $image;
+
+            if (!file_exists($source)) continue;
+
+            $ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowedExt)) continue;
+
+            rename($source, $finalDir . $index . '.' . $ext);
+            $index++;
+        }
+
+        // Eliminar las imágenes no usadas
+        $remaining = glob($tempDir . '*');
+        foreach ($remaining as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
         }
 
         rmdir($tempDir);
 
-        echo json_encode(["success" => true]);
+        echo json_encode(['success' => true]);
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
@@ -195,9 +282,7 @@ function clearTemp()
                     unlink($file);
                 }
             }
-            deleteDirectory($dir); // Dice que no esta vacio
-
-
+            deleteDirectory($dir);
         }
 
         echo json_encode(['success' => true, 'message' => 'Directorio temporal limpiado']);
@@ -205,8 +290,6 @@ function clearTemp()
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
 }
-
-
 function deleteDirectory($dir)
 {
     if (!file_exists($dir)) {

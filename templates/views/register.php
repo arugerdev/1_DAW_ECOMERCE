@@ -1,4 +1,32 @@
-<?php include_once __DIR__ . "/../components/navbar.php" ?>
+<?php
+session_start();
+
+require __DIR__ . "/../../utils/checkout_utils.php";
+require __DIR__ . "/../../utils/auth_utils.php";
+
+function isLoggedIn()
+{
+    return isset($_SESSION['customer']) && !empty($_SESSION['customer']);
+}
+
+if (isLoggedIn()) {
+    header("Location: /");
+    exit;
+}
+
+?>
+
+<?php include __DIR__ . "/../components/navbar.php"; ?>
+
+ <!-- # checkout form -->
+
+<?php 
+
+/*
+
+ <?php include_once __DIR__ . "/../components/navbar.php" ?>
+
+
 
 <section class="container py-5">
     <div class="row justify-content-center">
@@ -355,3 +383,10 @@
         loadOrderSummary();
     });
 </script>
+*/ ?>
+
+<!-- #end checkout form -->
+
+<!-- Register form similar to checkout form -->
+
+<!-- ... -->

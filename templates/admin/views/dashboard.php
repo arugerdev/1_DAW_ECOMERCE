@@ -93,7 +93,7 @@
                     </div>
                     <div class="card-body">
                         <div class="position-relative mb-4">
-                            <canvas id="sales-chart" height="250"></canvas>
+                            <canvas id="sales-chart" height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
 
         <!-- Estadísticas rápidas -->
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col">
                 <div class="info-box bg-gradient-light">
                     <span class="info-box-icon bg-info"><i class="fas fa-shopping-cart"></i></span>
                     <div class="info-box-content">
@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col">
                 <div class="info-box bg-gradient-light">
                     <span class="info-box-icon bg-success"><i class="fas fa-euro-sign"></i></span>
                     <div class="info-box-content">
@@ -221,7 +221,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <div class="col">
                 <div class="info-box bg-gradient-light">
                     <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
                     <div class="info-box-content">
@@ -234,7 +234,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+            <!-- <div class="col">
                 <div class="info-box bg-gradient-light">
                     <span class="info-box-icon bg-danger"><i class="fas fa-chart-bar"></i></span>
                     <div class="info-box-content">
@@ -245,7 +245,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -284,10 +284,11 @@
 
             // Pedidos totales (ajustar según tu estructura de orders)
             selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "", (res) => {
+                console.log(res.data);
                 if (res.data.length > 0) {
                     const order = res.data[0];
                     $('#recently-orders').html(order.total || 0);
-                    $('#total-revenue').html((order.revenue || 0).toFixed(2) + '€');
+                    $('#total-revenue').html((Number(order.revenue) || 0).toFixed(2) + '€');
                 }
             });
 
@@ -304,12 +305,65 @@
                 (res) => {
                     if (res.data.length > 0) {
                         const monthData = res.data[0];
-                        $('#month-orders').html(monthData.total || 0);
-                        $('#month-revenue').html((monthData.revenue || 0).toFixed(2) + '€');
 
-                        // Actualizar barras de progreso
-                        $('#month-orders-progress').css('width', `${Math.min(100, monthData.total || 0)}%`);
-                        $('#month-revenue-progress').css('width', `${Math.min(100, (monthData.revenue || 0) / 1000)}%`);
+                        let target = 1;
+                        if ((monthData.revenue || 0) > 100) {
+                            target = 10;
+                        }
+                        if ((monthData.revenue || 0) > 1000) {
+                            target = 100;
+                        }
+                        if ((monthData.revenue || 0) > 10000) {
+                            target = 1000;
+                        }
+                        if ((monthData.revenue || 0) > 100000) {
+                            target = 10000;
+                        }
+                        if ((monthData.revenue || 0) > 1000000) {
+                            target = 100000;
+                        }
+
+                        $('#month-revenue').html((monthData.revenue || 0).toFixed(2) + '€ / ' + (target * 100) + '€');
+                        $('#month-revenue-progress').css('width', `${Math.min(100, ((monthData.revenue || 0) / target))}%`);
+
+                        target = 10;
+                        if ((monthData.total || 0) > 10) {
+                            target = 50;
+                        }
+                        if ((monthData.total || 0) > 50) {
+                            target = 100;
+                        }
+                        if ((monthData.total || 0) > 100) {
+                            target = 500;
+                        }
+                        if ((monthData.total || 0) > 500) {
+                            target = 5000;
+                        }
+                        if ((monthData.total || 0) > 5000) {
+                            target = 50000;
+                        }
+
+                        $('#month-orders').html((monthData.total || 0) + ' / ' + target);
+                        $('#month-orders-progress').css('width', `${Math.min(100, ((monthData.total || 0) / target))}%`);
+
+                        //actualizar clientes nuevos y tasa de conversión si es necesario
+                        selectData("COUNT(*) as customers", "customers",
+                            `WHERE MONTH(create_at) = ${currentMonth} AND YEAR(create_at) = ${currentYear}`,
+                            (res) => {
+                                if (res.data.length > 0) {
+                                    const customerData = res.data[0];
+                                    $('#new-customers').html(customerData.customers || 0);
+
+                                    // Tasa de conversión (simplificada)
+                                    // const conversionRate = ((monthData.total || 0) / Math.max(1, customerData.customers || 1)) * 100;
+                                    // $('#conversion-rate').html(conversionRate.toFixed(2) + '%');
+                                    // $('#conversion-progress').css('width', `${Math.min(100, conversionRate)}%`);
+                                }
+                            }
+                        );
+
+
+
                     }
                 }
             );
@@ -597,10 +651,10 @@
             );
         }
 
-        // Actualizar datos cada 60 segundos
+        // Actualizar datos cada 10 segundos
         setInterval(() => {
             loadDashboardStats();
             loadRecentOrders();
-        }, 60000);
+        }, 1000);
     });
 </script>

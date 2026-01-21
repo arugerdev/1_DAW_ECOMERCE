@@ -40,8 +40,6 @@
                                 ];
                             }
                             $groupedProducts[$id]['quantity']++;
-
-
                             $price = floatval($product['price']);
                             if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
                                 $price = $price * (1 - floatval($product['sale_discound']) / 100);
@@ -57,8 +55,6 @@
                             $quantity = $item['quantity'];
                             $subtotal = $item['total'];
                             $cartTotal += $subtotal;
-
-
                             $unitPrice = floatval($product['price']);
                             if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
                                 $discount = floatval($product['sale_discound']);
@@ -145,8 +141,6 @@
         <?php endif; ?>
     </section>
 </section>
-
-
 <footer class="py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
@@ -174,8 +168,6 @@
 
             updateCartQuantity(productId, newQuantity);
         });
-
-
         $('.quantity-plus').on('click', function() {
             const productId = $(this).data('id');
             const input = $(`#cart-item-${productId} .quantity-input`);
@@ -198,8 +190,6 @@
                 input.val(currentValue - 1).trigger('change');
             }
         });
-
-
         $('.remove-item').on('click', function() {
             const productId = $(this).data('id');
             if (confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')) {
@@ -212,8 +202,6 @@
                 })
             }
         });
-
-
         $('#clear-cart').on('click', function() {
             if (confirm('¿Estás seguro de que quieres vaciar todo el carrito?')) {
                 $.ajax({
@@ -231,7 +219,6 @@
                 });
             }
         });
-
 
         function updateCartQuantity(productId, newQuantity) {
             $.ajax({
@@ -259,7 +246,6 @@
             });
         }
 
-
         function updateCartTotal() {
             let total = 0;
             $('.subtotal').each(function() {
@@ -268,14 +254,10 @@
             $('#cart-total').text(total.toFixed(2) + '€');
         }
 
-
         function checkEmptyCart() {
             if ($('#cart-table tbody tr').length === 0) {
                 location.reload();
             }
         }
-
-
-
     });
 </script>

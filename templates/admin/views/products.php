@@ -1,11 +1,5 @@
 <?php include "./modals/product-creator.php"; ?>
-
-<script>
-    function updateVisible(id, value) {
-        updateData('products', `is_visible = ${value}`, `WHERE id = ${id}`)
-    }
-</script>
-
+<?php include "./modals/product-editor.php"; ?>
 
 <div class="content-header">
     <div class="container-fluid">
@@ -47,14 +41,16 @@
                     </table>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
 
 <script defer>
     let tempToken = null;
+
+    function updateVisible(id, value) {
+        updateData('products', `is_visible = ${value}`, `WHERE id = ${id}`)
+    }
 
     $('.btn-modal-product-creator').on('click', () => {
         $('#modal-product-creator').modal('show')
@@ -64,9 +60,13 @@
 
         tempToken = uuidv4();
     });
+    $('#modal-product-editor').on('show.bs.modal', () => {
+
+        tempToken = uuidv4();
+    });
 
     $(document).ready(function() {
-        selectData("*", "products", "", (recibed) => {
+        selectData("p.id, p.is_visible AS visible, p.name AS nombre, p.short_description AS descripcion_corta, p.description AS descripcion, p.price AS precio, p.stock, p.on_sale AS oferta, p.sale_discound AS oferta_porcent, c.name AS categoria, p.create_at", "products p LEFT JOIN categories c ON p.   category = c.id", "", (recibed) => {
             const data = recibed.data
 
             if (data.length > 0) {
@@ -77,34 +77,48 @@
                             title: capitalizeFirstLetter(key)
                         }
                     }).concat({
-                        title: "Actions"
+                        title: "Acciones"
                     }),
                     data: data.map((row) => {
                         return Object.values(row).concat("")
                     }),
                     columnDefs: [{
-                            targets: 0,
+                            targets: [0,10],
                             visible: false,
                             searchable: false
                         },
                         {
                             targets: 1,
                             render: function(data, type, row) {
-                                return getCheckBox(row);
+                                return getCheckBox(data, `updateVisible(${row[0]}, this.checked)`);
 
                             }
                         },
                         {
-                            targets: [4, 5],
+                            targets: [3, 4],
                             render: function(data, type, row) {
                                 return `<p class="elipsis">${data}</p>`;
 
                             }
                         },
                         {
-                            targets: 3,
+                            targets: 5,
                             render: function(data, type, row) {
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
+                            }
+                        },
+                        {
+                            targets: 7,
+                            render: function(data, type, row) {
+                                return getCheckBox(data, null);
+
+                            }
+                        },
+                        {
+                            targets: 8,
+                            render: function(data, type, row) {
+                                return data + '%';
+
                             }
                         },
                         {
@@ -112,7 +126,7 @@
                             render: function(data, type, row) {
                                 const id = row[0]
 
-                                return getRowActions(id);
+                                return getRowActions(id, `editProduct(${id})`, `deleteProduct(${id})`, );
 
                             }
                         }
@@ -128,13 +142,6 @@
             }
         });
 
-        function getRowActions(row) {
-            return `<button class="${row}-editer btn-primary">Editar</button><button class="${row}-remover btn-danger" onClick="deleteProduct(${row})">Eliminar</button>`;
-        }
-
-        function getCheckBox(row) {
-            return `<input style="margin-left:32px" type='checkbox' value='${row[0]}' onChange="updateVisible(this.value, this.checked)" ${row[1] == 1 ? 'checked' : ''}>`
-        }
     })
 
     function deleteProduct(row) {
@@ -145,5 +152,11 @@
                 window.location.reload();
             })
         })
+    }
+
+    function editProduct(row) {
+        $('#modal-product-editor').data('product-id', row);
+        $('#modal-product-editor').modal('show');
+
     }
 </script>

@@ -14,14 +14,9 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="content">
     <div class="container-fluid">
         <section class="orders_editor">
-
-
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Todas las devoluciones</h3>
@@ -41,14 +36,9 @@
                     </table>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
-
-
-
 
 <script defer>
     $(document).ready(function() {
@@ -62,7 +52,7 @@
                             title: capitalizeFirstLetter(key)
                         }
                     }).concat({
-                        title: "Actions"
+                        title: "Acciones"
                     }),
                     data: data.map((row) => {
                         return Object.values(row).concat("")

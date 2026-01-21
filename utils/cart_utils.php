@@ -50,8 +50,6 @@ function deleteFromCart()
     }
 
     $productId = $_REQUEST["product_id"];
-
-
     $newCart = array_filter($_SESSION["cart_products"], function ($product) use ($productId) {
         return $product['id'] != $productId;
     });
@@ -72,8 +70,6 @@ function updateQuantity()
 
     $productId = $_REQUEST["product_id"];
     $newQuantity = intval($_REQUEST["quantity"]);
-
-
     $product = null;
     foreach ($_SESSION["cart_products"] as $item) {
         if ($item['id'] == $productId) {
@@ -85,25 +81,17 @@ function updateQuantity()
     if (!$product) {
         return json_encode(["success" => false, "message" => "Producto no encontrado"]);
     }
-
-
     $unitPrice = floatval($product['price']);
     if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
         $discount = floatval($product['sale_discound']);
         $unitPrice = $unitPrice * (1 - $discount / 100);
     }
-
-
     $currentItems = array_filter($_SESSION["cart_products"], function ($item) use ($productId) {
         return $item['id'] == $productId;
     });
-
-
     $newCart = array_filter($_SESSION["cart_products"], function ($item) use ($productId) {
         return $item['id'] != $productId;
     });
-
-
     for ($i = 0; $i < $newQuantity; $i++) {
         $newCart[] = $product;
     }

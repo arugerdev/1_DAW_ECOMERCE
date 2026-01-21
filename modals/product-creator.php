@@ -37,21 +37,6 @@
                                     <div class="form-group">
                                         <label for="product-category">Categoria</label>
                                         <select id="product-category" class="form-control custom-select">
-                                            <?php
-                                            require __DIR__ . "/../utils/db_utils.php";
-
-
-                                            $_REQUEST["select"] = "*";
-                                            $_REQUEST["table"] = "categories";
-                                            $_REQUEST["extra"] = "";
-
-                                            $recibe =  json_decode(selectData());
-
-                                            $data = $recibe->data;
-                                            foreach ($data as $key => $value) {
-                                                echo "<option value=" . $value->id . ">" . $value->name . "</option>";
-                                            }
-                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -124,10 +109,20 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <input type="file" id="product_images" multiple accept="image/*">
+                                        <!-- <input class="dropzone w-100 h-100" type="file" id="product_images" multiple accept="image/*"> -->
+
+                                        <label class="dropzone-file-upload" for="product_images">
+                                            <i class="fa-solid fa-images icon fs-1"></i>
+                                            <div class="text">
+                                                <span>Haz clic para subir imagen<small>/es</small></span>
+                                            </div>
+                                            <input type="file" id="product_images" multiple accept="image/*" style="display:none;">
+                                        </label>
                                         <section class="currentUploadedImages">
 
                                         </section>
+
+
                                     </div>
                                 </div>
 
@@ -147,6 +142,49 @@
 </div>
 
 <style>
+    .dropzone-file-upload {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        gap: 20px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #cacaca;
+        background-color: rgba(255, 255, 255, 1);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0px 48px 35px -48px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropzone-file-upload .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropzone-file-upload .icon svg {
+        height: 80px;
+        fill: rgba(75, 85, 99, 1);
+    }
+
+    .dropzone-file-upload .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropzone-file-upload .text span {
+        font-weight: 400;
+        color: rgba(75, 85, 99, 1);
+    }
+
+    .dropzone-file-upload input {
+        display: none;
+    }
+
     .create_product_form {
         display: flex;
         flex-direction: column;
@@ -200,42 +238,55 @@
 </style>
 
 <script defer>
-    let uploadedImages = [];
+    $(document).ready(() => {
+        selectData("*", "categories", "", (recibed) => {
+            const data = recibed.data;
 
-    $('.btn-cancel, .btn-close').on('click', () => {
-        cancelUpload();
-        $('#modal-product-creator').modal('hide');
-    });
+            data.forEach((category) => {
+                $('#product-category').append(
+                    `<option value="${category.id}">${category.name}</option>`
+                );
+            });
+        });
 
-    $("input[data-type='currency']").on({
-        keyup: function() {
-            formatCurrency($(this));
-        },
-        blur: function() {
-            formatCurrency($(this), "blur");
-        }
-    });
+        let uploadedImages = [];
 
-    $("#product_images").on('change', function() {
-        const files = this.files;
-        if (!files.length) return;
+        Dropzone.autoDiscover = false;
 
-        uploadTempImage({
-            files,
-            token: tempToken
-        }, (data) => {
-            data.files.forEach((src, index) => {
-                const imageId = 'img_' + Date.now() + '_' + index;
-                const imageObj = {
-                    id: imageId,
-                    path: src,
-                    filename: src.split('/').pop()
-                };
+        $('.btn-cancel, .btn-close').on('click', () => {
+            cancelUpload();
+            $('#modal-product-creator').modal('hide');
+        });
 
-                uploadedImages.push(imageObj);
+        $("input[data-type='currency']").on({
+            keyup: function() {
+                formatCurrency($(this));
+            },
+            blur: function() {
+                formatCurrency($(this), "blur");
+            }
+        });
 
-                $('.currentUploadedImages').append(
-                    `<div class="image-container" style="position: relative; display: inline-block; margin: 5px;">
+        $("#product_images").on('change', function() {
+            const files = this.files;
+            if (!files.length) return;
+
+            uploadTempImage({
+                files,
+                token: tempToken
+            }, (data) => {
+                data.files.forEach((src, index) => {
+                    const imageId = 'img_' + Date.now() + '_' + index;
+                    const imageObj = {
+                        id: imageId,
+                        path: src,
+                        filename: src.split('/').pop()
+                    };
+
+                    uploadedImages.push(imageObj);
+
+                    $('.currentUploadedImages').append(
+                        `<div class="image-container" style="position: relative; display: inline-block; margin: 5px;">
                             <img id="${imageId}" 
                                  src="${"/uploads" + src.split('/uploads')[1]}" 
                                  style="max-width: 64px; max-height:64px; object-fit:contain; aspect-ratio:1/1; cursor: pointer;" 
@@ -246,76 +297,78 @@
                                     style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;"
                                     data-id="${imageId}">×</button>
                         </div>`
-                );
+                    );
+                });
+
+                $(this).val('');
             });
 
-            $(this).val('');
         });
 
-    });
+        $(document).on('click', '.btn-remove-image', function(e) {
+            e.stopPropagation();
 
-    $(document).on('click', '.btn-remove-image', function(e) {
-        e.stopPropagation();
+            const imageId = $(this).data('id');
+            deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
+                $(this).parent('.image-container').addClass('removing');
+                $(this).parent('.image-container').remove();
+            });
 
-        const imageId = $(this).data('id');
-        deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
-            $(this).parent('.image-container').addClass('removing');
-            $(this).parent('.image-container').remove();
+            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
         });
 
-        uploadedImages = uploadedImages.filter(img => img.id !== imageId);
-    });
+        $(document).on('click', '.preview-image', function() {
+            const imageId = $(this).attr('id');
+            deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
+                $(this).parent('.image-container').addClass('removing');
+                $(this).parent('.image-container').remove();
+            });
 
-    $(document).on('click', '.preview-image', function() {
-        const imageId = $(this).attr('id');
-        deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
-            $(this).parent('.image-container').addClass('removing');
-            $(this).parent('.image-container').remove();
+            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
         });
 
-        uploadedImages = uploadedImages.filter(img => img.id !== imageId);
-    });
+        const upload = () => {
+            const name = $("#product-name").val();
+            const price = Number($("#product-price").val().replace(/[^0-9.-]+/g, ""));
+            const stock = $("#product-stock").val();
+            const short_description = $("#product-description-short").val();
+            const description = $("#product-description").val();
+            const category = $("#product-category").val();
+            const on_sale = $("#on-sale").is(":checked");
+            const sale_discound = $("#on-sale-discound").val();
 
-    const upload = () => {
-        const name = $("#product-name").val();
-        const price = Number($("#product-price").val().replace(/[^0-9.-]+/g, ""));
-        const stock = $("#product-stock").val();
-        const short_description = $("#product-description-short").val();
-        const description = $("#product-description").val();
-        const category = $("#product-category").val();
-        const on_sale = $("#on-sale").is(":checked");
-        const sale_discound = $("#on-sale-discound").val();
+            insertData(
+                "products",
+                "name, price, stock, short_description, description, category, on_sale, sale_discound",
+                `"${name}", ${price}, ${stock}, "${short_description}", "${description}", ${category}, ${on_sale ? 1:0}, ${sale_discound}`,
+                "",
+                (data) => {
+                    finalizeProductImages(data.newId, tempToken, () => {
+                        uploadedImages = [];
+                        location.reload();
+                    });
+                }
+            );
+        }
 
-        insertData(
-            "products",
-            "name, price, stock, short_description, description, category, on_sale, sale_discound",
-            `"${name}", ${price}, ${stock}, "${short_description}", "${description}", ${category}, ${on_sale ? 1:0}, ${sale_discound}`,
-            "",
-            (data) => {
-                finalizeProductImages(data.newId, tempToken, () => {
+        $(".create_product_form").on('submit', () => {
+            upload()
+        });
+
+        function cancelUpload() {
+            if (uploadedImages.length > 0) {
+
+                deleteAllTempImages(tempToken, () => {
                     uploadedImages = [];
-                    location.reload();
+                    $('.currentUploadedImages').empty();
                 });
             }
-        );
-    }
-
-    $(".create_product_form").on('submit', () => {
-        upload()
-    });
-
-    function cancelUpload() {
-        if (uploadedImages.length > 0) {
-
-            deleteAllTempImages(tempToken, () => {
-                uploadedImages = [];
-                $('.currentUploadedImages').empty();
-            });
         }
-    }
 
-    // On reload clear any temp images that might be left
-    $(document).ready(() => {
-        clearTemp(() => {});
+        // On reload clear any temp images that might be left
+        $(document).ready(() => {
+            clearTemp(() => {});
+        });
+
     });
 </script>

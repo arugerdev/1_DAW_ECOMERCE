@@ -2,213 +2,117 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
-$option = $_REQUEST["action"];
+$action = $_POST['action'] ?? '';
 
-switch ($option) {
-    case "save_customer_info":
-        echo (saveCustomerInfo());
+switch ($action) {
+    case 'save_customer_info':
+        echo saveCustomerInfo();
         break;
-    case "get_customer_info":
-        echo (getCustomerInfo());
+    case 'create_order':
+        echo createOrder($pdo);
         break;
-    case "create_order":
-        echo (createOrder());
+    case 'get_customer_info':
+        echo getCustomerInfo($pdo);
         break;
 }
 
 function saveCustomerInfo()
 {
-    if (!isset($_REQUEST["customer"])) {
-        return json_encode(["success" => false, "message" => "Datos del cliente no recibidos"]);
-    }
+    $_SESSION['customer'] = json_decode($_POST['customer'], true);
+    return json_encode(["success" => true]);
+}
 
-    $customer = json_decode($_REQUEST["customer"], true);
+function getCustomerInfo($pdo)
+{
+    try {
+        if (isset($_SESSION['customer'])) {
 
-    // Validar campos requeridos
-    $requiredFields = ['name', 'email', 'phone_number', 'address', 'city', 'cp', 'country'];
-    foreach ($requiredFields as $field) {
-        if (empty($customer[$field])) {
-            return json_encode(["success" => false, "message" => "El campo $field es requerido"]);
+            // Return the customer info stored in db because need all of them
+
+            $query = $pdo->prepare("SELECT * FROM customers WHERE id = ?");
+            $query->execute([$_SESSION['customer']['id']]);
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+
+            // Evitar informacion sesnible como password
+            unset($data['password']);
+
+            return json_encode([
+                "success" => true,
+                "customer" => $data
+            ]);
+        } else {
+            return json_encode(["success" => false]);
         }
+    } catch (Exception $e) {
+        return json_encode(["success" => false, "message" => $e->getMessage()]);
     }
-
-    $_SESSION["checkout_customer"] = $customer;
-
-    return json_encode([
-        "success" => true,
-        "message" => "Información guardada correctamente"
-    ]);
 }
 
-function getCustomerInfo()
+function createOrder($pdo)
 {
-    if (!isset($_SESSION["checkout_customer"])) {
-        return json_encode(["success" => false, "message" => "No hay información del cliente"]);
+    if (!isset($_SESSION['customer'], $_SESSION['cart_products'])) {
+        return json_encode(["success" => false]);
     }
 
-    return json_encode([
-        "success" => true,
-        "customer" => $_SESSION["checkout_customer"]
-    ]);
-}
-
-function createOrder()
-{
-    global $pdo;
-
-    if (!isset($_SESSION["checkout_customer"])) {
-        return json_encode(["success" => false, "message" => "Información del cliente no encontrada"]);
-    }
-
-    if (!isset($_SESSION["cart_products"]) || empty($_SESSION["cart_products"])) {
-        return json_encode(["success" => false, "message" => "El carrito está vacío"]);
-    }
-
-    $customer = $_SESSION["checkout_customer"];
-    $shippingMethod = $_REQUEST["shipping_method"] ?? "standard";
-    $paymentMethod = $_REQUEST["payment_method"] ?? "card";
+    $customer = $_SESSION['customer'];
+    $products = $_SESSION['cart_products'];
 
     $subtotal = 0;
-    $groupedProducts = [];
-
-    foreach ($_SESSION["cart_products"] as $product) {
-        $id = $product['id'];
-        if (!isset($groupedProducts[$id])) {
-            $groupedProducts[$id] = [
-                'product' => $product,
-                'quantity' => 0,
-                'price' => floatval($product['price'])
-            ];
-
-            if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
-                $discount = floatval($product['sale_discound']);
-                $groupedProducts[$id]['price'] = $groupedProducts[$id]['price'] * (1 - $discount / 100);
-            }
-        }
-        $groupedProducts[$id]['quantity']++;
+    foreach ($products as $p) {
+        $subtotal += $p['price'];
     }
 
-    foreach ($groupedProducts as $item) {
-        $subtotal += $item['price'] * $item['quantity'];
-    }
+    $total = $subtotal + 5;
 
-    $shippingCost = $shippingMethod === "express" ? 10.00 : 5.00;
-    $total = $subtotal + $shippingCost;
+    $pdo->beginTransaction();
 
     try {
-        $pdo->beginTransaction();
-
-        // Crear o obtener cliente
-        $customerId = createOrGetCustomer($customer, $pdo);
-
-        if ($customerId === 0) {
-            throw new Exception("Error al crear o obtener el cliente");
-        }
-
-        $orderNumber = generateOrderNumber();
-        $status = "pending";
-
-        // Insertar pedido
-        $stmt = $pdo->prepare("INSERT INTO orders (order_number, customer_id, total_amount, status) 
-                               VALUES (:order_number, :customer_id, :total_amount, :status)");
-
+        $stmt = $pdo->prepare("
+            INSERT INTO orders (order_number, customer_id, total_amount)
+            VALUES (?, ?, ?)
+        ");
+        $orderNumber = 'ORD-' . strtoupper(uniqid());
         $stmt->execute([
-            ':order_number' => $orderNumber,
-            ':customer_id' => $customerId,
-            ':total_amount' => $total,
-            ':status' => $status
+            $orderNumber,
+            $_SESSION['customer']['id'] ?? createGuest($pdo, $customer),
+            $total
         ]);
 
         $orderId = $pdo->lastInsertId();
 
-        // Insertar productos del pedido
-        foreach ($groupedProducts as $item) {
-            $product = $item['product'];
-            $quantity = $item['quantity'];
-            $price = $item['price'];
-            $totalItem = $price * $quantity;
-
-            $stmt = $pdo->prepare("INSERT INTO prodToOrder (orderId, productId, quantity, unit_price, total_price) 
-                                   VALUES (:orderId, :productId, :quantity, :unit_price, :total_price)");
-
-            $stmt->execute([
-                ':orderId' => $orderId,
-                ':productId' => $product['id'],
-                ':quantity' => $quantity,
-                ':unit_price' => $price,
-                ':total_price' => $totalItem
-            ]);
-
-            // Actualizar stock del producto
-            $updateStmt = $pdo->prepare("UPDATE products SET stock = stock - :quantity WHERE id = :product_id");
-            $updateStmt->execute([
-                ':quantity' => $quantity,
-                ':product_id' => $product['id']
-            ]);
+        foreach ($products as $p) {
+            $stmt = $pdo->prepare("
+                INSERT INTO prodToOrder (orderId, productId, quantity, unit_price, total_price)
+                VALUES (?, ?, 1, ?, ?)
+            ");
+            $stmt->execute([$orderId, $p['id'], $p['price'], $p['price']]);
         }
 
         $pdo->commit();
+        unset($_SESSION['cart_products'], $_SESSION['customer']);
 
-        // Limpiar sesiones
-        unset($_SESSION["cart_products"]);
-        unset($_SESSION["checkout_customer"]);
-
-        return json_encode([
-            "success" => true,
-            "order_id" => $orderId,
-            "order_number" => $orderNumber,
-            "total" => $total,
-            "message" => "Pedido creado correctamente"
-        ]);
+        return json_encode(["success" => true, "orderNumber" => $orderNumber]);
     } catch (Exception $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollback();
-        }
-
-        return json_encode([
-            "success" => false,
-            "message" => "Error al crear el pedido: " . $e->getMessage()
-        ]);
+        $pdo->rollBack();
+        return json_encode(["success" => false, "message" => $e->getMessage()]);
     }
 }
 
-function createOrGetCustomer($customerData, $pdo)
+function createGuest($pdo, $c)
 {
-    try {
-        // Verificar si el cliente ya existe
-        $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = :email");
-        $stmt->execute([':email' => $customerData['email']]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("
+        INSERT INTO customers (name,email,phone_number,address,city,cp,country)
+        VALUES (?,?,?,?,?,?,?)
+    ");
+    $stmt->execute([
+        $c['name'],
+        $c['email'],
+        $c['phone_number'],
+        $c['address'],
+        $c['city'],
+        $c['cp'],
+        $c['country']
+    ]);
 
-        if ($result) {
-            return $result['id'];
-        }
-
-        // Crear nuevo cliente
-        $stmt = $pdo->prepare("INSERT INTO customers (name, last_name, email, phone_number, 
-                                 address, city, cp, country, create_at) 
-                               VALUES (:name, :last_name, :email, :phone_number, :address, 
-                                       :city, :cp, :country, NOW())");
-
-        $stmt->execute([
-            ':name' => $customerData['name'],
-            ':last_name' => $customerData['last_name'] ?? '',
-            ':email' => $customerData['email'],
-            ':phone_number' => $customerData['phone_number'],
-            ':address' => $customerData['address'],
-            ':city' => $customerData['city'],
-            ':cp' => $customerData['cp'],
-            ':country' => $customerData['country']
-        ]);
-
-        return $pdo->lastInsertId();
-    } catch (Exception $e) {
-        error_log("Error en createOrGetCustomer: " . $e->getMessage());
-        return 0;
-    }
-}
-
-function generateOrderNumber()
-{
-    return 'ORD-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
+    return $pdo->lastInsertId();
 }

@@ -14,14 +14,14 @@
                     <p class="lead mb-4">
                         Tu pedido ha sido procesado correctamente.
                         <br>Te hemos enviado un email con todos los detalles.
-                    </p>    
+                    </p>
 
                     <div class="alert alert-info mb-4">
                         <h5 class="alert-heading mb-2">
                             <i class="fas fa-receipt me-2"></i>
                             Número de pedido:
                             <span class="badge bg-primary fs-6" id="order-number">
-                                <?php echo isset($_GET['order_id']) ? '#' . $_GET['order_id'] : ''; ?>
+                                <?php echo isset($_GET['orderNumber']) ? '#' . $_GET['orderNumber'] : ''; ?>
                             </span>
                         </h5>
                         <p class="mb-0">Guarda este número para cualquier consulta</p>

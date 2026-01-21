@@ -19,13 +19,18 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex">
-                <a class="btn btn-outline-dark" type="submit" href="/cart">
+
+            <section class="d-flex flex-row gap-2">
+                <a class="btn btn-outline-dark" href="/orders">
+                    <i class="fa-solid fa-circle-user"></i>
+                    Mis Compras
+                </a>
+                <a class="btn btn-outline-dark" href="/cart">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Carrito
                     <span id="cart-products-quantity" class="badge bg-dark text-white ms-1 rounded-pill"> <?php echo (count($_SESSION["cart_products"]  ?? [])) ?></span>
                 </a>
-            </form>
+            </section>
         </div>
     </div>
 

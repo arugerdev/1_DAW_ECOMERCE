@@ -41,9 +41,6 @@ Remember activate in php.ini:
 **Or copy the custom [*php.ini*](https://raw.githubusercontent.com/arugerdev/1_DAW_ECOMERCE/refs/heads/main/php.ini) in this repo, and paste and replace to the directory where is php installed.**
 
 
-
-
-
 Start the server
 
 ```bach
@@ -62,9 +59,6 @@ C:/php/php.exe -S 192.168.2.175:80
 ```bach 
 C:/php/php.exe -S localhost:80 
 ```
-
-
-
 ## Created for
 
 This project is created for 1ºDAW practices, for Evirom company (Cañada Rosal, Sevilla, Spain)
@@ -84,7 +78,7 @@ Is a simple project and the first created by me with this technologies.
 - List products ✅
 - Create products ✅
 - Remove products ✅
-- Edit products ❌
+- Edit products ✅
 - Upload images for products ✅
 - Load images for products ✅
 - Beauty products see as customer ⚠️
@@ -92,10 +86,9 @@ Is a simple project and the first created by me with this technologies.
 - Shipping function ✅
 - Login admin ✅
 - Login and Register ⚠️
-- Token access ❌
 - Shopping cart ✅
 
-**Progress: 35% ███████▒▒▒▒▒▒▒░░░░░░**
+**Progress: 50% ██████████▒▒▒▒▒▒▒░░░**
 
 ## License
 

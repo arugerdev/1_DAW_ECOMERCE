@@ -1,7 +1,4 @@
-
 <?php include_once __DIR__ . "/../components/navbar.php" ?>
-
-
 <section class="card p-0 p-lg-4">
 
     <section class="card-header">
@@ -30,9 +27,6 @@
         <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
     </div>
 </footer>
-
-
-
 <script defer>
     const container = $('.product-list-container')
 

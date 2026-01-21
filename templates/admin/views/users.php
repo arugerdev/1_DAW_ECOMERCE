@@ -1,7 +1,4 @@
 <?php include "./modals/user-creator.php"; ?>
-
-
-
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -17,14 +14,9 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="content">
     <div class="container-fluid">
         <section class="users_editor">
-
-
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Todos los Usuarios</h3>
@@ -42,14 +34,9 @@
                     </table>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
-
-
-
 
 <script defer>
     $('.btn-modal-user-creator').on('click', () => {
@@ -84,7 +71,7 @@
                             render: function(data, type, row) {
                                 const id = row[0]
 
-                                return getRowActions(id);
+                                return getRowActions(id, null, `deleteData('users','id',${id},'',location.reload())`);
 
                             }
                         }
@@ -100,9 +87,9 @@
             }
         });
 
-        function getRowActions(row) {
-            return `<button class="${row}-remover btn-danger" onClick="deleteData('users','id',${row},'',location.reload())">Eliminar</button>`;
-        }
+        // function getRowActions(row) {
+        //     return `<button class="${row}-remover btn-danger" onClick="deleteData('users','id',${row},'',location.reload())">Eliminar</button>`;
+        // }
 
     })
 </script>

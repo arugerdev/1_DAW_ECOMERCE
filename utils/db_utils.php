@@ -41,7 +41,6 @@ function selectData()
         $query->execute();
         $result = $query->fetchAll();
 
-
         http_response_code(200);
         return json_encode([
             "success" => true,

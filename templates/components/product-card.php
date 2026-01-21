@@ -4,8 +4,6 @@ require '../../utils/sessions.php';
 $data = json_decode($_GET["PROD_DATA"]);
 
 ?>
-
-
 <div class="col">
     <div>
         <a style="width: 100%; height:100%; display:flex; flex-direction:column; justify-content:center; place-items:center;" href="/product?id=<?php echo $data->id ?>">
@@ -14,7 +12,14 @@ $data = json_decode($_GET["PROD_DATA"]);
                     <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                 <?php endif ?>
                 <?php
-                echo "<img class=\"card-img-top\" src=\"/uploads/img/products/$data->id/0.png\" alt=\"...\"  onerror=\"this.onerror=null; this.src='/assets/img/logo.png'\" style=\"max-width:128px; max-height: 128px; aspect-ratio:1/1; object-fit:contain;\" />";
+                if (is_dir($_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$data->id/")) {
+                    $files = array_diff(scandir($_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$data->id/"), array('.', '..'));
+                    $imgSrc = "/uploads/img/products/$data->id/" . array_values($files)[0];
+                } else {
+                    $imgSrc = "https://placehold.co/128";
+                }
+
+                echo "<img class=\"card-img-top\" src=\"$imgSrc\" alt=\"...\"  onerror=\"this.onerror=null; this.src='https://placehold.co/128'\" style=\"max-width:128px; max-height: 128px; aspect-ratio:1/1; object-fit:contain;\" />";
                 ?>
                 <div class="card-body p-0 px-2 w-100">
                     <div class="text-start text-secondary w-100">

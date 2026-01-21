@@ -15,14 +15,9 @@
         </div>
     </div>
 </div>
-
-
-
 <div class="content">
     <div class="container-fluid">
         <section class="orders_editor">
-
-
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Todas las categorias</h3>
@@ -44,21 +39,14 @@
                     </table>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>
-
-
-
 
 <script defer>
     $('.btn-modal-category-creator').on('click', () => {
         $('#modal-category-creator').modal('show')
     })
-
-
     $(document).ready(function() {
         selectData("*", "categories", "", (res) => {
             const data = res.data
@@ -70,20 +58,24 @@
                             title: capitalizeFirstLetter(key)
                         }
                     }).concat({
-                        title: "Actions"
+                        title: "Acciones"
                     }),
                     data: data.map((row) => {
                         return Object.values(row).concat("")
                     }),
                     columnDefs: [{
-                            targets: 0,
+                            targets: [0, 2],
                             visible: false,
                             searchable: false
                         },
                         {
                             targets: 3,
                             render: function(data, type, row) {
-                                return getRowActions(row);
+                                const id = row[0]
+                                // No borrar "Sin categoria"
+                                if (id == 1) return ''
+
+                                return getRowActions(id, `editCategory(${id})`, `deleteCategory(${id})`);
 
                             }
                         },
@@ -98,26 +90,15 @@
 
             }
 
-            function getRowActions(row) {
-                if (row[0] == 1) return "";
 
-                return `
-                <div class="btn-group" role="group">
-                    <button class="${row[0]}-editer btn btn-sm btn-outline-primary edit-category-btn" 
-                            data-toggle="tooltip" 
-                            title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="${row[0]}-remover btn btn-sm btn-outline-danger delete-category-btn" 
-                                onClick="deleteData('categories','id',${row[0]},'',location.reload())"
-                            data-toggle="tooltip" 
-                            title="Eliminar">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-                
-                `;
-            }
         });
     })
+
+    function deleteCategory(row) {
+        deleteData('categories', 'id', row, '', location.reload())
+    }
+
+    function editCategory(row) {
+        alert("Funcionalidad en desarrollo")
+    }
 </script>

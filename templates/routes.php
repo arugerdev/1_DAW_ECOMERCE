@@ -23,17 +23,24 @@ switch ($url) {
     case "/cart":
         include "./templates/views/cart.php";
         break;
-   case "/checkout":
+    case "/orders":
+        include "./templates/views/orders.php";
+        break;
+    case "/login":
+        include "./templates/views/login.php";
+        break;
+    case "/register":
+        include "./templates/views/register.php";
+        break;
+    case "/checkout":
         include "./templates/views/checkout.php";
         break;
-   case "/checkout/confirm":
+    case "/checkout/confirm":
         include "./templates/views/checkout_confirm.php";
         break;
-   case "/checkout/success":
+    case "/checkout/success":
         include "./templates/views/checkout_success.php";
         break;
-
-
     default:
         http_response_code(404);
         include "./templates/views/404.php";
