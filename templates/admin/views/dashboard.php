@@ -284,7 +284,6 @@
 
             // Pedidos totales (ajustar según tu estructura de orders)
             selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "", (res) => {
-                console.log(res.data);
                 if (res.data.length > 0) {
                     const order = res.data[0];
                     $('#recently-orders').html(order.total || 0);
@@ -617,7 +616,7 @@
                             html += `
                             <tr>
                                 <td>
-                                    <a href="/admin/orders/edit/${order.id}" class="font-weight-bold">
+                                    <a href="/admin/orders?edit=${order.id}" class="font-weight-bold">
                                         #${order.id.toString().padStart(6, '0')}
                                     </a>
                                 </td>

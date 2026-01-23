@@ -145,10 +145,8 @@
     })
 
     function deleteProduct(row) {
-        console.log(row)
         deleteData('products', 'id', row, '', () => {
             deleteImages(row, (data) => {
-                console.log(data)
                 window.location.reload();
             })
         })

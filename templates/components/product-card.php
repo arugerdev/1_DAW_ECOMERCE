@@ -56,7 +56,6 @@ $data = json_decode($_GET["PROD_DATA"]);
 
 <script defer>
     $("#add-to-cart-<?php echo $data->id ?>").on("click", (evnt) => {
-        console.log(evnt)
         addToCart(<?php echo json_encode($data) ?>, (data) => {
             upCart()
 

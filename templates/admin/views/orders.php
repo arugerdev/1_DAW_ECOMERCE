@@ -42,14 +42,19 @@
 </div>
 
 <script defer>
+    function getQueryParam(param) {
+        const params = new URLSearchParams(window.location.search)
+        return params.get(param)
+    }
+
+
     $(document).ready(function() {
         selectData("c.email, c.phone_number, o.*", "orders o LEFT JOIN customers c ON o.customer_id = c.id", "", (res) => {
             const data = res.data
 
-            console.log(data)
             if (data.length > 0) {
 
-                $('#orders-table').DataTable({
+                let orders = $('#orders-table').DataTable({
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -107,6 +112,23 @@
                     lengthChange: false,
 
                 });
+
+                const editId = getQueryParam('edit')
+
+                if (editId) {
+                    // Espera un tick para asegurar render completo
+                    setTimeout(() => {
+                        editOrder(parseInt(editId))
+                    }, 0)
+
+                    $('#modal-order-editor').on('hidden.bs.modal', () => {
+                        const url = new URL(window.location)
+                        url.searchParams.delete('edit')
+                        window.history.replaceState({}, '', url)
+                    })
+
+                }
+
 
             }
         });

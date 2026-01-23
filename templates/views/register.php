@@ -18,9 +18,9 @@ if (isLoggedIn()) {
 
 <?php include __DIR__ . "/../components/navbar.php"; ?>
 
- <!-- # checkout form -->
+<!-- # checkout form -->
 
-<?php 
+<?php
 
 /*
 

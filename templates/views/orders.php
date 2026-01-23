@@ -156,7 +156,6 @@ if (!isLoggedIn()) {
                 Object.values(groupedProducts).forEach(prod => {
                     getProductImages(prod.id, (data) => {
                         const images = data.images;
-                        console.log(images)
 
                         tbody.append(`
                         <tr>

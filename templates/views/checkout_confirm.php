@@ -300,9 +300,6 @@
             const shippingMethod = $('input[name="shipping_method"]:checked').val();
             const paymentMethod = $('input[name="payment_method"]:checked').val();
 
-            console.log(shippingMethod)
-            console.log(paymentMethod)
-
             $.ajax({
                 url: "../../utils/checkout_utils.php",
                 type: "POST",

@@ -1,6 +1,5 @@
 
 function addToCart(item, callback = () => { }) {
-    console.log(item)
     $.ajax({
         url: "/utils/cart_utils.php",
         type: "POST",
@@ -16,7 +15,6 @@ function addToCart(item, callback = () => { }) {
 }
 
 function deleteFromCart(productId, callback = () => { }) {
-    console.log(productId)
     $.ajax({
         url: "/utils/cart_utils.php",
         type: "POST",

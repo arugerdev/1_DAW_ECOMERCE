@@ -81,7 +81,6 @@ $_SESSION["cart_products"] = $validatedCart;
 
     selectData('p.*, COUNT(oi.id) as sales', 'products p LEFT JOIN prodToOrder oi ON p.id = oi.productId', 'WHERE is_visible = TRUE GROUP BY p.id ORDER BY sales DESC LIMIT 12', (result) => {
         const data = result.data;
-        console.log(data)
         data.map((result) => {
             $.ajax({
                 type: 'GET',

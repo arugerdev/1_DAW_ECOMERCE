@@ -59,7 +59,6 @@
 
 <script defer>
     function getOrderData(id, callback) {
-        console.log(id)
         selectData("*", "orders", `WHERE id = ${id}`, (res) => {
             callback(res.data[0])
         })

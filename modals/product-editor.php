@@ -419,7 +419,6 @@
                     `name = "${name}", price = ${price}, stock = ${stock}, short_description = "${short_description}", description = "${description}", category = ${category}, on_sale = ${on_sale ? 1 : 0}, sale_discound = ${sale_discount}`,
                     `WHERE id = ${productId}`,
                     (data) => {
-                        console.log(data);
                         finalizeProductImages(productId, tempToken, () => {
                             uploadedImages = [];
                             originalImages = [];

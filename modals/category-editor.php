@@ -106,7 +106,6 @@
         const id = $('#modal-category-editor').data('product-id')
 
         selectData("name", "categories", `WHERE id = ${id}`, (res) => {
-            console.log(res.data[0].name)
             $("#editor-category-name").val(res.data[0].name)
         })
 

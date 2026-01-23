@@ -72,7 +72,6 @@
         selectData('*', 'orders', 'WHERE order_number = "<?php echo $_GET['orderNumber'] ?>"', (data) => {
             const order = data.data[0];
 
-            console.log(order)
             $('#order-total').html(order.total_amount + "€")
             $('#order-status').html(order.status )
             $('#payment-method').html(order.payment_method )

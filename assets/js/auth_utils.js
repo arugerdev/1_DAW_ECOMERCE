@@ -24,8 +24,6 @@ function register(customer, callback = () => { }) {
             customer: JSON.stringify(customer),
         },
         success: (data) => {
-            console.log(customer)
-            console.log(data)
             callback(JSON.parse(data))
         }
     });
