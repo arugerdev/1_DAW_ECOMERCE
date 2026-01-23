@@ -26,7 +26,12 @@ $data = $recibe->data[0];
 
                     if (is_dir($dir)) {
                         $files = array_diff(scandir($dir), array('.', '..'));
-                        $imgSrc = "/uploads/img/products/" . $id . "/" . array_values($files)[0];
+                        if (!$files) {
+                            $imgSrc = "https://placehold.co/512";
+                        } else {
+
+                            $imgSrc = "/uploads/img/products/" . $id . "/" . array_values($files)[0];
+                        }
                     } else {
                         $imgSrc = "https://placehold.co/512";
                     }
@@ -63,68 +68,6 @@ $data = $recibe->data[0];
                 <p><?php echo $data->short_description ?></p>
 
                 <hr>
-                <!-- <h4>Colores permitidos</h4>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-default text-center active">
-                        <input type="radio" name="color_option" id="color_option_a1" autocomplete="off" checked="">
-                        Green
-                        <br>
-                        <i class="fas fa-circle text-green"></i>
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a2" autocomplete="off">
-                        Blue
-                        <br>
-                        <i class="fas fa-circle text-blue"></i>
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a3" autocomplete="off">
-                        Purple
-                        <br>
-                        <i class="fas fa-circle text-purple"></i>
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a4" autocomplete="off">
-                        Red
-                        <br>
-                        <i class="fas fa-circle text-red"></i>
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_a5" autocomplete="off">
-                        Orange
-                        <br>
-                        <i class="fas fa-circle text-orange"></i>
-                    </label>
-                </div>
-
-                <h4 class="mt-3">Talla <small>Por favor selecciona una talla</small></h4>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                        <span class="text-md">S</span>
-                        <br>
-                        Small
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b2" autocomplete="off">
-                        <span class="text-md">M</span>
-                        <br>
-                        Medium
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b3" autocomplete="off">
-                        <span class="text-md">L</span>
-                        <br>
-                        Large
-                    </label>
-                    <label class="btn btn-default text-center">
-                        <input type="radio" name="color_option" id="color_option_b4" autocomplete="off">
-                        <span class="text-md">XL</span>
-                        <br>
-                        Xtra-Large
-                    </label>
-                </div> -->
-
                 <div class="text-success py-0 px-0 mt-4">
 
                     <?php
@@ -148,17 +91,8 @@ $data = $recibe->data[0];
                 </div>
 
                 <div class="mt-4 product-share">
-                    <a href="#" class="text-gray">
-                        <i class="fab fa-facebook-square fa-2x"></i>
-                    </a>
-                    <a href="#" class="text-gray">
-                        <i class="fab fa-twitter-square fa-2x"></i>
-                    </a>
-                    <a href="#" class="text-gray">
-                        <i class="fas fa-envelope-square fa-2x"></i>
-                    </a>
-                    <a href="#" class="text-gray">
-                        <i class="fas fa-rss-square fa-2x"></i>
+                    <a id="share-button" class="text-gray" style="cursor: pointer;">
+                        <i class="fa-solid fa-square-share-nodes fa-2x"></i>
                     </a>
                 </div>
 
@@ -179,17 +113,19 @@ $data = $recibe->data[0];
         mainImg.attr("src", event.target.src);
     })
     $("#add-to-cart").on("click", (evnt) => {
-        console.log(evnt)
         addToCart(<?php echo json_encode($data) ?>, (data) => {
-            console.log(data)
-            $(document).Toasts('create', {
-                position: "bottomRight",
-                title: 'Añadido correctamente al carrito',
-                class: "toasts-success text-succes color-success success bg-success",
-                showHideTransition: 'slide',
-                icon: 'success'
-            })
-
+            upCart()
         })
     })
+
+
+    $('#share-button').on('click', function(event) {
+
+
+        navigator.share({
+            title: "Compartir",
+            url: window.location,
+            text: "Mira este producto genial que he encontrado en :" + window.location
+        })
+    });
 </script>

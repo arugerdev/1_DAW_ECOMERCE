@@ -71,6 +71,9 @@
                             render: function(data, type, row) {
                                 const id = row[0]
 
+                                // Admin filter
+                                if (id == 1) return '';
+                                
                                 return getRowActions(id, null, `deleteData('users','id',${id},'',location.reload())`);
 
                             }

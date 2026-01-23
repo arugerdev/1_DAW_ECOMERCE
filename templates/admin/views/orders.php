@@ -1,3 +1,5 @@
+<?php include "./modals/order-editor.php"; ?>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -41,8 +43,10 @@
 
 <script defer>
     $(document).ready(function() {
-        selectData("*", "orders", "", (res) => {
+        selectData("c.email, c.phone_number, o.*", "orders o LEFT JOIN customers c ON o.customer_id = c.id", "", (res) => {
             const data = res.data
+
+            console.log(data)
             if (data.length > 0) {
 
                 $('#orders-table').DataTable({
@@ -57,29 +61,42 @@
                         return Object.values(row).concat("")
                     }),
                     columnDefs: [{
-                            targets: [0, 8],
+                            targets: [2, 10, 4],
                             visible: false,
                             searchable: false
                         },
                         {
-                            targets: [3],
+                            targets: [5],
                             render: function(data, type, row) {
                                 return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
                             }
                         },
                         {
-                            targets: [7],
+                            targets: [9],
                             render: function(data, type, row) {
                                 return getCheckBox(data, null);
                             }
                         },
                         {
-                            targets: 9,
+                            targets: 11,
                             render: function(data, type, row) {
                                 const id = row[0]
 
                                 return getRowActions(id, `editOrder(${id})`, `deleteOrder(${id})`);
 
+                            }
+                        },
+                        {
+                            targets: 6, // status
+                            render: (data) => {
+                                const colors = {
+                                    pending: 'warning',
+                                    paid: 'info',
+                                    sent: 'primary',
+                                    completed: 'success',
+                                    cancelled: 'danger'
+                                }
+                                return `<span class="badge badge-${colors[data] || 'secondary'}">${data}</span>`
                             }
                         }
                     ],
@@ -100,6 +117,7 @@
     }
 
     function editOrder(row) {
-        alert("Funcionalidad en desarrollo")
+        $('#modal-order-editor').data('id', row)
+        $('#modal-order-editor').modal('show')
     }
 </script>

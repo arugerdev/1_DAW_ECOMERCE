@@ -1,14 +1,9 @@
 <?php
+error_reporting(0);
+
 ini_set('display_errors', 'Off');
 include "./utils/router.php";
-// include "./utils/db_utils.php";
 
-$option = $_POST['option'];
-
-if ($option == "?") {
-
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +16,7 @@ if ($option == "?") {
 
     <?php
 
-    echo ("<title>" . (is_admin_route() ? "EviMerce - Admin Panel" : "EviMerce") . "</title>")
+    echo ("<title>" . (is_admin_route() ? "EviMerce - Admin Panel" : "ElectricMer") . "</title>")
     ?>
     <link rel="stylesheet" href="/assets/css/index.css">
 
@@ -29,6 +24,7 @@ if ($option == "?") {
 
     <script src="/assets/js/cart_utils.js"></script>
     <script src="/assets/js/db_utils.js"></script>
+    <script src="/assets/js/auth_utils.js"></script>
     <script src="/assets/js/images_utils.js"></script>
     <script src="/assets/js/utils.js"></script>
 

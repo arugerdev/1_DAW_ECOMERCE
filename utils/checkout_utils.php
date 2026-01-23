@@ -5,21 +5,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 $action = $_POST['action'] ?? '';
 
 switch ($action) {
-    case 'save_customer_info':
-        echo saveCustomerInfo();
-        break;
     case 'create_order':
         echo createOrder($pdo);
         break;
     case 'get_customer_info':
         echo getCustomerInfo($pdo);
         break;
-}
-
-function saveCustomerInfo()
-{
-    $_SESSION['customer'] = json_decode($_POST['customer'], true);
-    return json_encode(["success" => true]);
 }
 
 function getCustomerInfo($pdo)
@@ -56,6 +47,8 @@ function createOrder($pdo)
 
     $customer = $_SESSION['customer'];
     $products = $_SESSION['cart_products'];
+    $shipping = $_POST['shipping_method'];
+    $payment = $_POST['payment_method'];
 
     $subtotal = 0;
     foreach ($products as $p) {
@@ -68,14 +61,16 @@ function createOrder($pdo)
 
     try {
         $stmt = $pdo->prepare("
-            INSERT INTO orders (order_number, customer_id, total_amount)
-            VALUES (?, ?, ?)
+            INSERT INTO orders (order_number, customer_id, total_amount, shipping_method, payment_method)
+            VALUES (?, ?, ?, ?, ?)
         ");
         $orderNumber = 'ORD-' . strtoupper(uniqid());
         $stmt->execute([
             $orderNumber,
-            $_SESSION['customer']['id'] ?? createGuest($pdo, $customer),
-            $total
+            $_SESSION['customer']['id'],
+            $total,
+            $shipping,
+            $payment
         ]);
 
         $orderId = $pdo->lastInsertId();
@@ -96,23 +91,4 @@ function createOrder($pdo)
         $pdo->rollBack();
         return json_encode(["success" => false, "message" => $e->getMessage()]);
     }
-}
-
-function createGuest($pdo, $c)
-{
-    $stmt = $pdo->prepare("
-        INSERT INTO customers (name,email,phone_number,address,city,cp,country)
-        VALUES (?,?,?,?,?,?,?)
-    ");
-    $stmt->execute([
-        $c['name'],
-        $c['email'],
-        $c['phone_number'],
-        $c['address'],
-        $c['city'],
-        $c['cp'],
-        $c['country']
-    ]);
-
-    return $pdo->lastInsertId();
 }

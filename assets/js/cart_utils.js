@@ -2,7 +2,7 @@
 function addToCart(item, callback = () => { }) {
     console.log(item)
     $.ajax({
-        url: "../../utils/cart_utils.php",
+        url: "/utils/cart_utils.php",
         type: "POST",
         data: {
             "action": "add",
@@ -18,7 +18,7 @@ function addToCart(item, callback = () => { }) {
 function deleteFromCart(productId, callback = () => { }) {
     console.log(productId)
     $.ajax({
-        url: "../../utils/cart_utils.php",
+        url: "/utils/cart_utils.php",
         type: "POST",
         data: {
             "action": "delete",
@@ -29,4 +29,27 @@ function deleteFromCart(productId, callback = () => { }) {
         }
     });
 
+}
+
+
+function loadOrderSummary(callback = () => { }) {
+    $.ajax({
+        url: "/utils/cart_utils.php",
+        type: "POST",
+        data: {
+            "action": "select"
+        },
+        success: (data) => callback(JSON.parse(data))
+    });
+}
+
+function updateCheckoutTotals(callback = () => { }) {
+    $.ajax({
+        url: "/utils/cart_utils.php",
+        type: "POST",
+        data: {
+            "action": "get_cart_total"
+        },
+        success: (data) => callback(JSON.parse(data))
+    });
 }

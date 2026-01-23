@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once __DIR__ . '/sessions.php';
 
 $option = $_REQUEST["action"];

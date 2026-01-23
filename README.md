@@ -72,7 +72,7 @@ Is a simple project and the first created by me with this technologies.
 ##### *❌ -> Not implemented / Not working*
 
 
-- Fully SQL Database ⚠️
+- Fully SQL Database ✅
 - Separate Admin / Customer UI ✅
 - Custom PHP router ✅
 - List products ✅
@@ -81,14 +81,23 @@ Is a simple project and the first created by me with this technologies.
 - Edit products ✅
 - Upload images for products ✅
 - Load images for products ✅
-- Beauty products see as customer ⚠️
+- Beauty products see as customer ✅
 - Buy function ✅
 - Shipping function ✅
 - Login admin ✅
-- Login and Register ⚠️
+- Login ✅
 - Shopping cart ✅
+- Categories filter ✅
+- Edit orders ✅
+- Edit categories ✅
+- Search products ✅
+- Chat bot for customers ❌
+- Refounds ❌ 
+- Edit Refounds ❌ 
+- Mobile responsive ⚠️ (Responsive by default but in some screens can be better)
 
-**Progress: 50% ██████████▒▒▒▒▒▒▒░░░**
+
+**Progress: 70% ██████████████▒▒▒▒▒░**
 
 ## License
 

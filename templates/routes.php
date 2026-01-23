@@ -15,7 +15,9 @@ switch ($url) {
     case "/products":
         include "./templates/views/products.php";
         break;
-
+ case "/products/category":
+        include "./templates/views/products_category.php";
+        break;
     case "/product":
         include "./templates/views/product.php";
         break;

@@ -1,4 +1,8 @@
-<?php include_once __DIR__ . "/../components/navbar.php" ?>
+<?php
+include_once __DIR__ . "/../components/navbar.php";
+require __DIR__ . "/../../utils/images_utils.php";
+
+?>
 
 
 <section class="card p-0 p-lg-4 min-vh-100">
@@ -48,9 +52,8 @@
                         }
 
                         $cartTotal = 0;
-                        ?>
 
-                        <?php foreach ($groupedProducts as $id => $item):
+                        foreach ($groupedProducts as $id => $item):
                             $product = $item['product'];
                             $quantity = $item['quantity'];
                             $subtotal = $item['total'];
@@ -63,8 +66,7 @@
                         ?>
                             <tr id="cart-item-<?php echo $id; ?>" data-product-id="<?php echo $id; ?>">
                                 <td>
-                                    <img src="/uploads/img/products/<?php echo $id; ?>/0.png"
-                                        onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=Producto'"
+                                    <img src="<?php echo getProductMainImage($id) ?? 'https://placehold.co/100x100?text=Producto'; ?>"
                                         style="width: 80px; height: 80px; object-fit: contain;"
                                         class="img-thumbnail"
                                         alt="<?php echo htmlspecialchars($product['name']); ?>">
@@ -141,24 +143,23 @@
         <?php endif; ?>
     </section>
 </section>
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php' ?>
+
 
 <script>
     $(document).ready(function() {
 
         $('.quantity-input').on('change', function() {
+            if (!$(this).val() || $(this).val() < 1) {
+                $(this).val(1)
+                $(this).trigger('change');
+
+            }
+
             const productId = $(this).data('id');
             const newQuantity = parseInt($(this).val());
             const stock = parseInt($(this).attr('max'));
 
-            if (newQuantity < 1) {
-                $(this).val(1);
-                return;
-            }
 
             if (newQuantity > stock) {
                 $(this).val(stock);

@@ -31,7 +31,7 @@ function login($pdo)
     $stmt = $pdo->prepare("SELECT * FROM customers WHERE email = ?");
     $stmt->execute([$email]);
     $customer = $stmt->fetch();
-    
+
 
     if (!$customer || !password_verify($password, $customer->password)) {
         return json_encode(["success" => false, "message" => "Credenciales incorrectas"]);
@@ -49,49 +49,56 @@ function login($pdo)
 
 function register($pdo)
 {
-    $customer = json_decode($_POST['customer'], true);
+    try {
 
-    $required = ['name', 'email', 'password', 'phone_number', 'address', 'city', 'cp', 'country'];
-    foreach ($required as $f) {
-        if (empty($customer[$f])) {
-            return json_encode(["success" => false, "message" => "Campo $f requerido"]);
+        $customer = json_decode($_POST['customer'], true);
+
+        $required = ['name', 'email', 'phone_number', 'address', 'city', 'cp', 'country'];
+        foreach ($required as $f) {
+            if (empty($customer[$f])) {
+                return json_encode(["success" => false, "message" => "Campo $f requerido"]);
+            }
         }
-    }
 
-    $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = ?");
-    $stmt->execute([$customer['email']]);
-    if ($stmt->fetch()) {
-        return json_encode(["success" => false, "message" => "Email ya registrado"]);
-    }
+        $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = ?");
+        $stmt->execute([$customer['email']]);
+        if ($stmt->fetch()) {
+            return json_encode(["success" => false, "message" => "Email ya registrado"]);
+        }
+        $hash = null;
+        if ($customer['password']) {
+            $hash = password_hash($customer['password'], PASSWORD_DEFAULT);
+        }
 
-    $hash = password_hash($customer['password'], PASSWORD_DEFAULT);
-
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         INSERT INTO customers 
         (name,last_name,email,phone_number,address,city,cp,country,password)
         VALUES (?,?,?,?,?,?,?,?,?)
     ");
 
-    $stmt->execute([
-        $customer['name'],
-        $customer['last_name'] ?? '',
-        $customer['email'],
-        $customer['phone_number'],
-        $customer['address'],
-        $customer['city'],
-        $customer['cp'],
-        $customer['country'],
-        $hash
-    ]);
+        $stmt->execute([
+            $customer['name'],
+            $customer['last_name'] ?? '',
+            $customer['email'],
+            $customer['phone_number'],
+            $customer['address'],
+            $customer['city'],
+            $customer['cp'],
+            $customer['country'],
+            $hash
+        ]);
 
-    $_SESSION['customer'] = [
-        "id" => $pdo->lastInsertId(),
-        "name" => $customer['name'],
-        "last_name" => $customer['last_name'],
-        "email" => $customer['email']
-    ];
+        $_SESSION['customer'] = [
+            "id" => $pdo->lastInsertId(),
+            "name" => $customer['name'],
+            "last_name" => $customer['last_name'],
+            "email" => $customer['email']
+        ];
 
-    return json_encode(["success" => true]);
+        return json_encode(["success" => true]);
+    } catch (Exception $e) {
+        return json_encode(["success" => false, "message" => $e->getMessage()]);
+    }
 }
 
 function logout()

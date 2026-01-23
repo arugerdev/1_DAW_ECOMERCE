@@ -1,6 +1,6 @@
 function selectData(select, table, extra = "", callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "select",
@@ -16,7 +16,7 @@ function selectData(select, table, extra = "", callback = () => { }) {
 }
 function deleteData(table, filterParam, filterValue, extra = "", callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "delete",
@@ -34,7 +34,7 @@ function deleteData(table, filterParam, filterValue, extra = "", callback = () =
 
 function insertData(table, keys, values, extra = "", callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "insert",
@@ -52,7 +52,7 @@ function insertData(table, keys, values, extra = "", callback = () => { }) {
 
 function updateData(table, values, extra = "", callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "update",
@@ -68,7 +68,7 @@ function updateData(table, values, extra = "", callback = () => { }) {
 }
 function loginAdmin(username, password, callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "loginAdmin",
@@ -84,7 +84,7 @@ function loginAdmin(username, password, callback = () => { }) {
 
 function createUser(username, password, callback = () => { }) {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "createUser",
@@ -99,7 +99,7 @@ function createUser(username, password, callback = () => { }) {
 }
 function clearSession() {
     $.ajax({
-        url: "../../utils/db_utils.php",
+        url: "/utils/db_utils.php",
         type: "POST",
         data: {
             "action": "clearSession"

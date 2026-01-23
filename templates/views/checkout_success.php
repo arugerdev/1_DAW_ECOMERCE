@@ -33,8 +33,9 @@
                             <ul class="list-unstyled">
                                 <li class="mb-2"><strong>Fecha:</strong> <span id="order-date"><?php echo date('d/m/Y'); ?></span></li>
                                 <li class="mb-2"><strong>Total:</strong> <span id="order-total">0.00€</span></li>
-                                <li class="mb-2"><strong>Estado:</strong> <span class="badge bg-warning">Procesando</span></li>
+                                <li class="mb-2"><strong>Estado:</strong> <span id="order-status" class="badge bg-warning">Procesando</span></li>
                                 <li><strong>Método de pago:</strong> <span id="payment-method">Tarjeta</span></li>
+                                <li><strong>Método de envio:</strong> <span id="send-method">Standard</span></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
@@ -62,21 +63,23 @@
     </div>
 </section>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php' ?>
+
 
 <script>
     $(document).ready(function() {
-        // Cargar detalles del pedido desde localStorage o sesión
-        const orderData = localStorage.getItem('last_order');
-        if (orderData) {
-            const order = JSON.parse(orderData);
-            $('#order-total').text(order.total + '€');
-            $('#payment-method').text(order.payment_method);
-        }
+        // Obtener datos desde bd filtrando por $_GET['orderNumber'] y colocar los datos en la pantalla:
+        selectData('*', 'orders', 'WHERE order_number = "<?php echo $_GET['orderNumber'] ?>"', (data) => {
+            const order = data.data[0];
+
+            console.log(order)
+            $('#order-total').html(order.total_amount + "€")
+            $('#order-status').html(order.status )
+            $('#payment-method').html(order.payment_method )
+            $('#send-method').html(order.shipping_method )
+        })
+
+        // 
 
         // Limpiar carrito
         $.ajax({

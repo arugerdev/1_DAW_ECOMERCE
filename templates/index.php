@@ -10,7 +10,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
 if (!isset($_SESSION["cart_products"]) || gettype($_SESSION["cart_products"]) != "array") {
     $_SESSION["cart_products"] = [];
-    return;
 }
 
 $groupedProducts = [];
@@ -48,11 +47,16 @@ foreach ($groupedProducts as $id => $data) {
 $_SESSION["cart_products"] = $validatedCart;
 ?>
 
-<header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder fs-2">Plantilla EviMerce</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Esto es el inicio</p>
+<header class="bg-dark p-0 m-0" style="z-index:-1; min-height:186px; height:186px; display: flex; place-items:center; justify-content:center">
+    <div class="px-0 px-lg-0 m-0" style="width: 100%; height:100%">
+        <div class="text-center text-white" style="width: 100%; height:100%; position: relative; display:flex; place-items:center; justify-content:center; flex-direction:row;">
+            <img src="/assets/img/banner.jpg" style="position: absolute; z-index:0; opacity:0.6; object-fit:cover; width:100%; height:100%;" alt="">
+            <!-- <img src="/assets/img/logo.png" style="z-index:1; padding-left: 2rem;" width="128px"  alt=""> -->
+
+            <div style="padding-left: 2rem; display:flex; flex-direction:column; justify-content:start; text-align:start; width:100%">
+                <h1 class="display-4 fw-bolder fs-2" style="z-index:1; ">ElectricMer</h1>
+                <p class="lead fw-normal text-white-50 mb-0" style="z-index:1">Electronica y electricidad de calidad al mejor precio</p>
+            </div>
         </div>
     </div>
 </header>
@@ -70,21 +74,19 @@ $_SESSION["cart_products"] = $validatedCart;
     </section>
 </section>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php' ?>
+
 <script defer>
     const container = $('.product-list-container')
 
-    selectData('*', 'products', 'WHERE is_visible = TRUE LIMIT 12', (result) => {
+    selectData('p.*, COUNT(oi.id) as sales', 'products p LEFT JOIN prodToOrder oi ON p.id = oi.productId', 'WHERE is_visible = TRUE GROUP BY p.id ORDER BY sales DESC LIMIT 12', (result) => {
         const data = result.data;
-
+        console.log(data)
         data.map((result) => {
             $.ajax({
                 type: 'GET',
                 url: '/templates/components/product-card.php',
+                async: false,
                 data: {
                     'PROD_DATA': JSON.stringify(result)
                 },

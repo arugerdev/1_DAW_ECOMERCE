@@ -1,4 +1,5 @@
 <?php include "./modals/category-creator.php"; ?>
+<?php include "./modals/category-editor.php"; ?>
 
 <div class="content-header">
     <div class="container-fluid">
@@ -99,6 +100,7 @@
     }
 
     function editCategory(row) {
-        alert("Funcionalidad en desarrollo")
+        $('#modal-category-editor').data('product-id', row);
+        $('#modal-category-editor').modal('show');
     }
 </script>

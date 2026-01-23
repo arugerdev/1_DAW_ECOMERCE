@@ -113,6 +113,27 @@ function getProductImages()
     }
 }
 
+function getProductMainImage($productId)
+{
+    $dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$productId";
+
+    if (!is_dir($dir)) {
+        return null;
+    }
+
+    $files = array_values(array_filter(scandir($dir), function ($file) {
+        return preg_match('/\.(png|jpg|jpeg|webp)$/i', $file);
+    }));
+
+    if (empty($files)) {
+        return null;
+    }
+
+    sort($files);
+
+    return "/uploads/img/products/$productId/" . $files[0];
+}
+
 function uploadTempImage()
 {
     try {

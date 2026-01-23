@@ -208,11 +208,8 @@ if (isLoggedIn()) {
     </div>
 </section>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php'?>
+
 
 <script>
     $(document).ready(function() {

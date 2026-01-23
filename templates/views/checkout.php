@@ -188,36 +188,22 @@
     </div>
 </section>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php'?>
+
 
 <script>
     $(document).ready(function() {
         // Calcular total del carrito
-        function updateCheckoutTotals() {
-            $.ajax({
-                url: "../../utils/cart_utils.php",
-                type: "POST",
-                data: {
-                    "action": "get_cart_total"
-                },
-                success: (data) => {
-                    const result = JSON.parse(data);
-                    const subtotal = result.total || 0;
-                    const shipping = 5.00; // Envío fijo por ahora
-                    const total = subtotal + shipping;
 
-                    $('#checkout-subtotal').text(subtotal.toFixed(2) + '€');
-                    $('#checkout-shipping').text(shipping.toFixed(2) + '€');
-                    $('#checkout-total').text(total.toFixed(2) + '€');
-                }
-            });
-        }
+        updateCheckoutTotals((res) => {
+            const subtotal = res.total || 0;
+            const shipping = 5.00; // Envío fijo por ahora
+            const total = subtotal + shipping;
 
-        updateCheckoutTotals();
+            $('#checkout-subtotal').text(subtotal.toFixed(2) + '€');
+            $('#checkout-shipping').text(shipping.toFixed(2) + '€');
+            $('#checkout-total').text(total.toFixed(2) + '€');
+        });
 
         // Mostrar/ocultar campos de cuenta
         $('#create_account').on('change', function() {
@@ -261,30 +247,14 @@
                 }
             }
 
-            if ($('#create_account').is(':checked')) {
-                $.post("../../utils/auth_utils.php", {
-                    action: "register",
-                    customer: JSON.stringify(data)
-                });
-            }
-
-            // Guardar datos del cliente en sesión
-            $.ajax({
-                url: "../../utils/checkout_utils.php",
-                type: "POST",
-                data: {
-                    "action": "save_customer_info",
-                    "customer": JSON.stringify(data)
-                },
-                success: (response) => {
-                    const result = JSON.parse(response);
-                    if (result.success) {
-                        window.location.href = '/checkout/confirm';
-                    } else {
-                        alert(result.message || 'Error al guardar la información');
-                    }
+            register(data, (res) => {
+                if (res.success) {
+                    window.location.href = '/checkout/confirm';
+                } else {
+                    alert(res.message || 'Error al guardar la información');
                 }
-            });
+            })
+
         });
 
         // Formulario de login
@@ -296,23 +266,13 @@
 
 
 
-            $.ajax({
-                url: "../../utils/auth_utils.php",
-                type: "POST",
-                data: {
-                    "action": "login",
-                    "email": email,
-                    "password": password
-                },
-                success: (response) => {
-                    const result = JSON.parse(response);
-                    if (result.success) {
-                        window.location.href = '/checkout/confirm';
-                    } else {
-                        alert(result.message || 'Credenciales incorrectas');
-                    }
+            login(email, password, (res) => {
+                if (res.success) {
+                    window.location.href = '/checkout/confirm';
+                } else {
+                    alert(res.message || 'Credenciales incorrectas');
                 }
-            });
+            })
         });
-    });
+    })
 </script>

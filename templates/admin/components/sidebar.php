@@ -1,7 +1,7 @@
   
   <aside class="flex-column main-sidebar sidebar-light-secondary elevation-4">
       <a href="/admin/" class="brand-link bg-warning ">
-          <img src="/assets/img/logo.png" alt="EviMerce" class="brand-image " style="opacity: 1" width="128" height="128">
+          <img src="/assets/img/evimerce_logo.png" alt="EviMerce" class="brand-image " style="opacity: 1" width="128" height="128">
           <span class="brand-text font-weight-light">EviMerce</span>
       </a>
 

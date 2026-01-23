@@ -180,102 +180,71 @@
     </div>
 </section>
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; <a href="#">EviMerce</a> 2026</p>
-    </div>
-</footer>
+<?php include 'templates/components/footer.php'?>
+
 
 <script>
     $(document).ready(function() {
         // Cargar información del cliente
-        function loadCustomerInfo() {
-            $.ajax({
-                url: "../../utils/checkout_utils.php",
-                type: "POST",
-                data: {
-                    "action": "get_customer_info"
-                },
-                success: (response) => {
-                    const result = JSON.parse(response);
-                    console.log (result);
-                    if (result.success) {
-                        const customer = result.customer;
+        loadCustomerInfo((res) => {
+            if (res.success) {
+                const customer = res.customer;
 
-                        $('#customer-name').text(customer.name + ' ' + customer.last_name);
-                        $('#customer-email').text(customer.email);
-                        $('#customer-phone').text(customer.phone_number);
-                        $('#customer-address').text(customer.address);
-                        $('#customer-city').text(customer.city);
-                        $('#customer-zip').text(customer.cp);
-                        $('#customer-country').text(getCountryName(customer.country));
-                    } else {
-                        // Si no hay información del cliente, redirigir al checkout
-                        // window.location.href = '/checkout';
-                    }
-                }
-            });
-        }
+                $('#customer-name').text(customer.name + ' ' + customer.last_name);
+                $('#customer-email').text(customer.email);
+                $('#customer-phone').text(customer.phone_number);
+                $('#customer-address').text(customer.address);
+                $('#customer-city').text(customer.city);
+                $('#customer-zip').text(customer.cp);
+                $('#customer-country').text(getCountryName(customer.country));
+            } else {
+                window.location.href = '/checkout';
+            }
 
-        function getCountryName(countryCode) {
-            const countries = {
-                'ES': 'España',
-                'FR': 'Francia',
-                'IT': 'Italia',
-                'DE': 'Alemania',
-                'PT': 'Portugal'
-            };
-            return countries[countryCode] || countryCode;
-        }
+        })
+
+
 
         // Cargar resumen del carrito
-        function loadOrderSummary() {
-            $.ajax({
-                url: "../../utils/cart_utils.php",
-                type: "POST",
-                data: {
-                    "action": "select"
-                },
-                success: (response) => {
-                    const result = JSON.parse(response);
-                    const cartItems = result.cart || [];
+        loadOrderSummary((res) => {
+            const cartItems = res.cart || [];
 
-                    let html = '';
-                    let subtotal = 0;
+            let html = '';
+            let subtotal = 0;
 
-                    // Agrupar productos
-                    const groupedProducts = {};
-                    cartItems.forEach(product => {
-                        const id = product.id;
-                        if (!groupedProducts[id]) {
-                            groupedProducts[id] = {
-                                product: product,
-                                quantity: 0,
-                                price: parseFloat(product.price)
-                            };
-                        }
-                        groupedProducts[id].quantity++;
-                    });
+            // Agrupar productos
+            const groupedProducts = {};
+            cartItems.forEach(product => {
+                const id = product.id;
+                if (!groupedProducts[id]) {
+                    groupedProducts[id] = {
+                        product: product,
+                        quantity: 0,
+                        price: parseFloat(product.price)
+                    };
+                }
+                groupedProducts[id].quantity++;
+            });
 
-                    // Generar filas de productos
-                    Object.values(groupedProducts).forEach(item => {
-                        const product = item.product;
-                        const quantity = item.quantity;
-                        let price = item.price;
+            // Generar filas de productos
+            Object.values(groupedProducts).forEach(item => {
+                const product = item.product;
+                const quantity = item.quantity;
+                let price = item.price;
 
-                        // Aplicar descuento si existe
-                        if (product.on_sale === '1' && product.sale_discound) {
-                            price = price * (1 - parseFloat(product.sale_discound) / 100);
-                        }
+                // Aplicar descuento si existe
+                if (product.on_sale === '1' && product.sale_discound) {
+                    price = price * (1 - parseFloat(product.sale_discound) / 100);
+                }
 
-                        const itemTotal = price * quantity;
-                        subtotal += itemTotal;
-
-                        html += `
+                const itemTotal = price * quantity;
+                subtotal += itemTotal;
+                getProductImages(product.id, (data) => {
+                    html += `
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="/uploads/img/products/${product.id}/0.png" 
+                                    <img src="/uploads/img/products/${product.id}/${data.images[0]}" 
                                          class="img-thumbnail me-2" 
                                          style="width: 40px; height: 40px;"
                                          onerror="this.onerror=null; this.src='https://placehold.co/40x40'">
@@ -290,13 +259,14 @@
                             <td class="text-end align-middle">${itemTotal.toFixed(2)}€</td>
                         </tr>
                     `;
-                    });
 
                     $('#order-summary-items').html(html);
                     updateOrderTotal(subtotal);
-                }
+                })
+
             });
-        }
+
+        })
 
         // Actualizar total según método de envío
         function updateOrderTotal(subtotal) {
@@ -330,6 +300,9 @@
             const shippingMethod = $('input[name="shipping_method"]:checked').val();
             const paymentMethod = $('input[name="payment_method"]:checked').val();
 
+            console.log(shippingMethod)
+            console.log(paymentMethod)
+
             $.ajax({
                 url: "../../utils/checkout_utils.php",
                 type: "POST",
@@ -344,7 +317,7 @@
                         window.location.href = '/checkout/success?orderNumber=' + result.orderNumber;
                     } else {
 
-                        alert(JSON.stringify(result) || 'Error al crear el pedido');
+                        alert(JSON.stringify(result).message || 'Error al crear el pedido');
                     }
                 }
             });
