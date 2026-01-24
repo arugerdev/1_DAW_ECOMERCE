@@ -1,6 +1,4 @@
 <?php
-require '../../utils/sessions.php';
-
 $data = json_decode($_GET["PROD_DATA"]);
 
 ?>

@@ -1,11 +1,6 @@
-<?php require 'utils/sessions.php'; ?>
-<?php include_once __DIR__ . "/components/navbar.php" ?>
-
 <?php
+include_once __DIR__ . "/components/navbar.php";
 
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/utils/sessions.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
 if (!isset($_SESSION["cart_products"]) || gettype($_SESSION["cart_products"]) != "array") {

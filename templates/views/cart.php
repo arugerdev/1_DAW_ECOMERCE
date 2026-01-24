@@ -1,4 +1,5 @@
 <?php
+
 include_once __DIR__ . "/../components/navbar.php";
 require __DIR__ . "/../../utils/images_utils.php";
 

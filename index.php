@@ -1,9 +1,15 @@
 <?php
-error_reporting(0);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
 
-ini_set('display_errors', 'Off');
-include "./utils/router.php";
+if (!is_writable(session_save_path())) {
+    echo 'Session save path "' . session_save_path() . '" is not writable!';
+}
 
+// require_once "./utils/sessions.php";
+include_once "./utils/router.php";
+
+// error_reporting(0);
+// ini_set('display_errors', 'Off');
 ?>
 
 <!DOCTYPE html>

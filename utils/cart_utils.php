@@ -1,6 +1,5 @@
 <?php
-
-require_once __DIR__ . '/sessions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
 
 $option = $_REQUEST["action"];
 

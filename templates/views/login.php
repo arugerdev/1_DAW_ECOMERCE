@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require __DIR__ . "/../../utils/checkout_utils.php";
 require __DIR__ . "/../../utils/auth_utils.php";
 

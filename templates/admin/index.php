@@ -1,10 +1,8 @@
 <?php
 
-require 'utils/sessions.php';
-
 if (isset($_SESSION['user']) && $_SESSION['state'] == 'authenticated') {
 
-    $adminRoute = get_admin_route(); 
+    $adminRoute = get_admin_route();
 
     $routes = [
         '/' => 'dashboard.php',
@@ -20,7 +18,7 @@ if (isset($_SESSION['user']) && $_SESSION['state'] == 'authenticated') {
     include "template.php";
     die();
 } else {
-    
+
     include('views/login.php');
     die();
 }
