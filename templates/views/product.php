@@ -113,19 +113,55 @@ $data = $recibe->data[0];
         mainImg.attr("src", event.target.src);
     })
     $("#add-to-cart").on("click", (evnt) => {
-        addToCart(<?php echo json_encode($data) ?>, (data) => {
-            upCart()
+        const prodData = <?php echo json_encode($data) ?>;
+        loadOrderSummary((res) => {
+            if ((res.cart.filter((p) => p.id == prodData.id).length + 1) <= prodData.stock) {
+                addToCart(prodData, (data) => {
+                    upCart()
+                })
+            }
         })
     })
 
 
     $('#share-button').on('click', function(event) {
 
+        if (navigator.share && navigator.canShare(shareData)) {
 
-        navigator.share({
-            title: "Compartir",
-            url: window.location,
-            text: "Mira este producto genial que he encontrado en :" + window.location
-        })
+            navigator.share({
+                title: "Compartir",
+                url: window.location,
+                text: "Mira este producto genial que he encontrado en :" + window.location
+            })
+
+        } else {
+
+            writeClipboardText(window.location).finally(() => {
+                alert('Enlace copiado')
+            })
+
+        }
     });
+
+    async function writeClipboardText(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch (error) {
+            unsecuredCopyToClipboard(text)
+        }
+    }
+
+    function unsecuredCopyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+    }
 </script>

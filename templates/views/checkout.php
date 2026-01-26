@@ -188,12 +188,15 @@
     </div>
 </section>
 
-<?php include 'templates/components/footer.php'?>
+<?php include 'templates/components/footer.php' ?>
 
 
 <script>
     $(document).ready(function() {
         // Calcular total del carrito
+        loadOrderSummary((res) => {
+            if (res.cart.length <= 0) window.location.replace('/cart')
+        })
 
         updateCheckoutTotals((res) => {
             const subtotal = res.total || 0;

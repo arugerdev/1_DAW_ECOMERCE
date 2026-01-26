@@ -115,3 +115,10 @@ function checkAuth()
         "customer" => $_SESSION['customer'] ?? null
     ]);
 }
+
+
+
+function isLoggedIn()
+{
+    return isset($_SESSION['customer']) && !empty($_SESSION['customer']);
+}

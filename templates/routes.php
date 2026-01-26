@@ -11,17 +11,22 @@ switch ($url) {
     case "/":
         include "./templates/index.php";
         break;
+    case "/terms":
+        include "./templates/views/terms.php";
+        break;
+    case "/privacy":
+        include "./templates/views/privacy.php";
+        break;
 
     case "/products":
         include "./templates/views/products.php";
         break;
- case "/products/category":
+    case "/products/category":
         include "./templates/views/products_category.php";
         break;
     case "/product":
         include "./templates/views/product.php";
         break;
-
     case "/cart":
         include "./templates/views/cart.php";
         break;

@@ -180,11 +180,15 @@
     </div>
 </section>
 
-<?php include 'templates/components/footer.php'?>
+<?php include 'templates/components/footer.php' ?>
 
 
 <script>
     $(document).ready(function() {
+        loadOrderSummary((res) => {
+            if (res.cart.length <= 0) window.location.replace('/cart')
+        })
+
         // Cargar información del cliente
         loadCustomerInfo((res) => {
             if (res.success) {
@@ -202,8 +206,6 @@
             }
 
         })
-
-
 
         // Cargar resumen del carrito
         loadOrderSummary((res) => {

@@ -54,9 +54,13 @@ $data = json_decode($_GET["PROD_DATA"]);
 
 <script defer>
     $("#add-to-cart-<?php echo $data->id ?>").on("click", (evnt) => {
-        addToCart(<?php echo json_encode($data) ?>, (data) => {
-            upCart()
-
+        const prodData = <?php echo json_encode($data) ?>;
+        loadOrderSummary((res) => {
+            if ((res.cart.filter((p) => p.id == prodData.id).length + 1) <= prodData.stock) {
+                addToCart(prodData, (data) => {
+                    upCart()
+                })
+            }
         })
     })
 </script>

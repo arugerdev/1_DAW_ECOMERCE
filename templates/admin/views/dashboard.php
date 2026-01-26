@@ -283,7 +283,7 @@
             });
 
             // Pedidos totales (ajustar según tu estructura de orders)
-            selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "", (res) => {
+            selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "WHERE status != 'cancelled'", (res) => {
                 if (res.data.length > 0) {
                     const order = res.data[0];
                     $('#recently-orders').html(order.total || 0);
@@ -589,22 +589,6 @@
                                 pendingCount++;
                             }
 
-                            const statusColors = {
-                                'completed': 'success',
-                                'processing': 'info',
-                                'pending': 'warning',
-                                'cancelled': 'danger',
-                                'shipped': 'primary'
-                            };
-
-                            const statusText = {
-                                'completed': 'Completado',
-                                'processing': 'Procesando',
-                                'pending': 'Pendiente',
-                                'cancelled': 'Cancelado',
-                                'shipped': 'Enviado'
-                            };
-
                             const date = new Date(order.create_at);
                             const formattedDate = date.toLocaleDateString('es-ES', {
                                 day: '2-digit',
@@ -623,9 +607,7 @@
                                 <td>${order.customer_name || 'Cliente'}</td>
                                 <td class="text-center font-weight-bold">${parseFloat(order.total_amount).toFixed(2)}€</td>
                                 <td class="text-center">
-                                    <span class="badge badge-${statusColors[order.status] || 'secondary'}">
-                                        ${statusText[order.status] || order.status}
-                                    </span>
+                                    ${getStatus(order.status)}
                                 </td>
                                 <td class="text-center">
                                     <small class="text-muted">${formattedDate}</small>

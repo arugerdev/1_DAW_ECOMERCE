@@ -2,18 +2,16 @@
 require __DIR__ . "/../../utils/checkout_utils.php";
 require __DIR__ . "/../../utils/auth_utils.php";
 
-function isLoggedIn()
-{
-    return isset($_SESSION['customer']) && !empty($_SESSION['customer']);
-}
 
 if (!isLoggedIn()) {
-    header("Location: /login?redirect=/orders");
-    exit;
+    header("Location: /login?redirect=/orders", true, 301);
+    echo '<script> window.location.replace("/login?redirect=/orders"); </script>';
+    die();
 }
 ?>
 
 <?php include __DIR__ . "/../components/navbar.php"; ?>
+
 
 <div class="container mt-5">
     <h2 class="mb-4">Mis pedidos</h2>
@@ -24,6 +22,14 @@ if (!isLoggedIn()) {
 </div>
 
 <script>
+    function refoundOrder(id) {
+        if (confirm("¿Seguro que quieres devolver el producto?")) {
+            insertData("refounds", "orderId", id, "")
+            updateData("orders", "status = 'cancelled'", `WHERE id = ${id}`)
+            window.location.reload()
+        }
+    }
+
     function loadOrders() {
         selectData(
             '*',
@@ -64,6 +70,7 @@ if (!isLoggedIn()) {
                         </h3>
 
                         <div class="card-tools">
+                            <button class="btn btn-danger btn-sm" onclick="refoundOrder(${order.id})" ${order.status != "completed" && order.status != "paid" && order.status != "pending"  ? 'disabled' : ''}>Devolver</button>
                             <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
                                 <i class="fas fa-plus"></i>
                             </button>
@@ -72,8 +79,7 @@ if (!isLoggedIn()) {
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-4"><b>Estado:</b>
-                            
-                            <span class="badge badge-${colors[order.status] || 'secondary'}">${order.status}</span>
+                                ${getStatus(order.status)}
                             </div>
                             <div class="col-md-4"><b>Pago:</b> ${order.payment_method ?? '-'}</div>
                             <div class="col-md-4"><b>Envío:</b> ${order.shipping_method ?? '-'}</div>

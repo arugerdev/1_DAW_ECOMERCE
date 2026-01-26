@@ -30,4 +30,24 @@
         </div>
         `
     }
+
+
+    function getStatus(value) {
+        const colors = {
+            pending: 'warning',
+            paid: 'info',
+            sent: 'primary',
+            completed: 'success',
+            cancelled: 'danger'
+        }
+        const traduction = {
+            pending: 'En proceso',
+            paid: 'Pagado',
+            sent: 'Enviado',
+            completed: 'Completado',
+            cancelled: 'Cancelado'
+        }
+
+        return `<span class="badge badge-${colors[value] || 'secondary'}">${traduction[value]}</span>`
+    }
 </script>

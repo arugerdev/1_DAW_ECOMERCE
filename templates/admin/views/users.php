@@ -90,9 +90,5 @@
             }
         });
 
-        // function getRowActions(row) {
-        //     return `<button class="${row}-remover btn-danger" onClick="deleteData('users','id',${row},'',location.reload())">Eliminar</button>`;
-        // }
-
     })
 </script>

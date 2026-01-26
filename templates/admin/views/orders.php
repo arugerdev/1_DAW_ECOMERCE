@@ -85,7 +85,7 @@
                         {
                             targets: 11,
                             render: function(data, type, row) {
-                                const id = row[0]
+                                const id = row[2]
 
                                 return getRowActions(id, `editOrder(${id})`, `deleteOrder(${id})`);
 

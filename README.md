@@ -10,6 +10,12 @@ A ECommerce web, for 1ºDAW practices.
 
 **Back:** ```PHP 8.5.1 , PDO (PHP), MySQL 8.0.44.```
 
+## Screenshots
+![App Screenshot](/mockups/0.png)
+![App Screenshot](/mockups/1.png)
+![App Screenshot](/mockups/2.png)
+![App Screenshot](/mockups/3.png)
+
 
 ## Run Locally
 
@@ -92,12 +98,12 @@ Is a simple project and the first created by me with this technologies.
 - Edit categories ✅
 - Search products ✅
 - Chat bot for customers ❌
-- Refounds ❌ 
+- Refounds ✅ 
 - Edit Refounds ❌ 
 - Mobile responsive ⚠️ (Responsive by default but in some screens can be better)
 
 
-**Progress: 70% ██████████████▒▒▒▒▒░**
+**Progress: 80% ████████████████▒▒▒▒**
 
 ## License
 

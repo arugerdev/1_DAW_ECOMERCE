@@ -1,4 +1,3 @@
-
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -16,7 +15,7 @@
 </div>
 <div class="content">
     <div class="container-fluid">
-        <section class="orders_editor">
+        <section class="refounds_editor">
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Todas las devoluciones</h3>
@@ -31,7 +30,7 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table id="orders-table" class="table table-striped table-valign-middle">
+                    <table id="refounds-table" class="table table-striped table-valign-middle">
 
                     </table>
                 </div>
@@ -42,11 +41,12 @@
 
 <script defer>
     $(document).ready(function() {
-        selectData("*", "orders", "", (data) => {
+        selectData("*", "refounds", "", (res) => {
+            const data = res.data
 
             if (data.length > 0) {
 
-                $('#orders-table').DataTable({
+                $('#refounds-table').DataTable({
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -58,16 +58,32 @@
                         return Object.values(row).concat("")
                     }),
                     columnDefs: [{
-                            targets: 0,
+                            targets: [0, 4],
                             visible: false,
                             searchable: false
                         },
                         {
-                            targets: [2],
+                            targets: 1,
                             render: function(data, type, row) {
-                                return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
+                                return `<a href="/admin/orders?edit=${data}">${data}</a>`
                             }
                         },
+                        {
+                            targets: 5,
+                            render: function(data, type, row) {
+                                const id = row[0]
+
+                                return getRowActions(id, 
+                                null // `editRefound(${id})` 
+                                , `deleteRefound(${id})`);
+                            }
+                        }
+                        // {
+                        //     targets: [2],
+                        //     render: function(data, type, row) {
+                        //         return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
+                        //     }
+                        // },
                     ],
                     ordering: true,
                     searchable: true,
@@ -79,5 +95,17 @@
 
             }
         });
+
+
     })
+
+
+    function deleteRefound(row) {
+        deleteData('refounds', 'id', row, '', location.reload())
+    }
+
+    // function editRefound(row) {
+    //     $('#modal-refound-editor').data('id', row)
+    //     $('#modal-refound-editor').modal('show')
+    // }
 </script>

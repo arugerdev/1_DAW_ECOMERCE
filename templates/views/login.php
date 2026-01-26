@@ -2,10 +2,6 @@
 require __DIR__ . "/../../utils/checkout_utils.php";
 require __DIR__ . "/../../utils/auth_utils.php";
 
-function isLoggedIn()
-{
-    return isset($_SESSION['customer']) && !empty($_SESSION['customer']);
-}
 
 if (isLoggedIn()) {
     header("Location: /");

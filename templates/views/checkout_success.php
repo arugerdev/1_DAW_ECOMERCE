@@ -33,7 +33,7 @@
                             <ul class="list-unstyled">
                                 <li class="mb-2"><strong>Fecha:</strong> <span id="order-date"><?php echo date('d/m/Y'); ?></span></li>
                                 <li class="mb-2"><strong>Total:</strong> <span id="order-total">0.00€</span></li>
-                                <li class="mb-2"><strong>Estado:</strong> <span id="order-status" class="badge bg-warning">Procesando</span></li>
+                                <li class="mb-2" id="status-container"><strong>Estado:</strong></li>
                                 <li><strong>Método de pago:</strong> <span id="payment-method">Tarjeta</span></li>
                                 <li><strong>Método de envio:</strong> <span id="send-method">Standard</span></li>
                             </ul>
@@ -73,9 +73,9 @@
             const order = data.data[0];
 
             $('#order-total').html(order.total_amount + "€")
-            $('#order-status').html(order.status )
-            $('#payment-method').html(order.payment_method )
-            $('#send-method').html(order.shipping_method )
+            $('#status-container').html(getStatus(order.status))
+            $('#payment-method').html(order.payment_method)
+            $('#send-method').html(order.shipping_method)
         })
 
         // 

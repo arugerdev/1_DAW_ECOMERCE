@@ -82,6 +82,11 @@ function createOrder($pdo)
                 VALUES (?, ?, 1, ?, ?)
             ");
             $stmt->execute([$orderId, $p['id'], $p['price'], $p['price']]);
+
+            $stmt = $pdo->prepare("
+                UPDATE products SET stock = stock - 1 WHERE id = ?
+            ");
+            $stmt->execute([$p['id']]);
         }
 
         $pdo->commit();
