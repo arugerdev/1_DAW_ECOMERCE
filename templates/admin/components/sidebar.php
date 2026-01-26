@@ -1,8 +1,7 @@
-  
-  <aside class="flex-column main-sidebar sidebar-light-secondary elevation-4">
-      <a href="/admin/" class="brand-link bg-warning ">
+  <aside class="flex-column main-sidebar sidebar-light-secondary bg-white elevation-1">
+      <a href="/admin/" class="brand-link bg-lightblue">
           <img src="/assets/img/evimerce_logo.png" alt="EviMerce" class="brand-image " style="opacity: 1" width="128" height="128">
-          <span class="brand-text font-weight-light">EviMerce</span>
+          <span class="brand-text font-weight-light text-white">EviMerce</span>
       </a>
 
       <div class="sidebar width-full mt-2">
@@ -17,7 +16,7 @@
               </div>
               <div class="sidebar-search-results">
                   <div class="list-group"><a href="#" class="list-group-item">
-                          <div class="search-title"><strong class="text-light"></strong>N<strong class="text-light"></strong>o<strong class="text-light"></strong> <strong class="text-light"></strong>e<strong class="text-light"></strong>l<strong class="text-light"></strong>e<strong class="text-light"></strong>m<strong class="text-light"></strong>e<strong class="text-light"></strong>n<strong class="text-light"></strong>t<strong class="text-light"></strong> <strong class="text-light"></strong>f<strong class="text-light"></strong>o<strong class="text-light"></strong>u<strong class="text-light"></strong>n<strong class="text-light"></strong>d<strong class="text-light"></strong>!<strong class="text-light"></strong></div>
+                          <div class="search-title"><strong class="text-dark"></strong>N<strong class="text-dark"></strong>o<strong class="text-dark"></strong> <strong class="text-dark"></strong>e<strong class="text-dark"></strong>l<strong class="text-dark"></strong>e<strong class="text-dark"></strong>m<strong class="text-dark"></strong>e<strong class="text-dark"></strong>n<strong class="text-dark"></strong>t<strong class="text-dark"></strong> <strong class="text-dark"></strong>f<strong class="text-dark"></strong>o<strong class="text-dark"></strong>u<strong class="text-dark"></strong>n<strong class="text-dark"></strong>d<strong class="text-dark"></strong>!<strong class="text-dark"></strong></div>
                           <div class="search-path"></div>
                       </a></div>
               </div>
@@ -74,7 +73,7 @@
               <div class="separator"></div>
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <li class="nav-item">
-                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger color-danger text-danger">
+                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger text-danger ">
                           <i class=" fa-solid fa-right-from-bracket nav-icon"></i>
                           <p>Desconectar</p>
                       </a>

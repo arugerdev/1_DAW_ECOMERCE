@@ -1,5 +1,6 @@
 <div class="wrapper">
-    <?php //include __DIR__ . "/components/navbar.php"; 
+    <?php
+    include __DIR__ . "/components/navbar.php";
     ?>
     <?php include __DIR__ . "/utils/elementsGenerator.php"; ?>
     <?php include __DIR__ . "/components/sidebar.php"; ?>

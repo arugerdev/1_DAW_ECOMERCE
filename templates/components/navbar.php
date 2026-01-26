@@ -1,4 +1,4 @@
-<nav class="fixed-top navbar navbar-expand-md navbar-light bg-light" style="min-height: 64px;">
+<nav class="fixed-top navbar navbar-expand-md navbar-light" style="min-height: 64px;">
     <div class="container p-0 m-0" style="width: 100%; justify-content:space-between; place-items:center; max-width:100vw;display: flex; flex-direction: row; align-content: center; align-items: center;">
         <a class="navbar-brand" href="/">
             <img src="/assets/img/logo-brand.png" alt="" style="max-height: 38px; padding:0; margin:0;">

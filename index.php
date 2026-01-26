@@ -22,7 +22,7 @@ include_once "./utils/router.php";
     <link rel="stylesheet" href="/assets/css/index.css">
 
     <?php include "./includes/dependencies.php"; ?>
-    <?php include "./utils/elementsGenerator.php"; ?> 
+    <?php include "./utils/elementsGenerator.php"; ?>
     <script src="/assets/js/cart_utils.js"></script>
     <script src="/assets/js/db_utils.js"></script>
     <script src="/assets/js/auth_utils.js"></script>
@@ -32,7 +32,7 @@ include_once "./utils/router.php";
     </script>
 </head>
 
-<body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse">
+<body class="sidebar-mini sidebar-collapse layout-fixed ">
     <main>
         <?php
         include "./templates/routes.php";

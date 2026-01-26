@@ -19,7 +19,7 @@
         <section class="connectedSortable ui-sortable">
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-info">
+                    <div class="small-box bg-gradient-info">
                         <div class="inner">
                             <h3 id="recently-orders">0</h3>
                             <p>Pedidos Hoy</p>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-gradient-success">
                         <div class="inner">
                             <h3 id="total-revenue">0.00<sup style="font-size: 20px">€</sup></h3>
                             <p>Ingresos Totales</p>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-warning">
+                    <div class="small-box bg-gradient-warning">
                         <div class="inner">
                             <h3 id="current-active-products">0</h3>
                             <p>Productos Activos</p>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-danger">
+                    <div class="small-box bg-gradient-danger">
                         <div class="inner">
                             <h3 id="low-stock-products">0</h3>
                             <p>Bajo Stock</p>
@@ -196,7 +196,7 @@
         <!-- Estadísticas rápidas -->
         <div class="row">
             <div class="col">
-                <div class="info-box bg-gradient-light">
+                <div class="info-box bg-white">
                     <span class="info-box-icon bg-info"><i class="fas fa-shopping-cart"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Pedidos del Mes</span>
@@ -209,7 +209,7 @@
             </div>
 
             <div class="col">
-                <div class="info-box bg-gradient-light">
+                <div class="info-box bg-white">
                     <span class="info-box-icon bg-success"><i class="fas fa-euro-sign"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Ingresos del Mes</span>
@@ -222,7 +222,7 @@
             </div>
 
             <div class="col">
-                <div class="info-box bg-gradient-light">
+                <div class="info-box bg-white">
                     <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Clientes Nuevos</span>
@@ -235,7 +235,7 @@
             </div>
 
             <!-- <div class="col">
-                <div class="info-box bg-gradient-light">
+                <div class="info-box bg-light">
                     <span class="info-box-icon bg-danger"><i class="fas fa-chart-bar"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Conversión</span>

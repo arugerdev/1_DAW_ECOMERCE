@@ -7,7 +7,7 @@ $data = json_decode($_GET["PROD_DATA"]);
         <a href="/product?id=<?php echo $data->id ?>" style="display: flex; flex-direction:column; place-items:center; justify-content:center; text-align:start; width: 100%; height: 100%;" class="p-0 m-0">
 
             <?php if ($data->on_sale == 1): ?>
-                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                <div class="badge bg-warning position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
             <?php endif ?>
             <?php
             if (is_dir($_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/$data->id/")) {
