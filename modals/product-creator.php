@@ -7,7 +7,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="javascript:void(0)" class="create_product_form" id="create_product_form">
+                <form action="javascript:void(0)" id="create_product_form">
 
                     <div class="row">
                         <div class="col-md-6">
@@ -185,36 +185,36 @@
         display: none;
     }
 
-    .create_product_form {
+    #create_product_form {
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    .create_product_form .form_input_group {
+    #create_product_form .form_input_group {
         display: flex;
         flex-direction: row;
         gap: 12px;
     }
 
-    .create_product_form input {
+    #create_product_form input {
         display: flex;
         padding: 12px 4px;
     }
 
-    .create_product_form {
+    #create_product_form {
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    .create_product_form .form_input_group {
+    #create_product_form .form_input_group {
         display: flex;
         flex-direction: row;
         gap: 12px;
     }
 
-    .create_product_form input {
+    #create_product_form input {
         display: flex;
         padding: 12px 4px;
     }
@@ -238,137 +238,151 @@
 </style>
 
 <script defer>
-    $(document).ready(() => {
-        selectData("*", "categories", "", (recibed) => {
-            const data = recibed.data;
+    /* ===================== STATE ===================== */
 
-            data.forEach((category) => {
-                $('#product-category').append(
-                    `<option value="${category.id}">${category.name}</option>`
-                );
+    const imageState = {
+        list: [],
+        reset() {
+            this.list = [];
+        },
+        add(img) {
+            this.list.push(img);
+        },
+        remove(id) {
+            this.list = this.list.filter(i => i.id !== id);
+        },
+        paths() {
+            return this.list.map(i => i.path);
+        },
+        find(id) {
+            return this.list.find(i => i.id === id);
+        }
+    };
+
+
+    selectData("*", "categories", "", (res) => {
+        const data = res.data;
+        data.forEach((category) => {
+            $('#product-category').append(
+                `<option value="${category.id}">${category.name}</option>`
+            );
+        });
+    });
+
+    $('#modal-product-creator').off().on('show.bs.modal', function() {
+        let tempToken = 'tmp_' + Math.random().toString(36).substring(2);
+
+        imageState.reset();
+
+        /* ===================== RENDER ===================== */
+        function renderImage(container, img) {
+            const el = $(`
+        <div class="creator-image-container" data-id="${img.id}"
+             style="position:relative;display:inline-block;margin:5px;">
+            <img src="${"/uploads" + img.path.split('/uploads')[1]}"
+                 class="preview-image"
+                 style="max-width:64px;max-height:64px;object-fit:contain;">
+            <button type="button"
+                    class="btn-danger creator-btn-remove-image"
+                    style="position:absolute;top:-5px;right:-5px;
+                           border:none;border-radius:50%;
+                           width:20px;height:20px;
+                           font-size:12px;">×</button>
+        </div>
+    `);
+
+            el.find('.creator-btn-remove-image').off().on('click', () => removeImage(img.id, el));
+            container.append(el);
+        }
+
+        /* ===================== IMAGE ACTIONS ===================== */
+        function removeImage(id, el) {
+            const img = imageState.find(id);
+            if (!img) return;
+
+            deleteTempImage(tempToken, img.filename, () => {
+                el.addClass('removing');
+                setTimeout(() => el.remove(), 200);
+                imageState.remove(id);
             });
-        });
+        }
 
-        let uploadedImages = [];
+        /* ===================== MODAL INIT ===================== */
 
-        Dropzone.autoDiscover = false;
+        $('.currentUploadedImages').empty();
 
-        $('.btn-cancel, .btn-close').on('click', () => {
-            cancelUpload();
-            $('#modal-product-creator').modal('hide');
-        });
 
-        $("input[data-type='currency']").on({
-            keyup: function() {
-                formatCurrency($(this));
-            },
-            blur: function() {
-                formatCurrency($(this), "blur");
-            }
-        });
-
-        $("#product_images").on('change', function() {
+        /* ===================== FILE UPLOAD ===================== */
+        $('#product_images').off().on('change', function() {
             const files = this.files;
             if (!files.length) return;
 
             uploadTempImage({
                 files,
                 token: tempToken
-            }, (data) => {
-                data.files.forEach((src, index) => {
-                    const imageId = 'img_' + Date.now() + '_' + index;
-                    const imageObj = {
-                        id: imageId,
+            }, res => {
+                res.files.forEach((src, i) => {
+                    const img = {
+                        id: 'new_' + Date.now() + '_' + i,
                         path: src,
-                        filename: src.split('/').pop()
+                        filename: src.split('/').pop(),
+                        original: false
                     };
-
-                    uploadedImages.push(imageObj);
-
-                    $('.currentUploadedImages').append(
-                        `<div class="image-container" style="position: relative; display: inline-block; margin: 5px;">
-                            <img id="${imageId}" 
-                                 src="${"/uploads" + src.split('/uploads')[1]}" 
-                                 style="max-width: 64px; max-height:64px; object-fit:contain; aspect-ratio:1/1; cursor: pointer;" 
-                                 class="preview-image"
-                                 data-path="${src}" />
-                            <button type="button" 
-                                    class="btn-remove-image btn-danger" 
-                                    style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;"
-                                    data-id="${imageId}">×</button>
-                        </div>`
-                    );
+                    imageState.add(img);
+                    renderImage($('.currentUploadedImages'), img);
                 });
-
                 $(this).val('');
             });
-
         });
 
-        $(document).on('click', '.btn-remove-image', function(e) {
-            e.stopPropagation();
+        /* ===================== SAVE ===================== */
+        $('#create_product_form').off().on('submit', function() {
+            productId = $('#modal-product-creator').data('product-id');
 
-            const imageId = $(this).data('id');
-            deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
-                $(this).parent('.image-container').addClass('removing');
-                $(this).parent('.image-container').remove();
-            });
-
-            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
-        });
-
-        $(document).on('click', '.preview-image', function() {
-            const imageId = $(this).attr('id');
-            deleteTempImage(tempToken, uploadedImages.find(img => img.id === imageId).filename, () => {
-                $(this).parent('.image-container').addClass('removing');
-                $(this).parent('.image-container').remove();
-            });
-
-            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
-        });
-
-        const upload = () => {
-            const name = $("#product-name").val();
-            const price = Number($("#product-price").val().replace(/[^0-9.-]+/g, ""));
-            const stock = $("#product-stock").val();
-            const short_description = $("#product-description-short").val();
-            const description = $("#product-description").val();
-            const category = $("#product-category").val();
-            const on_sale = $("#on-sale").is(":checked");
-            const sale_discound = $("#on-sale-discound").val();
-
+            const data = {
+                name: $('#product-name').val(),
+                price: Number($('#product-price').val().replace(/[^0-9.-]+/g, "")),
+                stock: $('#product-stock').val(),
+                short_description: $('#product-description-short').val(),
+                description: $('#product-description').val(),
+                category: $('#product-category').val(),
+                on_sale: $('#on-sale').is(':checked') ? 1 : 0,
+                sale_discound: $('#on-sale-discound').val() ?? 0
+            };
             insertData(
                 "products",
-                "name, price, stock, short_description, description, category, on_sale, sale_discound",
-                `"${name}", ${price}, ${stock}, "${short_description}", "${description}", ${category}, ${on_sale ? 1:0}, ${sale_discound}`,
-                "",
+
+                "name,price,stock,short_description,description,category,on_sale,sale_discound",
+                `
+                    "${data.name}",
+                     ${data.price},
+                     ${data.stock},
+                    "${data.short_description}",
+                    "${data.description}",
+                     ${data.category},
+                     ${data.on_sale},
+                     ${data.sale_discound}
+                     `,
+                '',
                 (data) => {
-                    finalizeProductImages(data.newId, tempToken, () => {
-                        uploadedImages = [];
+                    finalizeProductImages(data.newId, tempToken, imageState.paths(), () => {
                         location.reload();
                     });
                 }
             );
-        }
-
-        $(".create_product_form").on('submit', () => {
-            upload()
         });
 
-        function cancelUpload() {
-            if (uploadedImages.length > 0) {
+        /* ===================== CANCEL ===================== */
+        $('.btn-cancel, .btn-close').on('click', () => {
 
-                deleteAllTempImages(tempToken, () => {
-                    uploadedImages = [];
-                    $('.currentUploadedImages').empty();
-                });
-            }
-        }
-
-        // On reload clear any temp images that might be left
-        $(document).ready(() => {
-            clearTemp(() => {});
+            $('#modal-product-creator').modal('hide');
         });
 
+        $('#modal-product-creator').on('hide.bs.modal', function() {
+            clearTemp(() => {
+                imageState.reset();
+            });
+
+        })
     });
 </script>

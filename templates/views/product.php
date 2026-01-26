@@ -38,7 +38,7 @@ $data = $recibe->data[0];
                     echo '<img src="' . $imgSrc . '" alt="Product Image" style=" max-width: 512px; max-height: 512px; aspect-ratio: 1/1; object-fit: contain;" class="product-image">';
                     ?>
                 </div>
-                <div class="col-12 product-image-thumbs" style="display: flex; place-items:center; justify-content:center">
+                <div class="col-14 product-image-thumbs" style="display: flex; place-items:center; justify-content:center; flex-direction:row; flex-wrap:wrap;">
                     <?php
 
                     $dir =  $_SERVER['DOCUMENT_ROOT'] . "/uploads/img/products/" . $id . "/";

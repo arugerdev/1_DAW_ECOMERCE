@@ -236,30 +236,44 @@
 </style>
 
 <script defer>
-    $('#modal-product-editor').on('show.bs.modal', function() {
+    /* ===================== STATE ===================== */
 
+    const edit_imageState = {
+        list: [],
+        reset() {
+            this.list = [];
+        },
+        add(img) {
+            this.list.push(img);
+        },
+        remove(id) {
+            this.list = this.list.filter(i => i.id !== id);
+        },
+        paths() {
+            return this.list.map(i => i.path);
+        },
+        find(id) {
+            return this.list.find(i => i.id === id);
+        }
+    };
+
+
+    selectData("*", "categories", "", (res) => {
+        const data = res.data;
+        data.forEach((category) => {
+            $('#editor-product-category').append(
+                `<option value="${category.id}">${category.name}</option>`
+            );
+        });
+    });
+    $('#modal-product-editor').off().on('show.bs.modal', function() {
         let tempToken = 'tmp_' + Math.random().toString(36).substring(2);
         let productId = null;
+        productId = $(this).data('product-id');
 
-        /* ===================== STATE ===================== */
-        const imageState = {
-            list: [],
-            reset() {
-                this.list = [];
-            },
-            add(img) {
-                this.list.push(img);
-            },
-            remove(id) {
-                this.list = this.list.filter(i => i.id !== id);
-            },
-            paths() {
-                return this.list.map(i => i.path);
-            },
-            find(id) {
-                return this.list.find(i => i.id === id);
-            }
-        };
+        console.log(productId)
+
+        edit_imageState.reset();
 
         /* ===================== RENDER ===================== */
         function renderImage(container, img) {
@@ -278,25 +292,24 @@
         </div>
     `);
 
-            el.find('.edit-btn-remove-image').on('click', () => removeImage(img.id, el));
+            el.find('.edit-btn-remove-image').off().on('click', () => removeImage(img.id, el));
             container.append(el);
         }
 
         /* ===================== IMAGE ACTIONS ===================== */
         function removeImage(id, el) {
-            const img = imageState.find(id);
+            const img = edit_imageState.find(id);
             if (!img) return;
 
             deleteTempImage(tempToken, img.filename, () => {
                 el.addClass('removing');
                 setTimeout(() => el.remove(), 200);
-                imageState.remove(id);
+                edit_imageState.remove(id);
             });
         }
 
         /* ===================== MODAL INIT ===================== */
-        productId = $(this).data('product-id');
-        imageState.reset();
+
         $('.currentUploadedImages').empty();
 
         /* ---- Load product data ---- */
@@ -318,15 +331,16 @@
                 const img = {
                     id: 'orig_' + i,
                     path: src,
-                    filename: src.split('/').pop()
+                    filename: src.split('/').pop(),
+                    original: true
                 };
-                imageState.add(img);
+                edit_imageState.add(img);
                 renderImage($('.currentUploadedImages'), img);
             });
         });
 
         /* ===================== FILE UPLOAD ===================== */
-        $('#editor_product_images').on('change', function() {
+        $('#editor_product_images').off().on('change', function() {
             const files = this.files;
             if (!files.length) return;
 
@@ -338,9 +352,10 @@
                     const img = {
                         id: 'new_' + Date.now() + '_' + i,
                         path: src,
-                        filename: src.split('/').pop()
+                        filename: src.split('/').pop(),
+                        original: false
                     };
-                    imageState.add(img);
+                    edit_imageState.add(img);
                     renderImage($('.currentUploadedImages'), img);
                 });
                 $(this).val('');
@@ -348,7 +363,9 @@
         });
 
         /* ===================== SAVE ===================== */
-        $('.edit_product_form').on('submit', function() {
+        $('.edit_product_form').off().on('submit', function() {
+            productId = $('#modal-product-editor').data('product-id');
+
             const data = {
                 name: $('#editor-product-name').val(),
                 price: Number($('#editor-product-price').val().replace(/[^0-9.-]+/g, "")),
@@ -363,18 +380,18 @@
             updateData(
                 "products",
                 `
-        name="${data.name}",
-        price=${data.price},
-        stock=${data.stock},
-        short_description="${data.short_description}",
-        description="${data.description}",
-        category=${data.category},
-        on_sale=${data.on_sale},
-        sale_discound=${data.sale_discound}
-        `,
+                    name="${data.name}",
+                    price=${data.price},
+                    stock=${data.stock},
+                    short_description="${data.short_description}",
+                    description="${data.description}",
+                    category=${data.category},
+                    on_sale=${data.on_sale},
+                    sale_discound=${data.sale_discound}
+                `,
                 `WHERE id=${productId}`,
                 () => {
-                    finalizeProductImages(productId, tempToken, imageState.paths(), () => {
+                    finalizeProductImages(productId, tempToken, edit_imageState.paths(), () => {
                         location.reload();
                     });
                 }
@@ -383,10 +400,19 @@
 
         /* ===================== CANCEL ===================== */
         $('.btn-cancel, .btn-close').on('click', () => {
-            clearTemp(() => {
-                imageState.reset();
-                $('#modal-product-editor').modal('hide');
-            });
+
+            $('#modal-product-editor').modal('hide');
         });
+
+        $('#modal-product-editor').on('hide.bs.modal', function() {
+            // Limpiar eventos para evitar que al cambiar de producto se siga escuchando el input del evento del producto editado anteriormente
+
+            finalizeProductImages(productId, tempToken, edit_imageState.list.filter((el) => el.original).map(i => i.path), () => {
+                clearTemp(() => {
+                    edit_imageState.reset();
+                });
+            });
+
+        })
     });
 </script>

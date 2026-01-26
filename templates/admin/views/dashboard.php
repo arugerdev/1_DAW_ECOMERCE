@@ -636,6 +636,6 @@
         setInterval(() => {
             loadDashboardStats();
             loadRecentOrders();
-        }, 1000);
+        }, 10000);
     });
 </script>
