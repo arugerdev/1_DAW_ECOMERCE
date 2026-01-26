@@ -10,6 +10,13 @@ A ECommerce web, for 1ºDAW practices.
 
 **Back:** ```PHP 8.5.1 , PDO (PHP), MySQL 8.0.44.```
 
+## ⚠️ Warning ⚠️
+
+**This project is not designed for production. It uses a weak login and authentication method and has security vulnerabilities. Please do not use it in production environments; it is intended for testing and learning purposes only.**
+
+*If you want to make a copy or a reusable branch, just make sure that the way PHP detects whether a user has logged in or not is not a simple **"{authenticated: true}"** object, but rather keys and tokens generated in the database or other methods of doing so.*
+
+
 ## Screenshots
 ![App Screenshot](/mockups/0.png)
 ![App Screenshot](/mockups/1.png)
@@ -95,6 +102,7 @@ Is a simple project and the first created by me with this technologies.
 - Shopping cart ✅
 - Categories filter ✅
 - Edit orders ✅
+- Edit users ✅
 - Edit categories ✅
 - Search products ✅
 - Chat bot for customers ❌
@@ -104,7 +112,7 @@ Is a simple project and the first created by me with this technologies.
 - Mobile responsive ⚠️ (Responsive by default but in some screens can be better)
 
 
-**Progress: 80% ████████████████▒▒▒▒**
+**Progress: 85% █████████████████▒▒▒**
 
 ## License
 
