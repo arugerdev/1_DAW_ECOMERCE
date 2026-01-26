@@ -25,6 +25,9 @@ switch ($option) {
     case "createUser":
         echo (createUser());
         break;
+    case "editUser":
+        echo (editUser());
+        break;
 }
 
 function selectData()
@@ -216,6 +219,64 @@ function loginAdmin()
     }
 }
 
+function editUser()
+{
+    try {
+        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+
+        $id = $_POST["id"];
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        if (!$username) {
+            return json_encode([
+                "success" => false
+            ]);
+        }
+
+        if (!$password) {
+            $password = '';
+        }
+
+        $maxCharactersUsername = "20";
+        $maxCharactersPassword = "60";
+
+        if (strlen($username) > $maxCharactersUsername) {
+            return json_encode([
+                "success" => false,
+                "error" => 'El nombre de usuario no puede superar los ' . $maxCharactersUsername . ' caracteres'
+            ]);
+        };
+
+        if (strlen($password) > $maxCharactersPassword) {
+            return json_encode([
+                "success" => false,
+                "error" => 'La contraseña no puede superar los ' . $maxCharactersPassword . ' caracteres'
+            ]);
+        };
+
+        $query = $pdo->prepare("UPDATE users SET username=:username" . ($password != '' ?  ",password=:password" : "") . " WHERE id = $id");
+        $query->bindParam(':username', $username);
+
+        if ($password != '') {
+            $encodedPass = crypt($password, "st");
+            $query->bindParam(':password', $encodedPass);
+        }
+
+        $query->execute();
+
+        http_response_code(200);
+        return json_encode([
+            "success" => true
+        ]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        return json_encode([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
+    }
+}
 function createUser()
 {
     try {

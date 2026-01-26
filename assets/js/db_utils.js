@@ -97,6 +97,23 @@ function createUser(username, password, callback = () => { }) {
     });
 
 }
+function editUser(id, username, password, callback = () => { }) {
+    $.ajax({
+        url: "/utils/db_utils.php",
+        type: "POST",
+        data: {
+            "action": "editUser",
+            "id": id,
+            "username": username,
+            "password": password
+        },
+        success: (data) => {
+            callback(JSON.parse(data))
+        }
+    });
+
+}
+
 function clearSession() {
     $.ajax({
         url: "/utils/db_utils.php",

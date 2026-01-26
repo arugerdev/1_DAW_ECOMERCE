@@ -1,4 +1,5 @@
 <?php include "./modals/user-creator.php"; ?>
+<?php include "./modals/user-editor.php"; ?>
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -43,6 +44,13 @@
         $('#modal-user-creator').modal('show')
     })
 
+
+    function editUserModal(row) {
+        $('#modal-user-editor').data('user-id', row);
+        $('#modal-user-editor').modal('show');
+
+    }
+
     $(document).ready(function() {
         selectData("id, username", "users", "", (res) => {
             const data = res.data
@@ -72,9 +80,9 @@
                                 const id = row[0]
 
                                 // Admin filter
-                                if (id == 1) return '';
-                                
-                                return getRowActions(id, null, `deleteData('users','id',${id},'',location.reload())`);
+                                if (id == 1) return getRowActions(id, `editUserModal(${id})`, null);
+
+                                return getRowActions(id, `editUserModal(${id})`, `deleteData('users','id',${id},'',location.reload())`);
 
                             }
                         }
