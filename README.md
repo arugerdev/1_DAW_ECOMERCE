@@ -100,6 +100,7 @@ Is a simple project and the first created by me with this technologies.
 - Chat bot for customers ❌
 - Refounds ✅ 
 - Edit Refounds ❌ 
+- Customize Ecommerce Page ❌
 - Mobile responsive ⚠️ (Responsive by default but in some screens can be better)
 
 

@@ -7,7 +7,7 @@ function deleteImages(id, callback = () => { }) {
             "id": id
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     });
 }
@@ -43,7 +43,7 @@ function deleteTempImage(token, filename, callback = () => { }) {
             "filename": filename
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     })
 }
@@ -57,7 +57,7 @@ function deleteAllTempImages(token, callback = () => { }) {
             "token": token
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     })
 }
@@ -70,40 +70,18 @@ function clearTemp(callback = () => { }) {
             "action": "clearTemp"
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     })
 }
 
-function finalizeProductImages(product_id, token, callback = () => { }) {
-    $.ajax({
-        url: "../../utils/images_utils.php",
-        type: "POST",
-        data: {
-            "action": "finalizeProductImages",
-            "product_id": product_id,
-            "token": token
-        },
-        success: (data) => {
-            callback(JSON.parse(data))
-        }
-    })
-}
-
-function finalizeProductImages(product_id, token, callback = () => { }, imagesToUplaod) {
-    $.ajax({
-        url: "../../utils/images_utils.php",
-        type: "POST",
-        data: {
-            "action": "finalizeProductImages",
-            "product_id": product_id,
-            "token": token,
-            "imagesToUplaod": imagesToUplaod
-        },
-        success: (data) => {
-            callback(JSON.parse(data))
-        }
-    })
+function finalizeProductImages(productId, token, images = [], cb = () => { }) {
+    $.post("../../utils/images_utils.php", {
+        action: "finalizeProductImages",
+        product_id: productId,
+        token,
+        imagesToUpload: images
+    }, res => cb((res)));
 }
 
 function getProductImages(id, callback = () => { }) {
@@ -115,7 +93,7 @@ function getProductImages(id, callback = () => { }) {
             "id": id
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     })
 }
@@ -130,7 +108,18 @@ function moveImagesToTemp(product_id, token, callback = () => { }) {
             "token": token
         },
         success: (data) => {
-            callback(JSON.parse(data))
+            callback((data))
         }
     })
+}
+
+function renderImage(container, img, onRemove) {
+    container.append(`
+        <div class="image-box" data-id="${img.id}">
+            <img src="${img.url}" />
+            <button class="remove">×</button>
+        </div>
+    `);
+
+    container.find(`[data-id="${img.id}"] .remove`).on('click', () => onRemove(img));
 }

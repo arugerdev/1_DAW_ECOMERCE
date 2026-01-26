@@ -67,10 +67,16 @@ require __DIR__ . "/../../utils/images_utils.php";
                         ?>
                             <tr id="cart-item-<?php echo $id; ?>" data-product-id="<?php echo $id; ?>">
                                 <td>
-                                    <img src="<?php echo getProductMainImage($id) ?? 'https://placehold.co/100x100?text=Producto'; ?>"
+                                    <p>
+
+                                    </p>
+
+
+                                    <img src="<?php echo (getProductImagesById($id)["images"][0] ? ("/uploads/img/products/$id/" . getProductImagesById($id)["images"][0]) : 'https://placehold.co/100x100?text=Producto') ?>"
                                         style="width: 80px; height: 80px; object-fit: contain;"
                                         class="img-thumbnail"
                                         alt="<?php echo htmlspecialchars($product['name']); ?>">
+
                                 </td>
                                 <td>
                                     <h6 class="mb-1"><?php echo htmlspecialchars($product['name']); ?></h6>

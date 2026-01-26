@@ -31,7 +31,6 @@
         `
     }
 
-
     function getStatus(value) {
         const colors = {
             pending: 'warning',
@@ -50,4 +49,5 @@
 
         return `<span class="badge badge-${colors[value] || 'secondary'}">${traduction[value]}</span>`
     }
+
 </script>
