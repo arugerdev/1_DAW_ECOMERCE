@@ -108,11 +108,11 @@ Is a simple project and the first created by me with this technologies.
 - Chat bot for customers ❌
 - Refounds ✅ 
 - Edit Refounds ❌ 
-- Customize Ecommerce Page ❌
-- Mobile responsive ⚠️ (Responsive by default but in some screens can be better)
+- Customize Ecommerce Page ⚠️ (Can save and load data, just need use that data and configs.)
+- Mobile responsive ✅
 
 
-**Progress: 85% █████████████████▒▒▒**
+**Progress: 90% ██████████████████▒▒**
 
 ## License
 

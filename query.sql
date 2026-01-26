@@ -85,6 +85,47 @@ CREATE TABLE prodToOrder(
     create_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE customShop (
+    id INT AUTO_INCREMENT UNIQUE NOT NULL PRIMARY KEY,
+    name VARCHAR(60) NOT NULL DEFAULT 'EviMerce',
+    slogan VARCHAR(120) DEFAULT NULL,
+    description TEXT NOT NULL,
+    logo_url VARCHAR(255) DEFAULT NULL,
+    logo_dark_url VARCHAR(255) DEFAULT NULL,
+    favicon_url VARCHAR(255) DEFAULT NULL,
+    primary_color VARCHAR(20) DEFAULT '#0d6efd',
+    secondary_color VARCHAR(20) DEFAULT '#6c757d',
+    accent_color VARCHAR(20) DEFAULT '#198754',
+    background_color VARCHAR(20) DEFAULT '#ffffff',
+    text_color VARCHAR(20) DEFAULT '#212529',
+    theme ENUM('light', 'dark', 'auto') DEFAULT 'light',
+    contact_email VARCHAR(120) DEFAULT NULL,
+    contact_phone VARCHAR(30) DEFAULT NULL,
+    whatsapp VARCHAR(30) DEFAULT NULL,
+    address VARCHAR(255) DEFAULT NULL,
+    city VARCHAR(80) DEFAULT NULL,
+    postal_code VARCHAR(15) DEFAULT NULL,
+    country VARCHAR(80) DEFAULT NULL,
+    facebook_url VARCHAR(255) DEFAULT NULL,
+    instagram_url VARCHAR(255) DEFAULT NULL,
+    twitter_url VARCHAR(255) DEFAULT NULL,
+    tiktok_url VARCHAR(255) DEFAULT NULL,
+    youtube_url VARCHAR(255) DEFAULT NULL,
+    meta_title VARCHAR(70) DEFAULT NULL,
+    meta_description VARCHAR(160) DEFAULT NULL,
+    meta_keywords VARCHAR(255) DEFAULT NULL,
+    footer_text VARCHAR(255) DEFAULT NULL,
+    copyright_text VARCHAR(255) DEFAULT '© 2026 EviMerce. Todos los derechos reservados.',
+    currency VARCHAR(10) DEFAULT 'EUR',
+    currency_symbol VARCHAR(5) DEFAULT '€',
+    tax_percent DECIMAL(5,2) DEFAULT 21.00,
+    maintenance_mode BOOLEAN DEFAULT FALSE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
 ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE products MODIFY name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE products MODIFY description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

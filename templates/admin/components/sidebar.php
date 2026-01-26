@@ -38,6 +38,12 @@
                       </a>
                   </li>
                   <li class="nav-item">
+                      <a href="/admin/customize" class="nav-link">
+                          <i class="fa-solid fa-palette nav-icon"></i>
+                          <p>Personalización</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
                       <a href="/admin/products" class="nav-link">
                           <i class="fa-solid fa-boxes-stacked nav-icon"></i>
                           <p>Productos</p>
@@ -65,6 +71,12 @@
                       <a href="/admin/users" class="nav-link">
                           <i class="fa-solid fa-users nav-icon"></i>
                           <p>Usuarios</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="/admin/config" class="nav-link">
+                          <i class="fa-solid fa-gear nav-icon"></i>
+                          <p>Configuracion</p>
                       </a>
                   </li>
               </ul>

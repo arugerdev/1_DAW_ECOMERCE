@@ -12,6 +12,8 @@ if (isset($_SESSION['user']) && $_SESSION['state'] == 'authenticated') {
         '/users' => 'users.php',
         '/refounds' => 'refounds.php',
         '/categories' => 'categories.php',
+        '/customize' => 'customize.php',
+        '/config' => 'config.php'
     ];
 
     $view = $routes[$adminRoute] ?? '404.php';

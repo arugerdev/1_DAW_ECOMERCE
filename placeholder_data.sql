@@ -77,3 +77,5 @@ VALUES
 
 (TRUE,'Relé Electromecánico 230V',6.50,'Componente electrónico',
 'Relé electromecánico para aplicaciones de control eléctrico y automatización básica.',180,FALSE,0,8);
+
+INSERT INTO customShop (name, description ) VALUES ('EviMerce', "A 	shop");
