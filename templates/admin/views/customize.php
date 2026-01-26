@@ -45,14 +45,33 @@
                         </div>
 
                         <div class="form-group">
-                            <label>URL Logo</label>
-                            <input type="text" id="shop-logo" class="form-control">
+                            <label class="dropzone-file-upload" for="logo_input">
+                                LOGO
+                                <i class="fa-solid fa-images icon fs-1"></i>
+                                <div class="text">
+                                    <span>Haz clic para subir imagen<small>/es</small></span>
+                                </div>
+                                <input type="file" id="logo_input" multiple accept="image/*" style="display:none;">
+                            </label>
+                            <img src="" id="logo-preview" width="128" alt="">
                         </div>
 
-                        <div class="form-group">
-                            <label>URL Logo oscuro</label>
-                            <input type="text" id="shop-logo-dark" class="form-control">
-                        </div>
+                        <!-- <div class="form-group">
+
+                            <label class="dropzone-file-upload" for="editor_product_images">
+                                LOGO OSCURO
+                                <i class="fa-solid fa-images icon fs-1"></i>
+                                <div class="text">
+                                    <span>Haz clic para subir imagen<small>/es</small></span>
+                                </div>
+                                <input type="file" id="editor_product_images" multiple accept="image/*" style="display:none;">
+                            </label>
+                            <section class="currentUploadedImages">
+
+                            </section>
+                        </div> -->
+
+
 
                     </div>
                 </div>
@@ -114,6 +133,10 @@
 
 <script>
     function loadShopData() {
+        $('#logo-preview')
+            .attr('src', '/uploads/img/shop/logo.png')
+            .removeClass('d-none');
+
         selectData(
             "*",
             "customShop",
@@ -128,9 +151,6 @@
                 $('#shop-slogan').val(shop.slogan);
                 $('#shop-description').val(shop.description);
 
-                $('#shop-logo').val(shop.logo_url);
-                $('#shop-logo-dark').val(shop.logo_dark_url);
-
                 $('#primary-color').val(shop.primary_color);
                 $('#secondary-color').val(shop.secondary_color);
                 $('#accent-color').val(shop.accent_color);
@@ -140,11 +160,38 @@
         );
     }
 
+    function uploadShopImage(file, type) {
+        const token = 'shop'; // fijo
+        const formData = new FormData();
+
+        formData.append('action', 'uploadShopImage');
+        formData.append('type', type);
+        formData.append('image', file);
+
+        fetch('../../utils/images_utils.php', {
+            method: 'POST',
+            body: formData
+        }).then(r => r.json()).then(res => {
+            if (!res.success) return alert('Error subiendo imagen');
+
+            const img = document.getElementById(
+                type === 'logo' ? 'logo-preview' : 'logo-dark-preview'
+            );
+
+            img.src = res.url + '?t=' + Date.now();
+            img.classList.remove('d-none');
+        });
+    }
+
+
     $(document).ready(function() {
 
         loadShopData();
 
-
+        $('#logo_input').on('change', () => {
+            console.log(e.target.files)
+            uploadShopImage(e.target.files[0], type);
+        })
 
         $('#save-shop').on('click', function() {
 
@@ -152,8 +199,6 @@
             name='${$('#shop-name').val()}',
             slogan='${$('#shop-slogan').val()}',
             description='${$('#shop-description').val()}',
-            logo_url='${$('#shop-logo').val()}',
-            logo_dark_url='${$('#shop-logo-dark').val()}',
             primary_color='${$('#primary-color').val()}',
             secondary_color='${$('#secondary-color').val()}',
             accent_color='${$('#accent-color').val()}',

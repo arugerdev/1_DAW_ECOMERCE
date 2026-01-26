@@ -18,7 +18,8 @@ $map = [
     'moveImagesToTemp'      => 'moveImagesToTemp',
     'getProductImages'      => 'getProductImages',
     'deleteImage'           => 'deleteImage',
-    'clearTemp'             => 'clearTemp'
+    'clearTemp'             => 'clearTemp',
+    'uploadShopImage' => 'uploadShopImage'
 ];
 if ($action != null) {
     if (!isset($map[$action])) {
@@ -183,4 +184,28 @@ function deleteDir(string $dir)
         is_dir($p) ? deleteDir($p) : unlink($p);
     }
     rmdir($dir);
+}
+
+function uploadShopImage()
+{
+    if (empty($_FILES['image'])) response(false, 'Sin imagen');
+
+    $type = $_POST['type'] ?? '';
+    if (!in_array($type, ['logo', 'logo-dark'])) response(false, 'Tipo inválido');
+
+    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, ALLOWED_EXT)) response(false, 'Extensión no válida');
+
+    $dir = BASE_PATH . '/img/shop';
+    ensureDir($dir);
+
+    $filename = $type === 'logo'
+        ? "logo.$ext"
+        : "logo-dark.$ext";
+
+    move_uploaded_file($_FILES['image']['tmp_name'], "$dir/$filename");
+
+    response(true, 'OK', [
+        'url' => "/uploads/img/shop/$filename"
+    ]);
 }
