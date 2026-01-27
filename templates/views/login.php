@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . "/../../utils/checkout_utils.php";
-require __DIR__ . "/../../utils/auth_utils.php";
+require_once __DIR__ . "/../../utils/checkout_utils.php";
+require_once __DIR__ . "/../../utils/auth_utils.php";
 
 
 if (isLoggedIn()) {

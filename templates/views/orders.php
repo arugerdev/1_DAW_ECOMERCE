@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . "/../../utils/checkout_utils.php";
-require __DIR__ . "/../../utils/auth_utils.php";
+require_once __DIR__ . "/../../utils/checkout_utils.php";
+require_once __DIR__ . "/../../utils/auth_utils.php";
 
 
 if (!isLoggedIn()) {
@@ -13,7 +13,7 @@ if (!isLoggedIn()) {
 <?php include __DIR__ . "/../components/navbar.php"; ?>
 
 
-<div class="container mt-5">
+<div class="bg text container mt-5">
     <h2 class="mb-4">Mis pedidos</h2>
 
     <div id="orders-container">
@@ -103,7 +103,7 @@ if (!isLoggedIn()) {
                         </table>
 
                         <div class="text-right mt-3">
-                            <h5>Total: <b>${order.total_amount.toFixed(2)} €</b></h5>
+                            <h5>Total: <b>${order.total_amount.toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></b></h5>
                         </div>
                     </div>
                 </div>
@@ -167,9 +167,9 @@ if (!isLoggedIn()) {
                                 <img src="${images[0] ? `/uploads/img/products/${prod.id}/${images[0]}` : 'https://placehold.co/86x86'}" alt="Product Image" style=" max-width: 86px; max-height: 86px; aspect-ratio: 1/1; object-fit: contain;" class="product-image">    
                             </td>
                             <td>${prod.name}</td>
-                            <td>${prod.unit_price.toFixed(2)} €</td>
+                            <td>${prod.unit_price.toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></td>
                             <td>${prod.quantity}</td>
-                            <td>${prod.total_price.toFixed(2)} €</td>
+                            <td>${prod.total_price.toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></td>
                         </tr>
                     `);
                     });

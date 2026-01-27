@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . "/../components/navbar.php" ?>
 
-<section class="container py-5">
+<section class="bg text container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Progreso del checkout -->
@@ -37,12 +37,12 @@
                     <!-- Tabs para registro/login -->
                     <ul class="nav nav-tabs mb-4" id="checkoutTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">
+                            <button class="text nav-link active" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">
                                 Nuevo cliente
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">
+                            <button class="text nav-link" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">
                                 Cliente existente
                             </button>
                         </li>
@@ -203,9 +203,9 @@
             const shipping = 5.00; // Envío fijo por ahora
             const total = subtotal + shipping;
 
-            $('#checkout-subtotal').text(subtotal.toFixed(2) + '€');
-            $('#checkout-shipping').text(shipping.toFixed(2) + '€');
-            $('#checkout-total').text(total.toFixed(2) + '€');
+            $('#checkout-subtotal').text(subtotal.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#checkout-shipping').text(shipping.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#checkout-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         });
 
         // Mostrar/ocultar campos de cuenta

@@ -13,7 +13,8 @@ if (isset($_SESSION['user']) && $_SESSION['state'] == 'authenticated') {
         '/refounds' => 'refounds.php',
         '/categories' => 'categories.php',
         '/customize' => 'customize.php',
-        '/config' => 'config.php'
+        '/config' => 'config.php',
+        '/export/products' => '/export/products_csv.php'
     ];
 
     $view = $routes[$adminRoute] ?? '404.php';

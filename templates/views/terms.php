@@ -42,7 +42,7 @@
 
     <h2 class="fs-4">5. Precios y pagos</h2>
     <p>
-        Todos los precios se muestran en euros (€) e incluyen los impuestos aplicables,
+        Todos los precios se muestran en euros (<?php echo SHOP_DATA->currency_symbol ?>) e incluyen los impuestos aplicables,
         salvo que se indique lo contrario.
     </p>
     <p>

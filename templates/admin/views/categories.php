@@ -23,12 +23,10 @@
                 <div class="card-header border-0">
                     <h3 class="card-title">Todas las categorias</h3>
                     <div class="card-tools">
-                        <a href="#" class="btn btn-tool btn-sm">
+                        <a href="#" class="btn btn-tool btn-sm btn-download-categories">
                             <i class="fas fa-download"></i>
                         </a>
-                        <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-bars"></i>
-                        </a>
+
                         <button class="btn-modal-category-creator btn btn-sm btn-outline-success" data-toggle="modal">
                             <i class="fas fa-plus "></i>
                         </button>
@@ -45,6 +43,61 @@
 </div>
 
 <script defer>
+    function downloadCategoriesCSV() {
+        // Mostrar indicador de carga
+        const btn = $('.btn-download-categories');
+        const originalHTML = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin"></i>');
+        btn.prop('disabled', true);
+
+        // Configurar los parámetros para la consulta específica de productos
+        const params = new URLSearchParams({
+            action: 'downloadCSV',
+            table: 'categories',
+            select: '*',
+            extra: 'ORDER BY id DESC'
+        });
+
+        // Crear y activar la descarga
+        const downloadUrl = '/utils/db_utils.php?' + params.toString();
+
+        // Usar fetch para manejar la respuesta
+        fetch(downloadUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                }
+                throw new Error('Error en la descarga');
+            })
+            .then(blob => {
+                // Crear un enlace temporal para descargar el archivo
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `categorias_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al descargar el CSV');
+            })
+            .finally(() => {
+                // Restaurar el botón
+                btn.html(originalHTML);
+                btn.prop('disabled', false);
+            });
+    }
+
+    // Modifica el evento click del botón
+    $('.btn-download-categories').on('click', function(e) {
+        e.preventDefault();
+        downloadCategoriesCSV();
+    });
+
+
     $('.btn-modal-category-creator').on('click', () => {
         $('#modal-category-creator').modal('show')
     })

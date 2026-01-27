@@ -16,7 +16,7 @@ function formatNumber(n) {
     return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
-function formatCurrency(input, blur) {
+function formatCurrency(input, blur, currencyChar) {
     var input_val = input.val();
     if (input_val === "") {
         return;
@@ -39,7 +39,7 @@ function formatCurrency(input, blur) {
 
         right_side = right_side.substring(0, 2);
 
-        input_val = left_side + "." + right_side + "€";
+        input_val = left_side + "." + right_side + currencyChar;
 
     } else {
         input_val = formatNumber(input_val);
@@ -47,7 +47,7 @@ function formatCurrency(input, blur) {
         if (blur === "blur") {
             input_val += ".00";
         }
-        input_val = input_val + "€";
+        input_val = input_val + currencyChar;
 
     }
     input.val(input_val);

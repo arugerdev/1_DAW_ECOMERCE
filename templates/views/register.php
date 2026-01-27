@@ -1,8 +1,8 @@
 <?php
 
 
-require __DIR__ . "/../../utils/checkout_utils.php";
-require __DIR__ . "/../../utils/auth_utils.php";
+require_once __DIR__ . "/../../utils/checkout_utils.php";
+require_once __DIR__ . "/../../utils/auth_utils.php";
 
 function isLoggedIn()
 {
@@ -108,15 +108,15 @@ if (isLoggedIn()) {
                                     <tfoot>
                                         <tr>
                                             <td colspan="2" class="text-end"><strong>Subtotal:</strong></td>
-                                            <td class="text-end" id="order-subtotal">0.00€</td>
+                                            <td class="text-end" id="order-subtotal">0.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="text-end"><strong>Envío:</strong></td>
-                                            <td class="text-end" id="order-shipping">5.00€</td>
+                                            <td class="text-end" id="order-shipping">5.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                         <tr class="table-active">
                                             <td colspan="2" class="text-end"><strong>TOTAL:</strong></td>
-                                            <td class="text-end fw-bold" id="order-total">0.00€</td>
+                                            <td class="text-end fw-bold" id="order-total">0.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -139,13 +139,13 @@ if (isLoggedIn()) {
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="shipping_method" id="shipping_standard" value="standard" checked>
                                 <label class="form-check-label" for="shipping_standard">
-                                    <strong>Envío estándar</strong> (5-7 días laborables) - 5.00€
+                                    <strong>Envío estándar</strong> (5-7 días laborables) - 5.00<?php echo SHOP_DATA->currency_symbol ?>
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="shipping_method" id="shipping_express" value="express">
                                 <label class="form-check-label" for="shipping_express">
-                                    <strong>Envío exprés</strong> (1-2 días laborables) - 10.00€
+                                    <strong>Envío exprés</strong> (1-2 días laborables) - 10.00<?php echo SHOP_DATA->currency_symbol ?>
                                 </label>
                             </div>
                         </div>
@@ -312,7 +312,7 @@ if (isLoggedIn()) {
                                 </div>
                             </td>
                             <td class="text-center align-middle">${quantity}</td>
-                            <td class="text-end align-middle">${itemTotal.toFixed(2)}€</td>
+                            <td class="text-end align-middle">${itemTotal.toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></td>
                         </tr>
                     `;
                     });
@@ -334,14 +334,14 @@ if (isLoggedIn()) {
 
             const total = subtotal + shipping;
 
-            $('#order-subtotal').text(subtotal.toFixed(2) + '€');
-            $('#order-shipping').text(shipping.toFixed(2) + '€');
-            $('#order-total').text(total.toFixed(2) + '€');
+            $('#order-subtotal').text(subtotal.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#order-shipping').text(shipping.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#order-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         }
 
         // Evento para cambiar método de envío
         $('input[name="shipping_method"]').on('change', function() {
-            const subtotal = parseFloat($('#order-subtotal').text().replace('€', ''));
+            const subtotal = parseFloat($('#order-subtotal').text().replace('<?php echo SHOP_DATA->currency_symbol ?>', ''));
             updateOrderTotal(subtotal);
         });
 

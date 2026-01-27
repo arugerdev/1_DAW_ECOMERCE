@@ -34,7 +34,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-gradient-success">
                         <div class="inner">
-                            <h3 id="total-revenue">0.00<sup style="font-size: 20px">€</sup></h3>
+                            <h3 id="total-revenue">0.00<sup style="font-size: 20px"><?php echo SHOP_DATA->currency_symbol ?></sup></h3>
                             <p>Ingresos Totales</p>
                         </div>
                         <div class="icon">
@@ -287,7 +287,7 @@
                 if (res.data.length > 0) {
                     const order = res.data[0];
                     $('#recently-orders').html(order.total || 0);
-                    $('#total-revenue').html((Number(order.revenue) || 0).toFixed(2) + '€');
+                    $('#total-revenue').html((Number(order.revenue) || 0).toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
                 }
             });
 
@@ -322,7 +322,7 @@
                             target = 100000;
                         }
 
-                        $('#month-revenue').html((monthData.revenue || 0).toFixed(2) + '€ / ' + (target * 100) + '€');
+                        $('#month-revenue').html((monthData.revenue || 0).toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?> / ' + (target * 100) + '<?php echo SHOP_DATA->currency_symbol ?>');
                         $('#month-revenue-progress').css('width', `${Math.min(100, ((monthData.revenue || 0) / target))}%`);
 
                         target = 10;
@@ -410,7 +410,7 @@
                         data: {
                             labels: dates,
                             datasets: [{
-                                label: 'Ventas (€)',
+                                label: 'Ventas (<?php echo SHOP_DATA->currency_symbol ?>)',
                                 data: revenues,
                                 borderColor: '#007bff',
                                 backgroundColor: 'rgba(0, 123, 255, 0.1)',
@@ -442,7 +442,7 @@
                                     ticks: {
                                         callback: function(value) {
                                             if (this.datasetIndex === 0) {
-                                                return value + '€';
+                                                return value + '<?php echo SHOP_DATA->currency_symbol ?>';
                                             }
                                             return value;
                                         }
@@ -537,7 +537,7 @@
                                             <small class="text-muted">
                                                 ${product.on_sale == '1' ? 
                                                     `<span class="text-success">${product.sale_discound}% OFF</span>` : 
-                                                    `<span>${parseFloat(product.price).toFixed(2)}€</span>`
+                                                    `<span>${parseFloat(product.price).toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></span>`
                                                 }
                                             </small>
                                         </div>
@@ -605,7 +605,7 @@
                                     </a>
                                 </td>
                                 <td>${order.customer_name || 'Cliente'}</td>
-                                <td class="text-center font-weight-bold">${parseFloat(order.total_amount).toFixed(2)}€</td>
+                                <td class="text-center font-weight-bold">${parseFloat(order.total_amount).toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></td>
                                 <td class="text-center">
                                     ${getStatus(order.status)}
                                 </td>

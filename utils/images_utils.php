@@ -7,6 +7,7 @@ header('Content-Type: application/json');
 define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/uploads');
 define('TEMP_PATH', BASE_PATH . '/temp');
 define('PRODUCT_PATH', BASE_PATH . '/img/products');
+define('SHOP_PATH', BASE_PATH . '/img/shop');
 define('ALLOWED_EXT', ['jpg', 'jpeg', 'png', 'webp']);
 
 $action = $_POST['action'] ?? null;
@@ -19,7 +20,8 @@ $map = [
     'getProductImages'      => 'getProductImages',
     'deleteImage'           => 'deleteImage',
     'clearTemp'             => 'clearTemp',
-    'uploadShopImage' => 'uploadShopImage'
+    'uploadShopImage'       => 'uploadShopImage',
+    'getShopImage'          => 'getShopImage'
 ];
 if ($action != null) {
     if (!isset($map[$action])) {
@@ -191,21 +193,41 @@ function uploadShopImage()
     if (empty($_FILES['image'])) response(false, 'Sin imagen');
 
     $type = $_POST['type'] ?? '';
-    if (!in_array($type, ['logo', 'logo-dark'])) response(false, 'Tipo inválido');
+    if (!in_array($type, ['logo', 'logo-dark', 'logo-brand', 'banner'])) {
+        response(false, 'Tipo inválido');
+    }
 
     $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, ALLOWED_EXT)) response(false, 'Extensión no válida');
+    if (!in_array($ext, ALLOWED_EXT)) {
+        response(false, 'Extensión no válida');
+    }
 
     $dir = BASE_PATH . '/img/shop';
     ensureDir($dir);
 
-    $filename = $type === 'logo'
-        ? "logo.$ext"
-        : "logo-dark.$ext";
+    $baseName = match ($type) {
+        'logo' => 'logo',
+        'logo-dark' => 'logo-dark',
+        'logo-brand' => 'logo-brand',
+        'banner' => 'banner',
+    };
 
+    foreach (glob("$dir/$baseName.*") as $file) {
+        if (is_file($file)) {
+            unlink($file);
+        }
+    }
+
+    $filename = "$baseName.$ext";
     move_uploaded_file($_FILES['image']['tmp_name'], "$dir/$filename");
 
     response(true, 'OK', [
         'url' => "/uploads/img/shop/$filename"
     ]);
+}
+
+
+function getShopImage()
+{
+    response(true, '', ['images' => listImages(SHOP_PATH . "/")]);
 }

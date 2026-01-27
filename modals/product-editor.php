@@ -273,7 +273,7 @@
         selectData("*", "products", `WHERE id=${productId}`, res => {
             const p = res.data[0];
             $('#editor-product-name').val(p.name);
-            $('#editor-product-price').val(p.price + "€");
+            $('#editor-product-price').val(p.price + '<?php echo SHOP_DATA->currency_symbol ?>');
             $('#editor-product-stock').val(p.stock);
             $('#editor-product-description-short').val(p.short_description);
             $('#editor-product-description').val(p.description);

@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
 
 $option = $_REQUEST["action"];
 
@@ -28,13 +28,16 @@ switch ($option) {
     case "editUser":
         echo (editUser());
         break;
+    case "downloadCSV":
+        echo (downloadCSV());
+        break;
 }
 
 function selectData()
 {
     try {
 
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $select = $_REQUEST["select"] ?? "";
         $table = $_REQUEST["table"] ?? "";
@@ -63,7 +66,7 @@ function deleteData()
 {
     try {
 
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $table = $_REQUEST["table"];
         $filterParam = $_REQUEST["filterParam"];
@@ -94,7 +97,7 @@ function insertData()
 {
     try {
 
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $table = $_REQUEST["table"];
         $keys = $_REQUEST["keys"];
@@ -128,7 +131,7 @@ function updateData()
 {
     try {
 
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $table = $_REQUEST["table"];
         $values = $_REQUEST["values"];
@@ -158,7 +161,7 @@ function updateData()
 function loginAdmin()
 {
     try {
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $username = $_POST["username"];
         $password = $_POST["password"];
@@ -222,7 +225,7 @@ function loginAdmin()
 function editUser()
 {
     try {
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $id = $_POST["id"];
         $username = $_POST["username"];
@@ -280,7 +283,7 @@ function editUser()
 function createUser()
 {
     try {
-        require_once $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
 
         $username = $_POST["username"];
         $password = $_POST["password"];
@@ -345,4 +348,74 @@ function clearSession()
 
     header("Location: /admin/");
     exit;
+}
+
+function getShopData()
+{
+    $_REQUEST["select"] = '*';
+    $_REQUEST["table"] = 'customShop';
+
+    return selectData();
+}
+
+function downloadCSV()
+{
+    try {
+        require $_SERVER['DOCUMENT_ROOT'] . "/includes/database.php";
+
+        $table = $_REQUEST["table"] ?? "";
+        $select = $_REQUEST["select"] ?? "*";
+        $extra = $_REQUEST["extra"] ?? "";
+
+        if (!$table) {
+            http_response_code(400);
+            return json_encode([
+                "success" => false,
+                "error" => "Tabla no especificada"
+            ]);
+        }
+
+        $query = $pdo->prepare("SELECT $select FROM $table $extra");
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result) === 0) {
+            http_response_code(404);
+            return json_encode([
+                "success" => false,
+                "error" => "No hay datos para exportar"
+            ]);
+        }
+
+        $filename = $table . "_" . date('Y-m-d_H-i-s') . ".csv";
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+        $output = fopen('php://output', 'w');
+
+        $headers = array_keys($result[0]);
+
+        fputcsv($output, $headers);
+
+        foreach ($result as $row) {
+            $row = array_map(function ($value) {
+                if ($value === null) return 'NULL';
+                if ($value === true || $value === '1') return 'Sí';
+                if ($value === false || $value === '0') return 'No';
+                return $value;
+            }, $row);
+
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit();
+    } catch (PDOException $e) {
+        http_response_code(500);
+        return json_encode([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
+    }
 }

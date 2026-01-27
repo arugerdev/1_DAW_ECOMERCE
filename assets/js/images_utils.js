@@ -113,6 +113,19 @@ function moveImagesToTemp(product_id, token, callback = () => { }) {
     })
 }
 
+function getShopImage(callback = () => { }) {
+    $.ajax({
+        url: "../../utils/images_utils.php",
+        type: "POST",
+        data: {
+            "action": "getShopImage"
+        },
+        success: (data) => {
+            callback((data))
+        }
+    })
+}
+
 function renderImage(container, img, onRemove) {
     container.append(`
         <div class="image-box" data-id="${img.id}">

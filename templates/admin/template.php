@@ -4,7 +4,7 @@
     ?>
     <?php include __DIR__ . "/utils/elementsGenerator.php"; ?>
     <?php include __DIR__ . "/components/sidebar.php"; ?>
-    <div class="content-wrapper" style="min-height: 792px; max-width: 95.5vw;">
+    <div class="content-wrapper pr-4 pl-2" style="min-height: 792px;">
         <?php include __DIR__ . "/views/" . $view; ?>
     </div>
     <?php include __DIR__ . "/components/control_sidebar.php"; ?>

@@ -22,11 +22,8 @@
                 <div class="card-header border-0">
                     <h3 class="card-title">Todos los pedidos</h3>
                     <div class="card-tools">
-                        <a href="#" class="btn btn-tool btn-sm">
+                        <a href="#" class="btn btn-tool btn-sm btn-download-orders">
                             <i class="fas fa-download"></i>
-                        </a>
-                        <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-bars"></i>
                         </a>
 
                     </div>
@@ -46,6 +43,61 @@
         const params = new URLSearchParams(window.location.search)
         return params.get(param)
     }
+
+
+    function downloadOrdersCSV() {
+        // Mostrar indicador de carga
+        const btn = $('.btn-download-orders');
+        const originalHTML = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin"></i>');
+        btn.prop('disabled', true);
+
+        // Configurar los parámetros para la consulta específica de productos
+        const params = new URLSearchParams({
+            action: 'downloadCSV',
+            table: 'orders',
+            select: '*',
+            extra: 'ORDER BY id DESC'
+        });
+
+        // Crear y activar la descarga
+        const downloadUrl = '/utils/db_utils.php?' + params.toString();
+
+        // Usar fetch para manejar la respuesta
+        fetch(downloadUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                }
+                throw new Error('Error en la descarga');
+            })
+            .then(blob => {
+                // Crear un enlace temporal para descargar el archivo
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `pedidos_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al descargar el CSV');
+            })
+            .finally(() => {
+                // Restaurar el botón
+                btn.html(originalHTML);
+                btn.prop('disabled', false);
+            });
+    }
+
+    // Modifica el evento click del botón
+    $('.btn-download-orders').on('click', function(e) {
+        e.preventDefault();
+        downloadOrdersCSV();
+    });
 
 
     $(document).ready(function() {
@@ -73,7 +125,7 @@
                         {
                             targets: [5],
                             render: function(data, type, row) {
-                                return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '€').display(data)
+                                return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '<?php echo SHOP_DATA->currency_symbol ?>').display(data)
                             }
                         },
                         {

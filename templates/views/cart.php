@@ -1,12 +1,12 @@
 <?php
 
 include_once __DIR__ . "/../components/navbar.php";
-require __DIR__ . "/../../utils/images_utils.php";
+require_once __DIR__ . "/../../utils/images_utils.php";
 
 ?>
 
 
-<section class="card p-0 p-lg-4 min-vh-100">
+<section class="bg text card p-0 p-lg-4 min-vh-100">
     <section class="card-header">
         <h1 class="fs-4">Carrito de compra</h1>
     </section>
@@ -108,13 +108,13 @@ require __DIR__ . "/../../utils/images_utils.php";
                                 <td>
                                     <?php if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])): ?>
                                         <span class="text-muted text-decoration-line-through">
-                                            <?php echo number_format(floatval($product['price']), 2); ?>€
+                                            <?php echo number_format(floatval($product['price']), 2); ?><?php echo SHOP_DATA->currency_symbol ?>
                                         </span><br>
                                     <?php endif; ?>
-                                    <span class="fw-bold"><?php echo number_format($unitPrice, 2); ?>€</span>
+                                    <span class="fw-bold"><?php echo number_format($unitPrice, 2); ?><?php echo SHOP_DATA->currency_symbol ?></span>
                                 </td>
                                 <td class="subtotal" data-subtotal="<?php echo $subtotal; ?>">
-                                    <span class="fw-bold"><?php echo number_format($subtotal, 2); ?>€</span>
+                                    <span class="fw-bold"><?php echo number_format($subtotal, 2); ?><?php echo SHOP_DATA->currency_symbol ?></span>
                                 </td>
                                 <td>
                                     <button class="btn btn-outline-danger btn-sm remove-item" data-id="<?php echo $id; ?>" title="Eliminar del carrito">
@@ -127,7 +127,7 @@ require __DIR__ . "/../../utils/images_utils.php";
                     <tfoot>
                         <tr>
                             <td colspan="4" class="text-end fw-bold">Total del carrito:</td>
-                            <td class="fw-bold fs-5" id="cart-total"><?php echo number_format($cartTotal, 2); ?>€</td>
+                            <td class="fw-bold fs-5" id="cart-total"><?php echo number_format($cartTotal, 2); ?><?php echo SHOP_DATA->currency_symbol ?></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -245,7 +245,7 @@ require __DIR__ . "/../../utils/images_utils.php";
                         const subtotal = unitPrice * newQuantity;
 
                         $(`#cart-item-${productId} .subtotal`).html(
-                            `<span class="fw-bold">${subtotal.toFixed(2)}€</span>`
+                            `<span class="fw-bold">${subtotal.toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></span>`
                         ).data('subtotal', subtotal);
 
                         updateCartTotal();
@@ -259,7 +259,7 @@ require __DIR__ . "/../../utils/images_utils.php";
             $('.subtotal').each(function() {
                 total += parseFloat($(this).data('subtotal') || 0);
             });
-            $('#cart-total').text(total.toFixed(2) + '€');
+            $('#cart-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         }
 
         function checkEmptyCart() {

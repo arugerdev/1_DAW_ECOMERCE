@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . "/../components/navbar.php" ?>
 
-<section class="container py-5">
+<section class="bg text container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card text-center border-0 shadow-sm">
@@ -72,7 +72,7 @@
         selectData('*', 'orders', 'WHERE order_number = "<?php echo $_GET['orderNumber'] ?>"', (data) => {
             const order = data.data[0];
 
-            $('#order-total').html(order.total_amount + "€")
+            $('#order-total').html(order.total_amount + "<?php echo SHOP_DATA->currency_symbol ?>")
             $('#status-container').html(getStatus(order.status))
             $('#payment-method').html(order.payment_method)
             $('#send-method').html(order.shipping_method)

@@ -26,55 +26,55 @@
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                   <li class="nav-item">
-                      <a href="/admin/" class="nav-link">
+                      <a href="/admin/" class="text nav-link">
                           <i class="fa-solid fa-gauge nav-icon"></i>
                           <p>Inicio</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/" class="nav-link">
+                      <a href="/" class="text nav-link">
                           <i class="fa-solid fa-eye nav-icon"></i>
                           <p>Vista Previa</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/customize" class="nav-link">
+                      <a href="/admin/customize" class="text nav-link">
                           <i class="fa-solid fa-palette nav-icon"></i>
                           <p>Personalización</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/products" class="nav-link">
+                      <a href="/admin/products" class="text nav-link">
                           <i class="fa-solid fa-boxes-stacked nav-icon"></i>
                           <p>Productos</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/orders" class="nav-link">
+                      <a href="/admin/orders" class="text nav-link">
                           <i class="fa-solid fa-cart-flatbed nav-icon"></i>
                           <p>Pedidos</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/refounds" class="nav-link">
+                      <a href="/admin/refounds" class="text nav-link">
                           <i class="fa-solid fa-arrow-rotate-left nav-icon"></i>
                           <p>Devoluciones</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/categories" class="nav-link">
+                      <a href="/admin/categories" class="text nav-link">
                           <i class="fa-solid fa-icons nav-icon"></i>
                           <p>Categorias</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/users" class="nav-link">
+                      <a href="/admin/users" class="text nav-link">
                           <i class="fa-solid fa-users nav-icon"></i>
                           <p>Usuarios</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="/admin/config" class="nav-link">
+                      <a href="/admin/config" class="text nav-link">
                           <i class="fa-solid fa-gear nav-icon"></i>
                           <p>Configuracion</p>
                       </a>
@@ -85,7 +85,7 @@
               <div class="separator"></div>
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <li class="nav-item">
-                      <a href=" /admin/orders" class="disconnect-button nav-link danger btn-danger text-danger ">
+                      <a href=" /admin/orders" class="disconnect-button text nav-link danger btn-danger text-danger ">
                           <i class=" fa-solid fa-right-from-bracket nav-icon"></i>
                           <p>Desconectar</p>
                       </a>

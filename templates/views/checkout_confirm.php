@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . "/../components/navbar.php" ?>
 
-<section class="container py-5">
+<section class="bg text container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <!-- Progreso del checkout -->
@@ -258,7 +258,7 @@
                                 </div>
                             </td>
                             <td class="text-center align-middle">${quantity}</td>
-                            <td class="text-end align-middle">${itemTotal.toFixed(2)}€</td>
+                            <td class="text-end align-middle">${itemTotal.toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></td>
                         </tr>
                     `;
 
@@ -281,14 +281,14 @@
 
             const total = subtotal + shipping;
 
-            $('#order-subtotal').text(subtotal.toFixed(2) + '€');
-            $('#order-shipping').text(shipping.toFixed(2) + '€');
-            $('#order-total').text(total.toFixed(2) + '€');
+            $('#order-subtotal').text(subtotal.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#order-shipping').text(shipping.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#order-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         }
 
         // Evento para cambiar método de envío
         $('input[name="shipping_method"]').on('change', function() {
-            const subtotal = parseFloat($('#order-subtotal').text().replace('€', ''));
+            const subtotal = parseFloat($('#order-subtotal').text().replace('<?php echo SHOP_DATA->currency_symbol ?>', ''));
             updateOrderTotal(subtotal);
         });
 

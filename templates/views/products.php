@@ -1,12 +1,10 @@
 <?php include_once __DIR__ . "/../components/navbar.php" ?>
-<section class="card p-0 p-lg-4">
+<section class="bg p-0 p-lg-4">
 
-    <section class="card-header">
-        <h1 class="fs-4">Catalogo de productos</h1>
-    </section>
+    <h1 class="fs-2">Catalogo de productos</h1>
     <section class="card-body py-2 py-lg-5" style="min-height: 75.7vh;">
         <div class="input-group">
-            <input type="search" id="search-input" class="form-control form-control-lg" placeholder="Escribe algo para buscar...  ">
+            <input type="search" id="search-input" class="bg text form-control form-control-lg" placeholder="Escribe algo para buscar...  ">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-lg btn-default">
                     <i class="fa fa-search"></i>
@@ -39,7 +37,8 @@
                     url: '/templates/components/product-card.php',
                     async: false,
                     data: {
-                        'PROD_DATA': JSON.stringify(result)
+                        'PROD_DATA': JSON.stringify(result),
+                        'CURRENCY_SYMBOL': '<?php echo SHOP_DATA->currency_symbol ?>'
                     },
                     success: (result) => {
                         container.html(container.html() + result)

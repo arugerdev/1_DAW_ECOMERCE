@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="product-price">Precio del producto</label>
-                                        <input type="currency" data-type="currency" placeholder="0,00€" id="product-price" class="form-control">
+                                        <input type="currency" data-type="currency" placeholder="0,00<?php echo SHOP_DATA->currency_symbol ?>" id="product-price" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="product-stock">Stock del producto</label>

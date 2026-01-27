@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . "/../../utils/db_utils.php";
+require_once __DIR__ . "/../../utils/db_utils.php";
 
 $id = $_GET['id'];
 
@@ -15,7 +15,7 @@ $data = $recibe->data[0];
 
 <?php include __DIR__ . "/../components/navbar.php"; ?>
 
-<div class="card card-solid">
+<div class="bg card card-solid">
     <div class="card-body">
         <div class="row">
             <div class="col-12 col-sm-6">
@@ -72,8 +72,8 @@ $data = $recibe->data[0];
 
                     <?php
 
-                    echo '<h2 class="mb-0 '  . ($data->on_sale ? 'text-md text-danger danger color-danger" style="text-decoration: line-through;"' : 'text-success success color-success " ') . '>' . number_format($data->price, 2) . ' €</h2>' .
-                        ($data->on_sale ? ('<h2 class="mb-0 text-xl text-success success color-success" >' . number_format($data->price - ($data->price * $data->sale_discound / 100), 2) . ' €</h2>') : '') .
+                    echo '<h2 class="mb-0 '  . ($data->on_sale ? 'text-md text-danger danger color-danger" style="text-decoration: line-through;"' : 'text-success success color-success " ') . '>' . number_format($data->price, 2) . SHOP_DATA->currency_symbol . '</h2>' .
+                        ($data->on_sale ? ('<h2 class="mb-0 text-xl text-success success color-success" >' . number_format($data->price - ($data->price * $data->sale_discound / 100), 2) . SHOP_DATA->currency_symbol . '</h2>') : '') .
                         '<h4 class="mt-0">
                 <small>IVA Incl.</small>
                 </h4>
