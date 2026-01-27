@@ -110,7 +110,7 @@ Is a simple project and the first created by me with this technologies.
 - Refounds ✅ 
 - Edit Refounds ❌ 
 - Download CSV of data tables ✅
-- Customize Ecommerce Page ✅ (Can save and load data, just need use that data and configs.)
+- Customize Ecommerce Page ✅
 - Mobile responsive ✅
 
 
