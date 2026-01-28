@@ -1,0 +1,23 @@
+services:
+  app:
+    image: aruger/evimerce
+    container_name: evimerce
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: evimerce
+      DB_USER: evimerce
+      DB_PASS: evimerce
+
+  db:
+    image: aruger/evimerce-db
+    container_name: evimerce-db
+    volumes:
+      - evimerce_db_data:/var/lib/mysql
+
+volumes:
+  evimerce_db_data:
+

@@ -1,8 +1,8 @@
 <?php
-$bd_host = "localhost"; //localhost
-$bd_usuario = "root";
-$bd_password = "root";
-$bd_base = "evimerce";
+$bd_host = getenv("DB_HOST") ?: "localhost";
+$bd_base = getenv("DB_NAME") ?: "evimerce";
+$bd_usuario = getenv("DB_USER") ?: "root";
+$bd_password = getenv("DB_PASS") ?: "root";
 
 // Conexión a BD usando PDO
 try {

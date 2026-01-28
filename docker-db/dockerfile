@@ -1,0 +1,8 @@
+FROM mysql:8.0
+
+ENV MYSQL_DATABASE=evimerce
+ENV MYSQL_USER=evimerce
+ENV MYSQL_PASSWORD=evimerce
+ENV MYSQL_ROOT_PASSWORD=root
+
+COPY init.sql /docker-entrypoint-initdb.d/
