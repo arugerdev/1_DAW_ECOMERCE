@@ -24,6 +24,13 @@ A ECommerce web, for 1ºDAW practices.
 ![App Screenshot](/mockups/2.png)
 ![App Screenshot](/mockups/3.png)
 
+## Docker
+Enter in docker hub and follow the steps:
+
+aruger/evimerce -> [General (front + back w/ docker-compose.yml)](https://hub.docker.com/r/aruger/evimerce)
+
+aruger/evimerce-db -> [Only Database](https://hub.docker.com/r/aruger/evimerce-db)
+
 ## Run Locally
 
 Clone the project
