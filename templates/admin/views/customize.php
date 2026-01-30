@@ -178,7 +178,7 @@
 
         selectData(
             "*",
-            "customShop",
+            "shop",
             "LIMIT 1",
             (res) => {
                 if (!res.success || res.data.length === 0) return;
@@ -247,7 +247,7 @@
         `;
 
             updateData(
-                "customShop",
+                "shop",
                 values,
                 "WHERE id = 1",
                 (res) => {

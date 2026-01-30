@@ -217,7 +217,7 @@
         loadAdvancedSettings();
 
         function loadAdvancedSettings() {
-            selectData("*", "customShop", "LIMIT 1", (res) => {
+            selectData("*", "shop", "LIMIT 1", (res) => {
                 if (!res.success || res.data.length === 0) return;
                 const s = res.data[0];
 
@@ -282,7 +282,7 @@
             maintenance_mode=${$('#maintenance-mode').is(':checked') ? 1 : 0}
         `;
 
-            updateData("customShop", values, "WHERE id = 1", (res) => {
+            updateData("shop", values, "WHERE id = 1", (res) => {
                 $('#save-status')
                     .text(res.success ? 'Configuración guardada' : 'Error al guardar')
                     .toggleClass('text-success', res.success)

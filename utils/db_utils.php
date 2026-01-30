@@ -353,7 +353,7 @@ function clearSession()
 function getShopData()
 {
     $_REQUEST["select"] = '*';
-    $_REQUEST["table"] = 'customShop';
+    $_REQUEST["table"] = 'shop';
 
     return selectData();
 }

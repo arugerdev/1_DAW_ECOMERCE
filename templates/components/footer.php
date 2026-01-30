@@ -1,4 +1,4 @@
-<footer class="footer bg-dark text-white">
+<footer class="footer">
     <div class="container pt-4 pb-4" style="max-width: 100vw;">
         <div class="row g-2">
 
@@ -87,6 +87,8 @@
     <style>
         .footer {
             font-size: 0.9rem;
+            background-color: var(--secondary);
+            color: var(--text-color);
         }
 
         .footer-title {
@@ -114,7 +116,7 @@
         }
 
         .footer-item i {
-            color: <?= SHOP_DATA->accent_color ?: '#198754' ?>;
+            color: var(--bg-color);
             font-size: 0.9rem;
             margin-top: 2px;
         }
@@ -125,7 +127,6 @@
         }
 
         .footer-text {
-            color: #adb5bd;
             font-size: 0.85rem;
             line-height: 1.5;
         }
@@ -139,7 +140,6 @@
         .footer-social a {
             width: 32px;
             height: 32px;
-            border: 1px solid rgba(255, 255, 255, .25);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -151,7 +151,7 @@
             border-top: 1px solid rgba(255, 255, 255, .15);
             padding-top: 0.75rem;
             font-size: 0.75rem;
-            color: #adb5bd;
+            color: var(--text-color);
         }
 
         @media (max-width: 768px) {

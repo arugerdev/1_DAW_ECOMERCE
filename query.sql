@@ -85,16 +85,16 @@ CREATE TABLE prodToOrder(
     create_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE customShop (
+CREATE TABLE shop (
     id INT AUTO_INCREMENT UNIQUE NOT NULL PRIMARY KEY,
     name VARCHAR(60) NOT NULL DEFAULT 'EviMerce',
     slogan VARCHAR(120) DEFAULT NULL,
     description TEXT NOT NULL,
-    primary_color VARCHAR(20) DEFAULT '#1f1f23',
-    secondary_color VARCHAR(20) DEFAULT '#80a8cb',
-    accent_color VARCHAR(20) DEFAULT '#555555',
-    background_color VARCHAR(20) DEFAULT '#fdfdfd',
-    text_color VARCHAR(20) DEFAULT '#454545',
+    primary_color VARCHAR(20) DEFAULT '#088395',
+    secondary_color VARCHAR(20) DEFAULT '#7AB2B2',
+    accent_color VARCHAR(20) DEFAULT '#09637E',
+    background_color VARCHAR(20) DEFAULT '#EBF4F6',
+    text_color VARCHAR(20) DEFAULT '#464e47',
     theme ENUM('light', 'dark', 'auto') DEFAULT 'light',
     contact_email VARCHAR(120) DEFAULT NULL,
     contact_phone VARCHAR(30) DEFAULT NULL,
@@ -128,11 +128,11 @@ ALTER TABLE products MODIFY name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8
 ALTER TABLE products MODIFY description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE products MODIFY short_description TEXT(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE customShop CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE shop CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- admin:admin
 INSERT INTO users (username, password) VALUES ("admin","st6rObYN0yR42");
 -- enrique:******
 INSERT INTO users (username, password) VALUES ("enrique","st16RxGjFMm8k");
 
-INSERT INTO customShop (copyright_text, description, slogan, currency_symbol) VALUES ('© 2026 EviMerce',"Entra en <a href='/admin'>/admin</a> para configurar tu tienda!!! <br><br><br> Usuario: admin <br> Contraseña: admin", "Una tienda muy chula.", '€');
+INSERT INTO shop (copyright_text, description, slogan, currency_symbol) VALUES ('© 2026 EviMerce',"Entra en <a href='/admin'>/admin</a> para configurar tu tienda!!! <br><br><br> Usuario: admin <br> Contraseña: admin", "Una tienda muy chula.", '€');
