@@ -1,3 +1,5 @@
+<?php include "./modals/refound-editor.php"; ?>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -118,7 +120,16 @@
                             targets: 1,
                             render: function(data, type, row) {
                                 return `<a href="/admin/orders?edit=${data}">${data}</a>`
-                            }
+                            },
+                            width: '80px'
+                        },
+                        {
+                            targets: 3,
+
+                            render: function(data, type, row) {
+                                return getCheckBox(data)
+                            },
+                            width: '100px'
                         },
                         {
                             targets: 5,
@@ -126,8 +137,7 @@
                                 const id = row[0]
 
                                 return getRowActions(id,
-                                    null // `editRefound(${id})` 
-                                    , `deleteRefound(${id})`);
+                                    `editRefound(${id})`, `deleteRefound(${id})`);
                             }
                         }
                         // {
@@ -156,8 +166,8 @@
         deleteData('refounds', 'id', row, '', location.reload())
     }
 
-    // function editRefound(row) {
-    //     $('#modal-refound-editor').data('id', row)
-    //     $('#modal-refound-editor').modal('show')
-    // }
+    function editRefound(row) {
+        $('#modal-refound-editor').data('id', row)
+        $('#modal-refound-editor').modal('show')
+    }
 </script>
