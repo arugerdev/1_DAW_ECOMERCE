@@ -50,6 +50,12 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 </html>
 <style>
     :root {
+        --primary: <?php echo SHOP_DATA->primary_color ?>;
+        --accent: <?php echo SHOP_DATA->accent_color ?>;
+        --secondary: <?php echo SHOP_DATA->secondary_color ?>;
+        --bg-color: <?php echo SHOP_DATA->background_color ?>;
+        --text-color: <?php echo SHOP_DATA->text_color ?>;
+
         /* Colores base */
         --bs-primary: <?php echo SHOP_DATA->primary_color ?>;
         --bs-secondary: <?php echo SHOP_DATA->secondary_color ?>;
@@ -71,8 +77,6 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
         color: var(--bs-body-bg);
     }
 
-
-
     p,
     a,
     button,
@@ -83,7 +87,51 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
     h4,
     h5,
     h6,
-    .text {
-        color: var(--bs-body-color);
+    .text,
+    .nav-link {
+        color: var(--text-color);
+    }
+
+    .nav-link,
+    a {
+        color: var(--text-color);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus,
+    a:hover {
+        color: var(--accent);
+    }
+
+    .dropdown-item:active {
+        background-color: var(--primary);
+
+    }
+
+    .btn,
+    .btn-outline-dark,
+    button {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: var(--bg-color);
+    }
+
+    .btn:hover,
+    .btn-outline-dark:hover,
+    button:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: var(--bg-color);
+
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #e7707c;
+        border-color: #e7707c;
     }
 </style>

@@ -39,8 +39,10 @@
                             <input type="text" id="shop-slogan" class="form-control">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group d-flex flex-column">
                             <label>Descripción</label>
+                            <small class="text-info">You can use HTML for styling</small>
+                            <small class="text-danger">Do not use: ' ' for strings (Singles quoted) use " " instead</small>
                             <textarea id="shop-description" class="form-control" rows="8"></textarea>
                         </div>
 

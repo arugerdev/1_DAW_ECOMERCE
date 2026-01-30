@@ -60,7 +60,7 @@ if (!isLoggedIn()) {
                         cancelled: 'danger'
                     }
                     const card = `
-                <div class="card bg-gradient collapsed-card collapsed btn" data-card-widget="collapse">
+                <div class="card bg-gradient collapsed-card collapsed" style="cursor:pointer;" data-card-widget="collapse">
                     <div class="card-header border-0 ui-sortable-handle" >
                         <h3 class="card-title">
                             Pedido <b>#${order.order_number ?? order.id}</b>
@@ -70,7 +70,7 @@ if (!isLoggedIn()) {
                         </h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-danger btn-sm" onclick="refoundOrder(${order.id})" ${order.status != "completed" && order.status != "paid" && order.status != "pending"  ? 'disabled' : ''}>Devolver</button>
+                            <button class="btn-danger btn btn-sm" onclick="refoundOrder(${order.id})" ${order.status != "completed" && order.status != "paid" && order.status != "pending"  ? 'disabled' : ''}>Devolver</button>
                             <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
                                 <i class="fas fa-plus"></i>
                             </button>
