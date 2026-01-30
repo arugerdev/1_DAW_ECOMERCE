@@ -43,9 +43,11 @@ $data = json_decode($_GET["PROD_DATA"]);
         </a>
         <div class="card-footer border-top-0 bg-transparent p-2" style="width:100%;justify-content: start; place-items:start;">
             <div class="text-center text-xs">
-                <a id="add-to-cart-<?php echo $data->id ?>" class="<?php echo ($data->stock <= 0) ? 'text-white btn-disabled btn-secondary disabled' : '' ?> btn btn-outline-primary text-xs" style="display:flex; flex-direction:row; gap:4px; place-items:center; justify-content:center; text-align:center;">
-                    <i class="fa-solid fa-cart-arrow-down"></i>
-                    <?php echo ($data->stock <= 0) ? '<p class="p-0 m-0">Fuera de stock</p>' : '' ?>
+                <a id="add-to-cart-<?php echo $data->id ?>" class="<?php echo ($data->stock <= 0) ? 'btn-disabled btn-danger text-danger disabled' : '' ?> btn btn-outline-primary text-xs" style="display:flex; flex-direction:row; gap:4px; place-items:center; justify-content:center; text-align:center;">
+
+                    <?php echo ($data->stock > 0) ? '<i class="fa-solid fa-cart-arrow-down"></i>' : '';
+                    ?>
+                    <?php echo ($data->stock <= 0) ? '<p class="p-0 m-0 text-danger">Fuera de stock</p>' : '' ?>
                 </a>
             </div>
         </div>

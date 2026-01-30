@@ -125,9 +125,14 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
     }
 
-    .btn-danger {
+    .btn-danger{
         background-color: #dc3545;
         border-color: #dc3545;
+    }
+
+    
+    .text-danger {
+        color: #dc3545;
     }
 
     .btn-danger:hover {

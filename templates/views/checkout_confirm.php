@@ -49,9 +49,9 @@
                                 <p><strong>Ciudad:</strong> <span id="customer-city"></span>, <span id="customer-zip"></span></p>
                                 <p><strong>País:</strong> <span id="customer-country"></span></p>
                             </div>
-                            <a href="/checkout" class="btn btn-outline-primary btn-sm mt-3">
-                                <i class="fas fa-edit me-1"></i> Editar información
-                            </a>
+                            <!-- <a href="/checkout" class="btn btn-outline-primary btn-sm mt-3"> -->
+                                <!-- <i class="fas fa-edit me-1"></i> Editar información -->
+                            <!-- </a> -->
                         </div>
                     </div>
                 </div>
