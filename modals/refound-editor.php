@@ -57,7 +57,6 @@
         const id = $('#modal-refound-editor').data('id')
 
         getrefoundData(id, (refound) => {
-            console.log(refound)
             $('#editor-refound-orderId').val(refound.orderId)
             $('#editor-refound-date').val(refound.refound_date)
             $('#editor-refound-completed').prop('checked', refound.completed == 1)
@@ -68,7 +67,6 @@
             e.preventDefault()
 
             const completed = $('#editor-refound-completed').is(':checked') ? 1 : 0
-            console.log(completed)
 
             updateData(
                 "refounds",

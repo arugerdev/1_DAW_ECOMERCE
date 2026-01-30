@@ -59,8 +59,6 @@
     function updateCartQuantity() {
         const el = $("#cart-products-quantity");
         loadOrderSummary((data) => {
-            console.log()
-
             el.html(new Set(data.cart.map((i) => i.id)).size)
         })
     }

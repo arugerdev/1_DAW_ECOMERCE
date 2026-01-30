@@ -86,7 +86,6 @@
         userId = $('#modal-user-editor').data('user-id');
         selectData('*', 'users', `WHERE id = ${userId}`, (res) => {
             const data = res.data[0]
-            console.log(data)
             $('#editor-user-username').val(data.username)
         })
 

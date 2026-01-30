@@ -155,11 +155,16 @@
 </div>
 
 <script>
+    $('#shop-description').on('blur', (e) => {
+        const parsedString = e.target.value.replaceAll("'", '"');
+        e.target.value = parsedString
+
+    })
+
     function loadShopData() {
 
 
         getShopImage((res) => {
-            console.log()
             $('#logo-preview')
                 .attr('src', '/uploads/img/shop/' + res.images.filter((p) => p.includes('logo.'))[0])
                 .removeClass('d-none');
@@ -179,7 +184,6 @@
                 if (!res.success || res.data.length === 0) return;
 
                 const shop = res.data[0];
-                console.log(shop)
 
                 $('#shop-name').val(shop.name);
                 $('#shop-slogan').val(shop.slogan);
@@ -207,8 +211,6 @@
             body: formData
         }).then(r => r.json()).then(res => {
             if (!res.success) return alert('Error subiendo imagen');
-
-            console.log(res)
 
             img.src = res.url + '?t=' + Date.now();
             img.classList.remove('d-none');

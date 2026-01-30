@@ -228,8 +228,6 @@
         let productId = null;
         productId = $(this).data('product-id');
 
-        console.log(productId)
-
         edit_imageState.reset();
 
         /* ===================== RENDER ===================== */
