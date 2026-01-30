@@ -6,10 +6,8 @@ require_once __DIR__ . "/../../utils/images_utils.php";
 ?>
 
 
-<section class="bg text card p-0 p-lg-4 min-vh-100">
-    <section class="card-header">
-        <h1 class="fs-4">Carrito de compra</h1>
-    </section>
+<section class="bg text p-0 p-lg-4 min-vh-100">
+    <h1 class="fs-4">Carrito de compra</h1>
     <section class="card-body py-0 py-lg-5">
         <?php if (empty($_SESSION["cart_products"])): ?>
             <div class="text-center py-5">

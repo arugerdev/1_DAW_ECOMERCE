@@ -15,8 +15,8 @@ $data = $recibe->data[0];
 
 <?php include __DIR__ . "/../components/navbar.php"; ?>
 
-<div class="bg card card-solid">
-    <div class="card-body">
+<div class="bg">
+    <div>
         <div class="row">
             <div class="col-12 col-sm-6">
                 <h3 class="d-inline-block d-sm-none"><?php $data->name ?></h3>

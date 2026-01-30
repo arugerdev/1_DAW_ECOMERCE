@@ -125,12 +125,34 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
     }
 
-    .btn-danger{
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active,
+    .nav-tabs>li>.active {
+        background-color: var(--secondary);
+        border-color: var(--primary);
+        border-radius: 4px;
+    }
+    
+    .nav-tabs {
+        background-color: transparent;
+        border-color: var(--primary);
+        border-radius: 4px;
+
+    }
+
+    .nav-tabs>li,
+    .nav-tabs>li>button {
+        background-color: var(--primary);
+        color: var(--bg-color);
+
+    }
+
+    .btn-danger {
         background-color: #dc3545;
         border-color: #dc3545;
     }
 
-    
+
     .text-danger {
         color: #dc3545;
     }
@@ -138,5 +160,22 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
     .btn-danger:hover {
         background-color: #e7707c;
         border-color: #e7707c;
+    }
+
+    .dropdown-menu,
+    .card {
+        background-color: var(--secondary);
+        color: var(--text-color);
+    }
+
+    .form-control,
+    input{
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+
+    .form-check-input:checked{
+        background-color: var(--accent);
+        border-color: var(--accent);
     }
 </style>
