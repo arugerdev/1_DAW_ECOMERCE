@@ -122,7 +122,12 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
         background-color: var(--accent);
         border-color: var(--accent);
         color: var(--bg-color);
-
+        
+    }
+    
+    .navbar-toggler:hover{
+        background-color: transparent;
+        border-color: transparent;
     }
 
     .nav-tabs .nav-item.show .nav-link,
