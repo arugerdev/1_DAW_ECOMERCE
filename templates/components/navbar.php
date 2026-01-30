@@ -39,7 +39,7 @@
                 <a class="btn btn-outline-dark" href="/cart">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Carrito
-                    <span id="cart-products-quantity" class="badge bg-dark text-white ms-1 rounded-pill"> <?php echo (count($_SESSION["cart_products"]  ?? [])) ?></span>
+                    <span id="cart-products-quantity" class="badge bg-dark text-white ms-1 rounded-pill"></span>
                 </a>
             </section>
         </div>
@@ -48,16 +48,21 @@
 <div style="width: 100vw; height:64px; top:0; display:flex;"></div>
 
 <script>
+    updateCartQuantity()
+
     getShopImage((res) => {
         $('#logo-brand')
             .attr('src', '/uploads/img/shop/' + res.images.filter((p) => p.includes('logo-brand.'))[0])
             .removeClass('d-none');
     })
 
-    function upCart() {
+    function updateCartQuantity() {
         const el = $("#cart-products-quantity");
-        var currentValue = Number(el.html())
-        el.html(++currentValue)
+        loadOrderSummary((data) => {
+            console.log()
+
+            el.html(new Set(data.cart.map((i) => i.id)).size)
+        })
     }
 
     // Cache para categorías

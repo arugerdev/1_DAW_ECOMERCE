@@ -29,7 +29,6 @@ function deleteFromCart(productId, callback = () => { }) {
 
 }
 
-
 function loadOrderSummary(callback = () => { }) {
     $.ajax({
         url: "/utils/cart_utils.php",

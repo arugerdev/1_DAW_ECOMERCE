@@ -117,7 +117,7 @@ $data = $recibe->data[0];
         loadOrderSummary((res) => {
             if ((res.cart.filter((p) => p.id == prodData.id).length + 1) <= prodData.stock) {
                 addToCart(prodData, (data) => {
-                    upCart()
+                    updateCartQuantity()
                 })
             }
         })
