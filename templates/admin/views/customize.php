@@ -103,11 +103,11 @@
                                 LOGO
                                 <i class="fa-solid fa-images icon fs-1"></i>
                                 <div class="text">
-                                    <span>Haz clic para subir imagen<small>/es</small></span>
+                                    <span>Haz clic para subir imagen</span>
                                 </div>
                                 <input type="file" id="logo_input" multiple accept="image/*" style="display:none;">
                             </label>
-                            <img src="" id="logo-preview" width="128" alt="">
+                            <img src="" id="logo-preview" style="object-fit: contain;" height="128" alt="">
                         </div>
 
                         <div class="form-group d-flex flex-column justify-center">
@@ -115,22 +115,22 @@
                                 Logo Extirado
                                 <i class="fa-solid fa-images icon fs-1"></i>
                                 <div class="text">
-                                    <span>Haz clic para subir imagen<small>/es</small></span>
+                                    <span>Haz clic para subir imagen</span>
                                 </div>
                                 <input type="file" id="logo_brand_input" multiple accept="image/*" style="display:none;">
                             </label>
-                            <img src="" id="logo-brand-preview" width="254" alt="">
+                            <img src="" id="logo-brand-preview" style="object-fit: contain;" height="128" alt="">
                         </div>
                         <div class="form-group d-flex flex-column justify-center">
                             <label class="dropzone-file-upload" for="banner_input">
                                 Cabecera
                                 <i class="fa-solid fa-images icon fs-1"></i>
                                 <div class="text">
-                                    <span>Haz clic para subir imagen<small>/es</small></span>
+                                    <span>Haz clic para subir imagen</span>
                                 </div>
                                 <input type="file" id="banner_input" multiple accept="image/*" style="display:none;">
                             </label>
-                            <img src="" id="banner-preview" height="100" alt="">
+                            <img src="" id="banner-preview" style="object-fit: contain;" height="128" alt="">
                         </div>
                     </div>
                 </div>
@@ -208,9 +208,9 @@
         }).then(r => r.json()).then(res => {
             if (!res.success) return alert('Error subiendo imagen');
 
+            console.log(res)
 
             img.src = res.url + '?t=' + Date.now();
-            console.log(img)
             img.classList.remove('d-none');
 
         });
@@ -222,16 +222,13 @@
         loadShopData();
 
         $('#logo_input').on('change', (e) => {
-            console.log(e.target.files)
-            uploadShopImage(e.target.files[0], 'logo', e.target);
+            uploadShopImage(e.target.files[0], 'logo', $('#logo-preview')[0]);
         })
         $('#logo_brand_input').on('change', (e) => {
-            console.log(e.target.files)
-            uploadShopImage(e.target.files[0], 'logo-brand', e.target);
+            uploadShopImage(e.target.files[0], 'logo-brand', $('#logo-brand-preview')[0]);
         })
         $('#banner_input').on('change', (e) => {
-            console.log(e.target.files)
-            uploadShopImage(e.target.files[0], 'banner', e.target);
+            uploadShopImage(e.target.files[0], 'banner', $('#banner-preview')[0]);
         })
 
         $('#save-shop').on('click', function() {
