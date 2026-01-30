@@ -162,18 +162,19 @@ require_once __DIR__ . "/../../utils/images_utils.php";
                 $(this).trigger('change');
             }
 
-            
+
             const productId = $(this).data('id');
             const newQuantity = parseInt($(this).val());
             const stock = parseInt($(this).attr('max'));
-            
-            
+
+
             if (newQuantity > stock) {
                 $(this).val(stock);
+                $(this).trigger('change')
                 alert(`No hay suficiente stock. Máximo disponible: ${stock}`);
                 return;
             }
-            
+
             updateCartQuantity(productId, newQuantity);
         });
         $('.quantity-plus').on('click', function() {
