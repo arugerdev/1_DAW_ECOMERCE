@@ -26,7 +26,7 @@ $data = json_decode($_GET["PROD_DATA"]);
             <div class="card-body p-0 px-2" style="width: 100%;">
                 <div class="text-start text-secondary w-100">
                     <h5 class="text-weight-bold text-md p-0 m-0"><?php echo $data->name ?></h5>
-                    <h6 class="text-weight-light text-xs p-0 m-0" style="text-overflow: ellipsis; overflow: hidden;white-space: unset;-webkit-line-clamp: 3;display: -webkit-box;-webkit-box-orient: vertical;"><?php echo $data->short_description ?></h6>
+                    <h6 class="text-weight-light text-xs p-0 m-0" style="text-overflow: ellipsis; overflow: hidden;white-space: unset;-webkit-line-clamp: 3;display: -webkit-box;-webkit-box-orient: vertical; opacity:0.75;"><?php echo $data->short_description ?></h6>
 
                     <?php if ($data->on_sale == 1): ?>
                         <span class="text-muted text-decoration-line-through p-0 m-0 text-xs"><?php echo number_format($data->price, 2) ?> <?php echo $_GET["CURRENCY_SYMBOL"] ?></span>
