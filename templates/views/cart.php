@@ -43,7 +43,7 @@ require_once __DIR__ . "/../../utils/images_utils.php";
                                 ];
                             }
                             $groupedProducts[$id]['quantity']++;
-                            $price = floatval($product['price']);
+                            $price = floatval($product['w_tax_price']);
                             if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
                                 $price = $price * (1 - floatval($product['sale_discound']) / 100);
                             }
@@ -57,7 +57,7 @@ require_once __DIR__ . "/../../utils/images_utils.php";
                             $quantity = $item['quantity'];
                             $subtotal = $item['total'];
                             $cartTotal += $subtotal;
-                            $unitPrice = floatval($product['price']);
+                            $unitPrice = floatval($product['w_tax_price']);
                             if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
                                 $discount = floatval($product['sale_discound']);
                                 $unitPrice = $unitPrice * (1 - $discount / 100);
@@ -106,7 +106,7 @@ require_once __DIR__ . "/../../utils/images_utils.php";
                                 <td>
                                     <?php if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])): ?>
                                         <span class="text-muted text-decoration-line-through">
-                                            <?php echo number_format(floatval($product['price']), 2); ?><?php echo SHOP_DATA->currency_symbol ?>
+                                            <?php echo number_format(floatval($product['w_tax_price']), 2); ?><?php echo SHOP_DATA->currency_symbol ?>
                                         </span><br>
                                     <?php endif; ?>
                                     <span class="fw-bold"><?php echo number_format($unitPrice, 2); ?><?php echo SHOP_DATA->currency_symbol ?></span>
@@ -240,7 +240,7 @@ require_once __DIR__ . "/../../utils/images_utils.php";
                     const result = JSON.parse(data);
                     if (result.success) {
 
-                        const unitPrice = result.unit_price;
+                        const unitPrice = result.unit_price.toFixed(2);
                         const subtotal = unitPrice * newQuantity;
 
                         $(`#cart-item-${productId} .subtotal`).html(

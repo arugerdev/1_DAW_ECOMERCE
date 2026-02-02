@@ -171,16 +171,16 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
-                        <span id="checkout-subtotal">0.00€</span>
+                        <span id="checkout-subtotal">0.00<?php echo SHOP_DATA->currency_symbol ?></span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Envío:</span>
-                        <span id="checkout-shipping">5.00€</span>
+                        <span id="checkout-shipping">5.00<?php echo SHOP_DATA->currency_symbol ?></span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between fw-bold">
                         <span>Total:</span>
-                        <span id="checkout-total">0.00€</span>
+                        <span id="checkout-total">0.00<?php echo SHOP_DATA->currency_symbol ?></span>
                     </div>
                 </div>
             </div>
@@ -199,6 +199,7 @@
         })
 
         updateCheckoutTotals((res) => {
+            console.log(res)
             const subtotal = res.total || 0;
             const shipping = 5.00; // Envío fijo por ahora
             const total = subtotal + shipping;

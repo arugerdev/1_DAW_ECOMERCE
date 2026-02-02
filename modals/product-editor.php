@@ -28,7 +28,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="editor-product-price">Precio del producto</label>
-                                        <input type="currency" data-type="currency" placeholder="0,00€" id="editor-product-price" class="form-control">
+                                        <input type="currency" data-type="currency" placeholder="0,00<?php echo SHOP_DATA->currency_symbol ?>" id="editor-product-price" class="form-control">
+                                        <label id="editor-product-w-tax-price">0.00<?php echo SHOP_DATA->currency_symbol ?> con 21% IVA</label>
                                     </div>
                                     <div class="form-group">
                                         <label for="editor-product-stock">Stock del producto</label>
@@ -223,7 +224,17 @@
             );
         });
     });
+
     $('#modal-product-editor').off().on('show.bs.modal', function() {
+
+        $('#editor-product-price').on('blur', function(e) {
+            if (!parseFloat($('#editor-product-price').val())) $('#editor-product-price').val(0)
+
+            formatCurrency($('#editor-product-price'), 'blur', '<?php echo SHOP_DATA->currency_symbol ?>')
+            console.log(`${calculateTax(parseFloat($('#editor-product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`)
+            $('#editor-product-w-tax-price').html(`${calculateTax(parseFloat($('#editor-product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`);
+        });
+
         let tempToken = 'tmp_' + Math.random().toString(36).substring(2);
         let productId = null;
         productId = $(this).data('product-id');
@@ -272,6 +283,7 @@
             const p = res.data[0];
             $('#editor-product-name').val(p.name);
             $('#editor-product-price').val(p.price + '<?php echo SHOP_DATA->currency_symbol ?>');
+            $('#editor-product-w-tax-price').html(`${p.w_tax_price}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`);
             $('#editor-product-stock').val(p.stock);
             $('#editor-product-description-short').val(p.short_description);
             $('#editor-product-description').val(p.description);
@@ -337,6 +349,7 @@
                 `
                     name="${data.name}",
                     price=${data.price},
+                    w_tax_price=${calculateTax(parseFloat(data.price), <?php echo SHOP_DATA->tax_percent ?>)},
                     stock=${data.stock},
                     short_description="${data.short_description}",
                     description="${data.description}",

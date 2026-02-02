@@ -78,7 +78,7 @@ function updateQuantity()
     if (!$product) {
         return json_encode(["success" => false, "message" => "Producto no encontrado"]);
     }
-    $unitPrice = floatval($product['price']);
+    $unitPrice = floatval($product['w_tax_price']);
     if (isset($product['on_sale']) && $product['on_sale'] == '1' && isset($product['sale_discound'])) {
         $discount = floatval($product['sale_discound']);
         $unitPrice = $unitPrice * (1 - $discount / 100);
@@ -135,7 +135,7 @@ function getCartTotal()
         $id = $product['id'];
         if (!isset($groupedProducts[$id])) {
             $groupedProducts[$id] = [
-                'price' => floatval($product['price']),
+                'price' => floatval($product['w_tax_price']),
                 'discount' => 0
             ];
 

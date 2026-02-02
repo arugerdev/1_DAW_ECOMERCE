@@ -61,18 +61,18 @@ function createOrder($pdo)
         if (!isset($groupedProducts[$productId])) {
             $groupedProducts[$productId] = [
                 'id' => $p['id'],
-                'price' => $p['price'],
+                'price' => $p['w_tax_price'],
                 'quantity' => 0,
                 'total_price' => 0
             ];
         }
 
         $groupedProducts[$productId]['quantity']++;
-        $groupedProducts[$productId]['total_price'] += $p['price'];
-        $subtotal += $p['price'];
+        $groupedProducts[$productId]['total_price'] += $p['w_tax_price'];
+        $subtotal += $p['w_tax_price'];
     }
 
-    $total = $subtotal + 5;
+    $total = $subtotal + $_POST['shipping_price'];
 
     $pdo->beginTransaction();
 
@@ -103,7 +103,7 @@ function createOrder($pdo)
                 $product['id'],
                 $product['quantity'],  // ← Cantidad correcta
                 $product['price'],
-                $product['total_price']
+                $product['total_price'] 
             ]);
 
             $stmt = $pdo->prepare("

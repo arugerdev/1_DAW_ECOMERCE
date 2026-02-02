@@ -145,9 +145,9 @@ if (!isLoggedIn()) {
                         groupedProducts[prod.id] = {
                             id: prod.id,
                             name: prod.name,
-                            unit_price: prod.unit_price,
+                            unit_price: parseFloat(prod.unit_price).toFixed(2),
                             quantity: prod.quantity,
-                            total_price: prod.total_price
+                            total_price: (prod.total_price).toFixed(2)
                         };
                     } else {
                         // Producto ya existe, sumar cantidades y total
@@ -167,9 +167,9 @@ if (!isLoggedIn()) {
                                 <img src="${images[0] ? `/uploads/img/products/${prod.id}/${images[0]}` : 'https://placehold.co/86x86'}" alt="Product Image" style=" max-width: 86px; max-height: 86px; aspect-ratio: 1/1; object-fit: contain;" class="product-image">    
                             </td>
                             <td>${prod.name}</td>
-                            <td>${prod.unit_price.toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></td>
+                            <td>${parseFloat(prod.unit_price).toFixed(2) } <?php echo SHOP_DATA->currency_symbol ?></td>
                             <td>${prod.quantity}</td>
-                            <td>${prod.total_price.toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></td>
+                            <td>${parseFloat(prod.total_price).toFixed(2)} <?php echo SHOP_DATA->currency_symbol ?></td>
                         </tr>
                     `);
                     });

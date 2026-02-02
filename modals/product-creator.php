@@ -29,6 +29,7 @@
                                     <div class="form-group">
                                         <label for="product-price">Precio del producto</label>
                                         <input type="currency" data-type="currency" placeholder="0,00<?php echo SHOP_DATA->currency_symbol ?>" id="product-price" class="form-control">
+                                        <label id="product-w-tax-price">0.00<?php echo SHOP_DATA->currency_symbol ?> con 21% IVA</label>
                                     </div>
                                     <div class="form-group">
                                         <label for="product-stock">Stock del producto</label>
@@ -142,7 +143,6 @@
 </div>
 
 <style>
-
     #create_product_form {
         display: flex;
         flex-direction: column;
@@ -228,6 +228,14 @@
     });
 
     $('#modal-product-creator').off().on('show.bs.modal', function() {
+        $('#product-price').on('blur', function(e) {
+            if (!parseFloat($('#product-price').val())) $('#product-price').val(0)
+
+            formatCurrency($('#product-price'), 'blur', '<?php echo SHOP_DATA->currency_symbol ?>')
+            console.log(`${calculateTax(parseFloat($('#product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`)
+            $('#product-w-tax-price').html(`${calculateTax(parseFloat($('#product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`);
+        });
+
         let tempToken = 'tmp_' + Math.random().toString(36).substring(2);
 
         imageState.reset();
@@ -310,10 +318,11 @@
             insertData(
                 "products",
 
-                "name,price,stock,short_description,description,category,on_sale,sale_discound",
+                "name,price,w_tax_price,stock,short_description,description,category,on_sale,sale_discound",
                 `
                     "${data.name}",
                      ${data.price},
+                     ${calculateTax(parseFloat(data.price), <?php echo SHOP_DATA->tax_percent ?>)},
                      ${data.stock},
                     "${data.short_description}",
                     "${data.description}",

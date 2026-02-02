@@ -1,7 +1,7 @@
 <?php
 $data = json_decode($_GET["PROD_DATA"]);
 $SHOP_DATA = $_GET['SHOP_DATA'];
-$tax = $SHOP_DATA['tax_percent'];
+
 ?>
 <div class="col">
     <div class="bg text card pt-4" style="filter: brightness(110%); display: flex; flex-direction:column; place-items:center; justify-content: center; height:95%">
@@ -30,13 +30,13 @@ $tax = $SHOP_DATA['tax_percent'];
                     <h6 class="text-weight-light text-xs p-0 m-0" style="text-overflow: ellipsis; overflow: hidden;white-space: unset;-webkit-line-clamp: 3;display: -webkit-box;-webkit-box-orient: vertical; opacity:0.75;"><?php echo $data->short_description ?></h6>
 
                     <?php if ($data->on_sale == 1): ?>
-                        <span class="text-muted text-decoration-line-through p-0 m-0 text-xs"><?php echo number_format($data->price + ($data->price * $tax / 100), 2) ?> <?php echo $SHOP_DATA['currency_symbol'] ?></span>
-                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format($data->price + (($data->price * $tax) / 100) - ($data->price * $data->sale_discound / 100), 2)  ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
+                        <span class="text-muted text-decoration-line-through p-0 m-0 text-xs"><?php echo number_format($data->w_tax_price, 2) ?> <?php echo $SHOP_DATA['currency_symbol'] ?></span>
+                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format($data->w_tax_price, 2)  ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
                     <?php endif ?>
 
                     <?php if (!$data->on_sale == 1): ?>
                         <br>
-                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format($data->price + (($data->price * $tax) / 100), 2) ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
+                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format($data->w_tax_price, 2) ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
                     <?php endif ?>
                 </div>
 

@@ -213,7 +213,7 @@
                     <span class="info-box-icon bg-success"><i class="fas fa-euro-sign"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Ingresos del Mes</span>
-                        <span class="info-box-number" id="month-revenue">0€</span>
+                        <span class="info-box-number" id="month-revenue">0<?php echo SHOP_DATA->currency_symbol ?></span>
                         <div class="progress">
                             <div class="progress-bar bg-success" style="width: 0%" id="month-revenue-progress"></div>
                         </div>
@@ -515,7 +515,7 @@
 
         // Función para cargar productos más vendidos
         function loadTopProducts() {
-            selectData("p.name, p.price, p.stock, p.on_sale, p.sale_discound, " +
+            selectData("p.name, p.price, p.w_tax_price, p.stock, p.on_sale, p.sale_discound, " +
                 "COUNT(oi.id) as sales",
                 "products p LEFT JOIN prodToOrder oi ON p.id = oi.productId",
                 "WHERE p.is_visible = TRUE GROUP BY p.id ORDER BY sales DESC LIMIT 5",
@@ -537,7 +537,7 @@
                                             <small class="text-muted">
                                                 ${product.on_sale == '1' ? 
                                                     `<span class="text-success">${product.sale_discound}% OFF</span>` : 
-                                                    `<span>${parseFloat(product.price).toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></span>`
+                                                    `<span>${(parseFloat(product.w_tax_price)).toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></span>`
                                                 }
                                             </small>
                                         </div>

@@ -37,7 +37,18 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
     </script>
 </head>
+
+
 <?php if (!is_admin_route()): ?>
+
+    <script>
+        $(document).ready(function() {
+            updateContrast();
+        });
+
+
+    </script>
+
     <style>
         :root {
             --primary-color: <?php echo SHOP_DATA->primary_color ?>;
@@ -189,21 +200,3 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
 
 </html>
-
-
-<script>
-    $(document).ready(function() {
-        updateContrast();
-    });
-
-    function updateContrast() {
-        document.querySelectorAll(".price-contrast").forEach(el => {
-            const baseColor = el.dataset.color.replace('#', '');
-            const origColor = el.dataset.originalcolor ? el.dataset.originalcolor.replace('#', '') : 'ffffff';
-            const contrast = getContrastColor(baseColor, origColor, 3);
-
-            el.style.color = '#' + contrast;
-            el.style.fontWeight = "600";
-        });
-    }
-</script>

@@ -32,7 +32,7 @@
                             <h5 class="fw-bold mb-3">Resumen del pedido:</h5>
                             <ul class="list-unstyled">
                                 <li class="mb-2"><strong>Fecha:</strong> <span id="order-date"><?php echo date('d/m/Y'); ?></span></li>
-                                <li class="mb-2"><strong>Total:</strong> <span id="order-total">0.00€</span></li>
+                                <li class="mb-2"><strong>Total:</strong> <span id="order-total">0.00<?php echo SHOP_DATA->currency_symbol ?></span></li>
                                 <li class="mb-2" id="status-container"><strong>Estado:</strong></li>
                                 <li><strong>Método de pago:</strong> <span id="payment-method">Tarjeta</span></li>
                                 <li><strong>Método de envio:</strong> <span id="send-method">Standard</span></li>

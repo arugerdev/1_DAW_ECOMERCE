@@ -50,7 +50,7 @@
                                 <p><strong>País:</strong> <span id="customer-country"></span></p>
                             </div>
                             <!-- <a href="/checkout" class="btn btn-outline-primary btn-sm mt-3"> -->
-                                <!-- <i class="fas fa-edit me-1"></i> Editar información -->
+                            <!-- <i class="fas fa-edit me-1"></i> Editar información -->
                             <!-- </a> -->
                         </div>
                     </div>
@@ -80,15 +80,15 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="2" class="text-end"><strong>Subtotal:</strong></td>
-                                            <td class="text-end" id="order-subtotal">0.00€</td>
+                                            <td class="text-end" id="order-subtotal">0.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="text-end"><strong>Envío:</strong></td>
-                                            <td class="text-end" id="order-shipping">5.00€</td>
+                                            <td class="text-end" id="order-shipping">5.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                         <tr class="table-active">
                                             <td colspan="2" class="text-end"><strong>TOTAL:</strong></td>
-                                            <td class="text-end fw-bold" id="order-total">0.00€</td>
+                                            <td class="text-end fw-bold" id="order-total">0.00<?php echo SHOP_DATA->currency_symbol ?></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -111,13 +111,13 @@
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="shipping_method" id="shipping_standard" value="standard" checked>
                                 <label class="form-check-label" for="shipping_standard">
-                                    <strong>Envío estándar</strong> (5-7 días laborables) - 5.00€
+                                    <strong>Envío estándar</strong> (5-7 días laborables) - 5.00<?php echo SHOP_DATA->currency_symbol ?>
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="shipping_method" id="shipping_express" value="express">
                                 <label class="form-check-label" for="shipping_express">
-                                    <strong>Envío exprés</strong> (1-2 días laborables) - 10.00€
+                                    <strong>Envío exprés</strong> (1-2 días laborables) - 10.00<?php echo SHOP_DATA->currency_symbol ?>
                                 </label>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                     groupedProducts[id] = {
                         product: product,
                         quantity: 0,
-                        price: parseFloat(product.price)
+                        price: (parseFloat(product.w_tax_price)).toFixed(2)
                     };
                 }
                 groupedProducts[id].quantity++;
@@ -232,7 +232,7 @@
             Object.values(groupedProducts).forEach(item => {
                 const product = item.product;
                 const quantity = item.quantity;
-                let price = item.price;
+                let price = parseFloat(item.price).toFixed(2);
 
                 // Aplicar descuento si existe
                 if (product.on_sale === '1' && product.sale_discound) {
@@ -271,9 +271,9 @@
         })
 
         // Actualizar total según método de envío
+        let shipping = 5.00; // estándar
         function updateOrderTotal(subtotal) {
             const shippingMethod = $('input[name="shipping_method"]:checked').val();
-            let shipping = 5.00; // estándar
 
             if (shippingMethod === 'express') {
                 shipping = 10.00;
@@ -308,6 +308,7 @@
                 data: {
                     "action": "create_order",
                     "shipping_method": shippingMethod,
+                    "shipping_price": shipping,
                     "payment_method": paymentMethod
                 },
                 success: (response) => {

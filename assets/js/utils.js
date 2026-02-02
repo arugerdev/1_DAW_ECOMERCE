@@ -196,3 +196,19 @@ function hslToHex(h, s, l) {
         .map(x => Math.round(x * 255).toString(16).padStart(2, "0"))
         .join("");
 }
+
+function updateContrast() {
+    document.querySelectorAll(".price-contrast").forEach(el => {
+        const baseColor = el.dataset.color.replace('#', '');
+        const origColor = el.dataset.originalcolor ? el.dataset.originalcolor.replace('#', '') : 'ffffff';
+        const contrast = getContrastColor(baseColor, origColor, 3);
+
+        el.style.color = '#' + contrast;
+        el.style.fontWeight = "600";
+    });
+}
+
+function calculateTax(price, taxPercent) {
+    return parseFloat(price + (price * taxPercent) / 100).toFixed(2)
+
+}

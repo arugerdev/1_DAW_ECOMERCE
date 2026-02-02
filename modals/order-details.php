@@ -104,6 +104,7 @@
         GROUP_CONCAT(p.id) as product_ids,
         GROUP_CONCAT(p.name) as product_names,
         GROUP_CONCAT(p.price) as product_prices,
+        GROUP_CONCAT(p.w_tax_price) as w_tax_prices,
         GROUP_CONCAT(po.quantity) as product_quantities
     `,
             "orders o LEFT JOIN customers c ON o.customer_id = c.id LEFT JOIN prodToOrder po ON po.orderId = o.id LEFT JOIN products p ON po.productId = p.id ",
@@ -161,7 +162,7 @@
             // Convertir los datos concatenados en arrays
             const productIds = order.product_ids.split(',');
             const productNames = order.product_names.split(',');
-            const productPrices = order.product_prices.split(',');
+            const productPrices = order.w_tax_prices.split(',');
             const productQuantities = order.product_quantities.split(',');
             const productImages = order.product_images ? order.product_images.split(',') : [];
 
@@ -198,7 +199,7 @@
                     </td>
                     <td>
                     <strong>${productNames[index]}</strong><br>
-                    <small class="text-muted">${price.toFixed(2)}€/u</small>
+                    <small class="text-muted">${price.toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?>/u</small>
                     </td>
                     <td>${quantity}</td>
                     <td>
@@ -216,7 +217,7 @@
             tableBody.append(`
             <tr class="table-active">
                 <td colspan="2" class="text-end"><strong>Total:</strong></td>
-                <td colspan="2"><strong>${total.toFixed(2)}€</strong></td>
+                <td colspan="2"><strong>${total.toFixed(2)}<?php echo SHOP_DATA->currency_symbol ?></strong></td>
             </tr>
         `);
         }
