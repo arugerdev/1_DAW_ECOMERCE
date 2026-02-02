@@ -1,4 +1,5 @@
 <?php include "./modals/order-editor.php"; ?>
+<?php include "./modals/order-details.php"; ?>
 
 <div class="content-header">
     <div class="container-fluid">
@@ -39,12 +40,6 @@
 </div>
 
 <script defer>
-    function getQueryParam(param) {
-        const params = new URLSearchParams(window.location.search)
-        return params.get(param)
-    }
-
-
     function downloadOrdersCSV() {
         // Mostrar indicador de carga
         const btn = $('.btn-download-orders');
@@ -139,7 +134,7 @@
                             render: function(data, type, row) {
                                 const id = row[2]
 
-                                return getRowActions(id, `editOrder(${id})`, `deleteOrder(${id})`);
+                                return getRowActions(id, `editOrder(${id})`, `deleteOrder(${id})`, `viewDetails(${id})`);
 
                             }
                         },
@@ -181,6 +176,21 @@
 
                 }
 
+                const viewId = getQueryParam('view')
+
+                if (viewId) {
+                    // Espera un tick para asegurar render completo
+                    setTimeout(() => {
+                        viewDetails(parseInt(viewId))
+                    }, 0)
+
+                    $('#modal-order-details').on('hidden.bs.modal', () => {
+                        const url = new URL(window.location)
+                        url.searchParams.delete('view')
+                        window.history.replaceState({}, '', url)
+                    })
+
+                }
 
             }
         });
@@ -193,5 +203,10 @@
     function editOrder(row) {
         $('#modal-order-editor').data('id', row)
         $('#modal-order-editor').modal('show')
+    }
+
+    function viewDetails(row) {
+        $('#modal-order-details').data('id', row)
+        $('#modal-order-details').modal('show')
     }
 </script>

@@ -87,7 +87,7 @@
     <style>
         .footer {
             font-size: 0.9rem;
-            background-color: var(--secondary);
+            background-color: var(--secondary-color);
             color: var(--text-color);
         }
 

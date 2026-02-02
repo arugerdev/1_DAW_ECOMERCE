@@ -14,22 +14,9 @@
                     <a class="text nav-link dropdown-toggle" id="navbarDropdown" href="/productos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tienda</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/products">Todos los productos</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <!-- Categorias -->
-                        <div id="categories-list">
-                            <!-- Las categorías se cargarán aquí dinámicamente -->
-                            <li class="text-center py-2">
-                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
-                                    <span class="visually-hidden">Cargando categorías...</span>
-                                </div>
-                            </li>
-                        </div>
-                        <!-- Subcategorías si las tienes -->
-                        <div id="subcategories-list" style="display: none;">
-                            <!-- Subcategorías podrían cargarse aquí -->
-                        </div>
+                        <section id="categories-container">
+
+                        </section>
                     </ul>
                 </li>
             </ul>
@@ -78,28 +65,36 @@
             return;
         }
 
-        // Mostrar indicador de carga
-        $('#categories-list').html(`
-            <li class="text-center py-2">
-                <div class="spinner-border spinner-border-sm text-secondary" role="status">
-                    <span class="visually-hidden">Cargando categorías...</span>
-                </div>
-            </li>
-        `);
+        autoLoader(
+            selectData('*', 'categories', 'ORDER BY name ASC', () => {}),
+            function(res) {
+                const response = JSON.parse(res)
+                if (!response.success) {
+                    showCategoriesError();
+                    return;
+                }
+                if (response.data.length > 1) {
+                    $('#categories-container').html(`
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <div id="categories-list">
+                            <li class="text-center py-2">
+                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                    <span class="visually-hidden">Cargando categorías...</span>
+                                </div>
+                            </li>
+                        </div>
+                    `)
+                }
 
-        selectData('*', 'categories', 'ORDER BY name ASC', function(response) {
-            if (!response.success) {
-                showCategoriesError();
-                return;
-            }
+                // Guardar en caché
+                categoriesCache = response.data;
+                categoriesLoaded = true;
 
-            // Guardar en caché
-            categoriesCache = response.data;
-            categoriesLoaded = true;
-
-            // Renderizar categorías
-            renderCategories(response.data);
-        });
+                // Renderizar categorías
+                renderCategories(response.data);
+            }, $('#categories-container'))
     }
 
     // Función para renderizar categorías
@@ -107,11 +102,6 @@
         const categoriesList = $('#categories-list');
 
         if (!categories || categories.length === 0) {
-            categoriesList.html(`
-                <li class="dropdown-item text-muted text-center">
-                    <small>No hay categorías</small>
-                </li>
-            `);
             return;
         }
 

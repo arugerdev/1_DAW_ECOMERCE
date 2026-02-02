@@ -38,7 +38,7 @@
                     async: false,
                     data: {
                         'PROD_DATA': JSON.stringify(result),
-                        'CURRENCY_SYMBOL': '<?php echo SHOP_DATA->currency_symbol ?>'
+                        'SHOP_DATA': <?php echo json_encode(SHOP_DATA) ?>
                     },
                     success: (result) => {
                         container.html(container.html() + result)

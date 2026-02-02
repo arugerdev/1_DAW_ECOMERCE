@@ -193,6 +193,22 @@
             }
         });
 
+        const editId = getQueryParam('edit')
+
+        if (editId) {
+            // Espera un tick para asegurar render completo
+            setTimeout(() => {
+                editProduct(parseInt(editId))
+            }, 0)
+
+            $('#modal-product-editor').on('hidden.bs.modal', () => {
+                const url = new URL(window.location)
+                url.searchParams.delete('edit')
+                window.history.replaceState({}, '', url)
+            })
+
+        }
+
     })
 
     function deleteProduct(row) {

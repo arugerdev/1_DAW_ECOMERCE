@@ -51,8 +51,24 @@ function createOrder($pdo)
     $shipping = $_POST['shipping_method'];
     $payment = $_POST['payment_method'];
 
+    // Agrupar productos por ID
+    $groupedProducts = [];
     $subtotal = 0;
+
     foreach ($products as $p) {
+        $productId = $p['id'];
+
+        if (!isset($groupedProducts[$productId])) {
+            $groupedProducts[$productId] = [
+                'id' => $p['id'],
+                'price' => $p['price'],
+                'quantity' => 0,
+                'total_price' => 0
+            ];
+        }
+
+        $groupedProducts[$productId]['quantity']++;
+        $groupedProducts[$productId]['total_price'] += $p['price'];
         $subtotal += $p['price'];
     }
 
@@ -76,17 +92,24 @@ function createOrder($pdo)
 
         $orderId = $pdo->lastInsertId();
 
-        foreach ($products as $p) {
+        // Insertar productos agrupados
+        foreach ($groupedProducts as $product) {
             $stmt = $pdo->prepare("
                 INSERT INTO prodToOrder (orderId, productId, quantity, unit_price, total_price)
-                VALUES (?, ?, 1, ?, ?)
+                VALUES (?, ?, ?, ?, ?)
             ");
-            $stmt->execute([$orderId, $p['id'], $p['price'], $p['price']]);
+            $stmt->execute([
+                $orderId,
+                $product['id'],
+                $product['quantity'],  // ← Cantidad correcta
+                $product['price'],
+                $product['total_price']
+            ]);
 
             $stmt = $pdo->prepare("
-                UPDATE products SET stock = stock - 1 WHERE id = ?
+                UPDATE products SET stock = stock - ? WHERE id = ?
             ");
-            $stmt->execute([$p['id']]);
+            $stmt->execute([$product['quantity'], $product['id']]);
         }
 
         $pdo->commit();

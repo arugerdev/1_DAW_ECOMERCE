@@ -68,12 +68,12 @@ $data = $recibe->data[0];
                 <p><?php echo $data->short_description ?></p>
 
                 <hr>
-                <div class="text-success py-0 px-0 mt-4">
+                <div class="py-0 px-0 mt-4 price-contrast" data-originalcolor="#28a745" data-color="<?php echo SHOP_DATA->secondary_color ?>">
 
                     <?php
 
-                    echo '<h2 class="mb-0 '  . ($data->on_sale ? 'text-md text-danger danger color-danger" style="text-decoration: line-through;"' : 'text-success success color-success " ') . '>' . number_format($data->price, 2) . SHOP_DATA->currency_symbol . '</h2>' .
-                        ($data->on_sale ? ('<h2 class="mb-0 text-xl text-success success color-success" >' . number_format($data->price - ($data->price * $data->sale_discound / 100), 2) . SHOP_DATA->currency_symbol . '</h2>') : '') .
+                    echo '<h2 class="mb-0 '  . ($data->on_sale ? 'text-md text-danger danger color-danger" style="text-decoration: line-through;"' : 'price-contrast" data-originalcolor="#28a745" data-color='.SHOP_DATA->secondary_color) .  '>' . number_format($data->price, 2) . SHOP_DATA->currency_symbol . '</h2>' .
+                        ($data->on_sale ? ('<h2 class="mb-0 text-xl price-contrast" data-originalcolor="#28a745" data-color="' . SHOP_DATA->secondary_color . '" >' .  number_format($data->price - ($data->price * $data->sale_discound / 100), 2) . SHOP_DATA->currency_symbol . '</h2>') : '') .
                         '<h4 class="mt-0">
                 <small>IVA Incl.</small>
                 </h4>
@@ -164,4 +164,6 @@ $data = $recibe->data[0];
         }
         document.body.removeChild(textArea);
     }
+
+    updateContrast()
 </script>

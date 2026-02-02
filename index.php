@@ -33,9 +33,148 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
     <script src="/assets/js/auth_utils.js"></script>
     <script src="/assets/js/images_utils.js"></script>
     <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/elements_generator.js"></script>
 
     </script>
 </head>
+<?php if (!is_admin_route()): ?>
+    <style>
+        :root {
+            --primary-color: <?php echo SHOP_DATA->primary_color ?>;
+            --accent-color: <?php echo SHOP_DATA->accent_color ?>;
+            --secondary-color: <?php echo SHOP_DATA->secondary_color ?>;
+            --bg-color: <?php echo SHOP_DATA->background_color ?>;
+            --text-color: <?php echo SHOP_DATA->text_color ?>;
+
+            /* Colores base */
+            --bs-primary: <?php echo SHOP_DATA->primary_color ?>;
+            --bs-secondary: <?php echo SHOP_DATA->secondary_color ?>;
+            --bs-success: <?php echo SHOP_DATA->accent_color ?>;
+            --bs-body-bg: <?php echo SHOP_DATA->background_color ?>;
+            --bs-body-color: <?php echo SHOP_DATA->text_color ?>;
+
+            /* RGB (OBLIGATORIO para botones, outlines, hovers, etc) */
+            --bs-primary-rgb: <?php echo implode(',', sscanf(SHOP_DATA->primary_color, "#%02x%02x%02x")); ?>;
+            --bs-secondary-rgb: <?php echo implode(',', sscanf(SHOP_DATA->secondary_color, "#%02x%02x%02x")); ?>;
+            --bs-success-rgb: <?php echo implode(',', sscanf(SHOP_DATA->accent_color, "#%02x%02x%02x")); ?>;
+        }
+
+        .bg {
+            background-color: var(--bg-color);
+        }
+
+        .text-bg {
+            color: var(--bg-color);
+        }
+
+        p,
+        a,
+        button,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .text,
+        .nav-link {
+            color: var(--text-color);
+        }
+
+        .nav-link,
+        a {
+            color: var(--text-color);
+        }
+
+        .nav-link:hover,
+        .nav-link:focus,
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        .dropdown-item:active {
+            background-color: var(--primary-color);
+
+        }
+
+        .btn,
+        .btn-outline-dark,
+        button {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .btn:hover,
+        .btn-outline-dark:hover,
+        button:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--bg-color);
+
+        }
+
+        .navbar-toggler:hover {
+            background-color: transparent;
+            border-color: transparent;
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active,
+        .nav-tabs>li>.active {
+            background-color: var(--secondary-color);
+            border-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .nav-tabs {
+            background-color: transparent;
+            border-color: var(--primary-color);
+            border-radius: 4px;
+
+        }
+
+        .nav-tabs>li,
+        .nav-tabs>li>button {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #e7707c;
+            border-color: #e7707c;
+        }
+
+        .dropdown-menu,
+        .card {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .form-control,
+        input {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+    </style>
+<?php endif ?>
 
 <body class="sidebar-mini sidebar-collapse layout-fixed bg">
     <main>
@@ -47,140 +186,24 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
 </body>
 
+
+
 </html>
-<style>
-    :root {
-        --primary: <?php echo SHOP_DATA->primary_color ?>;
-        --accent: <?php echo SHOP_DATA->accent_color ?>;
-        --secondary: <?php echo SHOP_DATA->secondary_color ?>;
-        --bg-color: <?php echo SHOP_DATA->background_color ?>;
-        --text-color: <?php echo SHOP_DATA->text_color ?>;
 
-        /* Colores base */
-        --bs-primary: <?php echo SHOP_DATA->primary_color ?>;
-        --bs-secondary: <?php echo SHOP_DATA->secondary_color ?>;
-        --bs-success: <?php echo SHOP_DATA->accent_color ?>;
-        --bs-body-bg: <?php echo SHOP_DATA->background_color ?>;
-        --bs-body-color: <?php echo SHOP_DATA->text_color ?>;
 
-        /* RGB (OBLIGATORIO para botones, outlines, hovers, etc) */
-        --bs-primary-rgb: <?php echo implode(',', sscanf(SHOP_DATA->primary_color, "#%02x%02x%02x")); ?>;
-        --bs-secondary-rgb: <?php echo implode(',', sscanf(SHOP_DATA->secondary_color, "#%02x%02x%02x")); ?>;
-        --bs-success-rgb: <?php echo implode(',', sscanf(SHOP_DATA->accent_color, "#%02x%02x%02x")); ?>;
+<script>
+    $(document).ready(function() {
+        updateContrast();
+    });
+
+    function updateContrast() {
+        document.querySelectorAll(".price-contrast").forEach(el => {
+            const baseColor = el.dataset.color.replace('#', '');
+            const origColor = el.dataset.originalcolor ? el.dataset.originalcolor.replace('#', '') : 'ffffff';
+            const contrast = getContrastColor(baseColor, origColor, 3);
+
+            el.style.color = '#' + contrast;
+            el.style.fontWeight = "600";
+        });
     }
-
-    .bg {
-        background-color: var(--bs-body-bg);
-    }
-
-    .text-bg {
-        color: var(--bs-body-bg);
-    }
-
-    p,
-    a,
-    button,
-    li,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .text,
-    .nav-link {
-        color: var(--text-color);
-    }
-
-    .nav-link,
-    a {
-        color: var(--text-color);
-    }
-
-    .nav-link:hover,
-    .nav-link:focus,
-    a:hover {
-        color: var(--accent);
-    }
-
-    .dropdown-item:active {
-        background-color: var(--primary);
-
-    }
-
-    .btn,
-    .btn-outline-dark,
-    button {
-        background-color: var(--primary);
-        border-color: var(--primary);
-        color: var(--bg-color);
-    }
-
-    .btn:hover,
-    .btn-outline-dark:hover,
-    button:hover {
-        background-color: var(--accent);
-        border-color: var(--accent);
-        color: var(--bg-color);
-        
-    }
-    
-    .navbar-toggler:hover{
-        background-color: transparent;
-        border-color: transparent;
-    }
-
-    .nav-tabs .nav-item.show .nav-link,
-    .nav-tabs .nav-link.active,
-    .nav-tabs>li>.active {
-        background-color: var(--secondary);
-        border-color: var(--primary);
-        border-radius: 4px;
-    }
-    
-    .nav-tabs {
-        background-color: transparent;
-        border-color: var(--primary);
-        border-radius: 4px;
-
-    }
-
-    .nav-tabs>li,
-    .nav-tabs>li>button {
-        background-color: var(--primary);
-        color: var(--bg-color);
-
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
-
-    .text-danger {
-        color: #dc3545;
-    }
-
-    .btn-danger:hover {
-        background-color: #e7707c;
-        border-color: #e7707c;
-    }
-
-    .dropdown-menu,
-    .card {
-        background-color: var(--secondary);
-        color: var(--text-color);
-    }
-
-    .form-control,
-    input{
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
-
-    .form-check-input:checked{
-        background-color: var(--accent);
-        border-color: var(--accent);
-    }
-</style>
+</script>

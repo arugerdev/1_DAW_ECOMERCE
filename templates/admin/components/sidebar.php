@@ -33,6 +33,12 @@
                   </li>
                   <li class="nav-item">
                       <a href="/" class="text nav-link">
+                          <i class="fa-solid fa-arrow-up-right-from-square nav-icon"></i>
+                          <p>Ir a la tienda</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="/admin/preview" class="text nav-link">
                           <i class="fa-solid fa-eye nav-icon"></i>
                           <p>Vista Previa</p>
                       </a>

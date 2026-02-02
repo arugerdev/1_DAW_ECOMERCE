@@ -600,7 +600,7 @@
                             html += `
                             <tr>
                                 <td>
-                                    <a href="/admin/orders?edit=${order.id}" class="font-weight-bold">
+                                    <a href="/admin/orders?view=${order.id}" class="font-weight-bold">
                                         #${order.id.toString().padStart(6, '0')}
                                     </a>
                                 </td>

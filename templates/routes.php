@@ -7,6 +7,11 @@ if (is_admin_route()) {
     exit;
 }
 
+if ($is_manteining()) {
+    include "./templates/manteining.php";
+    exit;
+}
+
 switch ($url) {
     case "/":
         include "./templates/index.php";

@@ -1,5 +1,8 @@
+var pendingAjax = 0
+
 function selectData(select, table, extra = "", callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -10,12 +13,14 @@ function selectData(select, table, extra = "", callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
+
 function deleteData(table, filterParam, filterValue, extra = "", callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -27,13 +32,14 @@ function deleteData(table, filterParam, filterValue, extra = "", callback = () =
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
 
 function insertData(table, keys, values, extra = "", callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -45,13 +51,15 @@ function insertData(table, keys, values, extra = "", callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
 
+
 function updateData(table, values, extra = "", callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -62,12 +70,14 @@ function updateData(table, values, extra = "", callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
+
 function loginAdmin(username, password, callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -77,13 +87,14 @@ function loginAdmin(username, password, callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
 
 function createUser(username, password, callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -93,12 +104,14 @@ function createUser(username, password, callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
+
 function editUser(id, username, password, callback = () => { }) {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -109,13 +122,14 @@ function editUser(id, username, password, callback = () => { }) {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
-
 }
 
 function clearSession() {
-    $.ajax({
+    pendingAjax++;
+    return $.ajax({
         url: "/utils/db_utils.php",
         type: "POST",
         data: {
@@ -123,6 +137,7 @@ function clearSession() {
         },
         success: (data) => {
             callback(JSON.parse(data))
-        }
+        },
+        complete: () => pendingAjax--
     });
 }

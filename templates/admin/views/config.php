@@ -279,7 +279,7 @@
             currency='${$('#currency').val()}',
             currency_symbol='${$('#currency-symbol').val()}',
             tax_percent='${$('#tax-percent').val()}',
-            maintenance_mode=${$('#maintenance-mode').is(':checked') ? 1 : 0}
+            maintenance_mode=${$('#maintenance-mode').is(':checked') ? 'true' : 'false'}
         `;
 
             updateData("shop", values, "WHERE id = 1", (res) => {
