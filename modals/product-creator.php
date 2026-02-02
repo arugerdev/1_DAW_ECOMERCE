@@ -232,7 +232,6 @@
             if (!parseFloat($('#product-price').val())) $('#product-price').val(0)
 
             formatCurrency($('#product-price'), 'blur', '<?php echo SHOP_DATA->currency_symbol ?>')
-            console.log(`${calculateTax(parseFloat($('#product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`)
             $('#product-w-tax-price').html(`${calculateTax(parseFloat($('#product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`);
         });
 

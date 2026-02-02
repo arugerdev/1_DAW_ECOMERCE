@@ -40,13 +40,13 @@
 
 <script defer>
     function downloadRefoundsCSV() {
-        // Mostrar indicador de carga
+       
         const btn = $('.btn-download-refounds');
         const originalHTML = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i>');
         btn.prop('disabled', true);
 
-        // Configurar los parámetros para la consulta específica de productos
+       
         const params = new URLSearchParams({
             action: 'downloadCSV',
             table: 'refounds',
@@ -54,10 +54,10 @@
             extra: 'ORDER BY id DESC'
         });
 
-        // Crear y activar la descarga
+       
         const downloadUrl = '/utils/db_utils.php?' + params.toString();
 
-        // Usar fetch para manejar la respuesta
+       
         fetch(downloadUrl)
             .then(response => {
                 if (response.ok) {
@@ -66,7 +66,7 @@
                 throw new Error('Error en la descarga');
             })
             .then(blob => {
-                // Crear un enlace temporal para descargar el archivo
+               
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -81,13 +81,13 @@
                 alert('Error al descargar el CSV');
             })
             .finally(() => {
-                // Restaurar el botón
+               
                 btn.html(originalHTML);
                 btn.prop('disabled', false);
             });
     }
 
-    // Modifica el evento click del botón
+   
     $('.btn-download-refounds').on('click', function(e) {
         e.preventDefault();
         downloadRefoundsCSV();
@@ -140,12 +140,12 @@
                                     `editRefound(${id})`, `deleteRefound(${id})`);
                             }
                         }
-                        // {
-                        //     targets: [2],
-                        //     render: function(data, type, row) {
-                        //         return (data === '0' || data === '0.00') ? '0' : $.fn.dataTable.render.number('.', ',', 2, '', '<?php echo SHOP_DATA->currency_symbol ?>').display(data)
-                        //     }
-                        // },
+                       
+                       
+                       
+                       
+                       
+                       
                     ],
                     ordering: true,
                     searchable: true,

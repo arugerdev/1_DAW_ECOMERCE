@@ -79,7 +79,7 @@
                             render: function(data, type, row) {
                                 const id = row[0]
 
-                                // Admin filter
+
                                 if (id == 1) return getRowActions(id, `editUserModal(${id})`, null);
 
                                 return getRowActions(id, `editUserModal(${id})`, `deleteData('users','id',${id},'',location.reload())`);

@@ -126,6 +126,7 @@ Is a simple project and the first created by me with this technologies.
 - Download CSV of data tables ✅
 - Customize Ecommerce Page ✅
 - Mobile responsive ✅
+- Better login and use db keys ✅
 
 **Progress: 100% ████████████████████**
 

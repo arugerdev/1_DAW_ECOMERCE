@@ -50,13 +50,13 @@
     }
 
     function downloadProductsCSV() {
-        // Mostrar indicador de carga
+       
         const btn = $('.btn-download-products');
         const originalHTML = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i>');
         btn.prop('disabled', true);
 
-        // Configurar los parámetros para la consulta específica de productos
+       
         const params = new URLSearchParams({
             action: 'downloadCSV',
             table: 'products p LEFT JOIN categories c ON p.category = c.id',
@@ -64,10 +64,10 @@
             extra: 'ORDER BY p.id DESC'
         });
 
-        // Crear y activar la descarga
+       
         const downloadUrl = '/utils/db_utils.php?' + params.toString();
 
-        // Usar fetch para manejar la respuesta
+       
         fetch(downloadUrl)
             .then(response => {
                 if (response.ok) {
@@ -76,7 +76,7 @@
                 throw new Error('Error en la descarga');
             })
             .then(blob => {
-                // Crear un enlace temporal para descargar el archivo
+               
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -91,13 +91,13 @@
                 alert('Error al descargar el CSV');
             })
             .finally(() => {
-                // Restaurar el botón
+               
                 btn.html(originalHTML);
                 btn.prop('disabled', false);
             });
     }
 
-    // Modifica el evento click del botón
+   
     $('.btn-download-products').on('click', function(e) {
         e.preventDefault();
         downloadProductsCSV();
@@ -196,7 +196,7 @@
         const editId = getQueryParam('edit')
 
         if (editId) {
-            // Espera un tick para asegurar render completo
+           
             setTimeout(() => {
                 editProduct(parseInt(editId))
             }, 0)

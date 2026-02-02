@@ -124,16 +124,14 @@
         const id = $('#modal-order-details').data('id')
 
         getOrderData(id, (order) => {
-            console.log(order)
-
-            // Información del pedido
+           
             $('#details-order-number').val(order.order_number)
             $('#details-order-status').val(order.status)
             $('#details-shipping-method').val(order.shipping_method)
             $('#details-payment-method').val(order.payment_method)
             $('#details-order-received').prop('checked', order.received == 1)
 
-            // Información del cliente
+           
             $('#details-customer-name').text(order.name || '-')
             $('#details-customer-email').text(order.email || '-')
             $('#details-customer-phone').text(order.phone_number || '-')
@@ -141,7 +139,7 @@
             $('#details-customer-city').text(order.city || '-')
             $('#details-customer-cp').text(order.cp || '-')
 
-            // Mostrar productos
+           
             displayOrderProducts(order)
         })
 
@@ -149,7 +147,7 @@
             const tableBody = $('#products-table-body');
             tableBody.empty();
 
-            // Verificar si hay productos
+           
             if (!order.product_ids || order.product_ids === null) {
                 tableBody.append(`
                 <tr>
@@ -159,7 +157,7 @@
                 return;
             }
 
-            // Convertir los datos concatenados en arrays
+           
             const productIds = order.product_ids.split(',');
             const productNames = order.product_names.split(',');
             const productPrices = order.w_tax_prices.split(',');
@@ -168,14 +166,14 @@
 
             let total = 0;
 
-            // Crear una fila por cada producto
+           
             productIds.forEach((productId, index) => {
                 const price = parseFloat(productPrices[index]);
                 const quantity = parseInt(productQuantities[index]);
                 const subtotal = price * quantity;
                 total += subtotal;
 
-                // Crear la imagen (si existe)
+               
                 let imageHtml = '<td>-</td>';
                 if (productImages[index] && productImages[index] !== 'null') {
                     imageHtml = `
@@ -188,7 +186,6 @@
                 }
 
                 getProductImages(productId, (res) => {
-                    console.log(res)
                     tableBody.append(`
                     <tr>
                     <td>
@@ -213,7 +210,7 @@
                 })
             });
 
-            // Agregar fila de total
+           
             tableBody.append(`
             <tr class="table-active">
                 <td colspan="2" class="text-end"><strong>Total:</strong></td>
@@ -222,9 +219,9 @@
         `);
         }
 
-        // Función para ver producto (puedes implementarla según tus necesidades)
+       
         window.viewProduct = function(productId) {
-            // Aquí puedes redirigir a la página del producto o abrir otro modal
+           
             window.location.href = `/admin/products?edit=${productId}`
         }
 

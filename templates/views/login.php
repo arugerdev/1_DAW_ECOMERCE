@@ -46,7 +46,7 @@ if (isLoggedIn()) {
 
         login(email, password, (res) => {
             if (res.success) {
-                // Redirigir después del login
+               
                 const urlParams = new URLSearchParams(window.location.search);
                 const redirectUrl = urlParams.get('redirect') || '/';
                 window.location.href = redirectUrl;

@@ -29,15 +29,15 @@ function process_links($buffer)
             strpos($href, 'javascript:') !== 0
         ) {
 
-            // Mantener los parámetros de consulta si existen
+           
             $parsed_url = parse_url($href);
             $path = $parsed_url['path'] ?? $href;
             $query = isset($parsed_url['query']) ? '&' . $parsed_url['query'] : '';
 
-            // Construir el nuevo enlace
+           
             $new_href = '/admin/preview?url=' . urlencode($path) . $query;
 
-            // Preservar cualquier fragmento (#anchor)
+           
             if (isset($parsed_url['fragment'])) {
                 $new_href .= '#' . $parsed_url['fragment'];
             }

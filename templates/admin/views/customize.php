@@ -199,7 +199,7 @@
     }
 
     function uploadShopImage(file, type, img) {
-        const token = 'shop'; // fijo
+        const token = 'shop';
         const formData = new FormData();
 
         formData.append('action', 'uploadShopImage');

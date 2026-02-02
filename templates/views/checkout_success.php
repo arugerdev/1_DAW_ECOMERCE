@@ -68,7 +68,7 @@
 
 <script>
     $(document).ready(function() {
-        // Obtener datos desde bd filtrando por $_GET['orderNumber'] y colocar los datos en la pantalla:
+       
         selectData('*', 'orders', 'WHERE order_number = "<?php echo $_GET['orderNumber'] ?>"', (data) => {
             const order = data.data[0];
 
@@ -78,9 +78,7 @@
             $('#send-method').html(order.shipping_method)
         })
 
-        // 
-
-        // Limpiar carrito
+             
         $.ajax({
             url: "../../utils/cart_utils.php",
             type: "POST",
@@ -88,7 +86,7 @@
                 "action": "clear"
             },
             success: () => {
-                // Carrito limpiado
+               
             }
         });
     });

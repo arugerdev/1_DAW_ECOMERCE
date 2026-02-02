@@ -31,7 +31,7 @@ $SHOP_DATA = $_GET['SHOP_DATA'];
 
                     <?php if ($data->on_sale == 1): ?>
                         <span class="text-muted text-decoration-line-through p-0 m-0 text-xs"><?php echo number_format($data->w_tax_price, 2) ?> <?php echo $SHOP_DATA['currency_symbol'] ?></span>
-                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format($data->w_tax_price, 2)  ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
+                        <p class="p-0 m-0 text-md price-contrast" data-originalcolor="#28a745" data-color="<?php echo $SHOP_DATA['secondary_color'] ?>"><?php echo number_format(($data->w_tax_price - (($data->w_tax_price * $data->sale_discound) / 100)), 2)  ?> <?php echo $SHOP_DATA['currency_symbol'] ?></p>
                     <?php endif ?>
 
                     <?php if (!$data->on_sale == 1): ?>

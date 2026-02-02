@@ -213,7 +213,7 @@ if (isLoggedIn()) {
 
 <script>
     $(document).ready(function() {
-        // Cargar información del cliente
+       
         function loadCustomerInfo() {
             $.ajax({
                 url: "../../utils/checkout_utils.php",
@@ -235,8 +235,8 @@ if (isLoggedIn()) {
                         $('#customer-zip').text(customer.cp);
                         $('#customer-country').text(getCountryName(customer.country));
                     } else {
-                        // Si no hay información del cliente, redirigir al checkout
-                        // window.location.href = '/checkout';
+                       
+                       
                     }
                 }
             });
@@ -253,7 +253,7 @@ if (isLoggedIn()) {
             return countries[countryCode] || countryCode;
         }
 
-        // Cargar resumen del carrito
+       
         function loadOrderSummary() {
             $.ajax({
                 url: "../../utils/cart_utils.php",
@@ -268,7 +268,7 @@ if (isLoggedIn()) {
                     let html = '';
                     let subtotal = 0;
 
-                    // Agrupar productos
+                   
                     const groupedProducts = {};
                     cartItems.forEach(product => {
                         const id = product.id;
@@ -282,13 +282,13 @@ if (isLoggedIn()) {
                         groupedProducts[id].quantity++;
                     });
 
-                    // Generar filas de productos
+                   
                     Object.values(groupedProducts).forEach(item => {
                         const product = item.product;
                         const quantity = item.quantity;
                         let price = item.price;
 
-                        // Aplicar descuento si existe
+                       
                         if (product.on_sale === '1' && product.sale_discound) {
                             price = price * (1 - parseFloat(product.sale_discound) / 100);
                         }
@@ -323,10 +323,10 @@ if (isLoggedIn()) {
             });
         }
 
-        // Actualizar total según método de envío
+       
         function updateOrderTotal(subtotal) {
             const shippingMethod = $('input[name="shipping_method"]:checked').val();
-            let shipping = 5.00; // estándar
+            let shipping = 5.00;
 
             if (shippingMethod === 'express') {
                 shipping = 10.00;
@@ -339,13 +339,13 @@ if (isLoggedIn()) {
             $('#order-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         }
 
-        // Evento para cambiar método de envío
+       
         $('input[name="shipping_method"]').on('change', function() {
             const subtotal = parseFloat($('#order-subtotal').text().replace('<?php echo SHOP_DATA->currency_symbol ?>', ''));
             updateOrderTotal(subtotal);
         });
 
-        // Confirmar pedido
+       
         $('#confirm-order-btn').on('click', function() {
             if (!$('#accept_terms').is(':checked')) {
                 alert('Debes aceptar los términos y condiciones');
@@ -375,7 +375,7 @@ if (isLoggedIn()) {
             });
         });
 
-        // Inicializar
+       
         loadCustomerInfo();
         loadOrderSummary();
     });

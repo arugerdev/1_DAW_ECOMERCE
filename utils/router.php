@@ -23,9 +23,7 @@ function is_manteining()
 
 $is_manteining = function(){
 return is_manteining();
-}; 
-
-function get_admin_route()
+};function get_admin_route()
 {
     $path = str_replace('/admin', '', get_current_url());
     return $path === '' ? '/' : $path;

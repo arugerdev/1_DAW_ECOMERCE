@@ -193,15 +193,14 @@
 
 <script>
     $(document).ready(function() {
-        // Calcular total del carrito
+
         loadOrderSummary((res) => {
             if (res.cart.length <= 0) window.location.replace('/cart')
         })
 
         updateCheckoutTotals((res) => {
-            console.log(res)
             const subtotal = res.total || 0;
-            const shipping = 5.00; // Envío fijo por ahora
+            const shipping = 5.00;
             const total = subtotal + shipping;
 
             $('#checkout-subtotal').text(subtotal.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
@@ -209,7 +208,7 @@
             $('#checkout-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         });
 
-        // Mostrar/ocultar campos de cuenta
+
         $('#create_account').on('change', function() {
             if ($(this).is(':checked')) {
                 $('#account-fields').removeClass('d-none');
@@ -220,7 +219,7 @@
             }
         });
 
-        // Validar contraseñas coinciden
+
         $('#confirm_password').on('keyup', function() {
             const password = $('#password').val();
             const confirmPassword = $(this).val();
@@ -232,7 +231,7 @@
             }
         });
 
-        // Formulario de registro
+
         $('#register-form').on('submit', function(e) {
             e.preventDefault();
 
@@ -243,7 +242,7 @@
                 data[field.name] = field.value;
             });
 
-            // Validar contraseñas si se crea cuenta
+
             if ($('#create_account').is(':checked')) {
                 if ($('#password').val() !== $('#confirm_password').val()) {
                     alert('Las contraseñas no coinciden');
@@ -261,7 +260,7 @@
 
         });
 
-        // Formulario de login
+
         $('#login-form').on('submit', function(e) {
             e.preventDefault();
 

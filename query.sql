@@ -8,15 +8,32 @@ ALTER DATABASE evimerce CHARACTER
 SET
     = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     users (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         username VARCHAR(30) UNIQUE,
         password VARCHAR(60),
-        create_at TIMESTAMP NOT NULL DEFAULT NOW()
+        create_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        last_login TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS user_sessions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_activity TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    user_agent TEXT,
+    ip_address VARCHAR(45),
+    is_active TINYINT(1) DEFAULT 1,
+    INDEX idx_token (token),
+    INDEX idx_user_id (user_id),
+    INDEX idx_expires (expires_at),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS
     categories (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         name VARCHAR(60) NOT NULL UNIQUE,
@@ -29,7 +46,7 @@ INSERT INTO
 VALUES
     (0, "Sin Categoria");
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     products (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         is_visible BOOLEAN DEFAULT FALSE,
@@ -46,7 +63,7 @@ CREATE TABLE
         create_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     customers (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         name VARCHAR(30) NOT NULL,
@@ -62,7 +79,7 @@ CREATE TABLE
         create_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     orders (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         order_number VARCHAR(50) UNIQUE,
@@ -76,7 +93,7 @@ CREATE TABLE
         FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE CASCADE
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     refounds (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         orderId INT NOT NULL UNIQUE,
@@ -86,7 +103,7 @@ CREATE TABLE
         create_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     prodToOrder (
         id INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
         productId INT NOT NULL,
@@ -99,7 +116,7 @@ CREATE TABLE
         create_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
 
-CREATE TABLE
+CREATE TABLE IF NOT EXISTS
     shop (
         id INT AUTO_INCREMENT UNIQUE NOT NULL PRIMARY KEY,
         name VARCHAR(60) NOT NULL DEFAULT 'EviMerce',
@@ -179,11 +196,10 @@ INSERT INTO
 VALUES
     (
         '© 2026 EviMerce',
-        "Entra en <a href='/admin'>/admin</a> para configurar tu tienda!!! <br><br><br> Usuario: admin <br> Contraseña: admin",
+        'Entra en <a href="/admin">/admin</a> para configurar tu tienda!!! <br><br><br> Usuario: admin <br> Contraseña: admin',
         "Una tienda muy chula.",
         '€'
     );
-
 
 DELIMITER $$
 

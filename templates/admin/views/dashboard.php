@@ -252,37 +252,37 @@
 
 <script>
     $(document).ready(function() {
-        // Variables para los gráficos
+       
         let salesChart = null;
         let categoriesChart = null;
 
-        // Cargar estadísticas principales
+       
         loadDashboardStats();
 
-        // Cargar gráficos
+       
         loadSalesChart(30);
         loadCategoriesChart();
 
-        // Cargar productos más vendidos
+       
         loadTopProducts();
 
-        // Cargar pedidos recientes
+       
         loadRecentOrders();
 
-        // Evento para cambiar periodo del gráfico de ventas
+       
         $('#sales-period').on('change', function() {
             const days = $(this).val();
             loadSalesChart(days);
         });
 
-        // Función para cargar estadísticas del dashboard
+       
         function loadDashboardStats() {
-            // Productos activos
+           
             selectData("id", "products", "WHERE is_visible = TRUE", (res) => {
                 $('#current-active-products').html(res.data.length);
             });
 
-            // Pedidos totales (ajustar según tu estructura de orders)
+           
             selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders", "WHERE status != 'cancelled'", (res) => {
                 if (res.data.length > 0) {
                     const order = res.data[0];
@@ -291,12 +291,12 @@
                 }
             });
 
-            // Productos con bajo stock
+           
             selectData("id", "products", "WHERE stock < 10", (res) => {
                 $('#low-stock-products').html(res.data.length);
             });
 
-            // Pedidos del mes actual
+           
             const currentMonth = new Date().getMonth() + 1;
             const currentYear = new Date().getFullYear();
             selectData("COUNT(*) as total, SUM(total_amount) as revenue", "orders",
@@ -345,7 +345,7 @@
                         $('#month-orders').html((monthData.total || 0) + ' / ' + target);
                         $('#month-orders-progress').css('width', `${Math.min(100, ((monthData.total || 0) / target))}%`);
 
-                        //actualizar clientes nuevos y tasa de conversión si es necesario
+                       
                         selectData("COUNT(*) as customers", "customers",
                             `WHERE MONTH(create_at) = ${currentMonth} AND YEAR(create_at) = ${currentYear}`,
                             (res) => {
@@ -353,10 +353,10 @@
                                     const customerData = res.data[0];
                                     $('#new-customers').html(customerData.customers || 0);
 
-                                    // Tasa de conversión (simplificada)
-                                    // const conversionRate = ((monthData.total || 0) / Math.max(1, customerData.customers || 1)) * 100;
-                                    // $('#conversion-rate').html(conversionRate.toFixed(2) + '%');
-                                    // $('#conversion-progress').css('width', `${Math.min(100, conversionRate)}%`);
+                                   
+                                   
+                                   
+                                   
                                 }
                             }
                         );
@@ -368,14 +368,14 @@
             );
         }
 
-        // Función para cargar gráfico de ventas
+       
         function loadSalesChart(days) {
-            // Obtener datos de ventas por día
+           
             const endDate = new Date();
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - days);
 
-            // Aquí deberías adaptar la consulta según tu estructura de orders
+           
             selectData("DATE(create_at) as date, COUNT(*) as orders, SUM(total_amount) as revenue", "orders",
                 `WHERE create_at >= '${startDate.toISOString().split('T')[0]}' 
              AND create_at <= '${endDate.toISOString().split('T')[0]}'
@@ -390,7 +390,7 @@
                     const orders = [];
                     const revenues = [];
 
-                    // Generar fechas para todo el periodo
+                   
                     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
                         const dateStr = d.toISOString().split('T')[0];
                         dates.push(new Date(d).toLocaleDateString('es-ES', {
@@ -403,7 +403,7 @@
                         revenues.push(dayData ? parseFloat(dayData.revenue) : 0);
                     }
 
-                    // Crear gráfico
+                   
                     const ctx = document.getElementById('sales-chart').getContext('2d');
                     salesChart = new Chart(ctx, {
                         type: 'line',
@@ -455,7 +455,7 @@
             );
         }
 
-        // Función para cargar gráfico de categorías
+       
         function loadCategoriesChart() {
             selectData("c.name as category, COUNT(p.id) as count",
                 "products p LEFT JOIN categories c ON p.category = c.id",
@@ -474,7 +474,7 @@
                         '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
                     ];
 
-                    // Crear gráfico de pastel
+                   
                     const ctx = document.getElementById('categories-chart').getContext('2d');
                     categoriesChart = new Chart(ctx, {
                         type: 'doughnut',
@@ -497,7 +497,7 @@
                         }
                     });
 
-                    // Crear leyenda personalizada
+                   
                     let legendHtml = '';
                     labels.forEach((label, index) => {
                         legendHtml += `
@@ -513,7 +513,7 @@
             );
         }
 
-        // Función para cargar productos más vendidos
+       
         function loadTopProducts() {
             selectData("p.name, p.price, p.w_tax_price, p.stock, p.on_sale, p.sale_discound, " +
                 "COUNT(oi.id) as sales",
@@ -574,7 +574,7 @@
             );
         }
 
-        // Función para cargar pedidos recientes
+       
         function loadRecentOrders() {
             selectData("o.id, c.name as customer_name, o.total_amount, o.status, o.create_at",
                 "customers c LEFT JOIN orders o ON c.id = o.customer_id ",
@@ -632,7 +632,7 @@
             );
         }
 
-        // Actualizar datos cada 10 segundos
+       
         setInterval(() => {
             loadDashboardStats();
             loadRecentOrders();

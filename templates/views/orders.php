@@ -141,7 +141,7 @@ if (!isLoggedIn()) {
 
                 response.data.forEach(prod => {
                     if (!groupedProducts[prod.id]) {
-                        // Primer registro de este producto
+                       
                         groupedProducts[prod.id] = {
                             id: prod.id,
                             name: prod.name,
@@ -150,13 +150,13 @@ if (!isLoggedIn()) {
                             total_price: (prod.total_price).toFixed(2)
                         };
                     } else {
-                        // Producto ya existe, sumar cantidades y total
+                       
                         groupedProducts[prod.id].quantity += prod.quantity;
                         groupedProducts[prod.id].total_price += prod.total_price;
                     }
                 });
 
-                // Convertir el objeto agrupado a array y mostrar
+               
                 Object.values(groupedProducts).forEach(prod => {
                     getProductImages(prod.id, (data) => {
                         const images = data.images;

@@ -231,7 +231,6 @@
             if (!parseFloat($('#editor-product-price').val())) $('#editor-product-price').val(0)
 
             formatCurrency($('#editor-product-price'), 'blur', '<?php echo SHOP_DATA->currency_symbol ?>')
-            console.log(`${calculateTax(parseFloat($('#editor-product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`)
             $('#editor-product-w-tax-price').html(`${calculateTax(parseFloat($('#editor-product-price').val().replaceAll(',','')), <?php echo SHOP_DATA->tax_percent ?>)}<?php echo SHOP_DATA->currency_symbol ?> con ${<?php echo SHOP_DATA->tax_percent ?>}% IVA`);
         });
 
@@ -373,9 +372,7 @@
         });
 
         $('#modal-product-editor').on('hide.bs.modal', function() {
-            // Limpiar eventos para evitar que al cambiar de producto se siga escuchando el input del evento del producto editado anteriormente
-
-            finalizeProductImages(productId, tempToken, edit_imageState.list.filter((el) => el.original).map(i => i.path), () => {
+                      finalizeProductImages(productId, tempToken, edit_imageState.list.filter((el) => el.original).map(i => i.path), () => {
                 clearTemp(() => {
                     edit_imageState.reset();
                 });

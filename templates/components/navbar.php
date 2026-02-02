@@ -53,13 +53,13 @@
         })
     }
 
-    // Cache para categorías
+   
     let categoriesCache = null;
     let categoriesLoaded = false;
 
-    // Función para cargar categorías
+   
     function loadCategories() {
-        // Si ya tenemos las categorías en caché, usarlas
+       
         if (categoriesCache) {
             renderCategories(categoriesCache);
             return;
@@ -88,16 +88,16 @@
                     `)
                 }
 
-                // Guardar en caché
+               
                 categoriesCache = response.data;
                 categoriesLoaded = true;
 
-                // Renderizar categorías
+               
                 renderCategories(response.data);
             }, $('#categories-container'))
     }
 
-    // Función para renderizar categorías
+   
     function renderCategories(categories) {
         const categoriesList = $('#categories-list');
 
@@ -105,12 +105,12 @@
             return;
         }
 
-        // Limpiar el contenedor
+       
         categoriesList.html('');
 
-        // Agregar cada categoría
+       
         categories.forEach(category => {
-            // Si la categoría tiene icono o imagen, puedes agregarlo aquí
+           
             if (category.id == 1) return;
 
             const icon = category.icon ? `<i class="${category.icon} me-2"></i>` : '';
@@ -128,7 +128,7 @@
 
     }
 
-    // Función para mostrar error
+   
     function showCategoriesError() {
         $('#categories-list').html(`
             <li class="dropdown-item text-danger text-center">
@@ -140,22 +140,22 @@
         `);
     }
 
-    // Recargar categorías cuando se hace clic en el dropdown (opcional)
+   
     $(document).ready(function() {
-        // Cargar categorías al cargar la página
+       
         loadCategories();
 
-        // Opcional: recargar al abrir el dropdown
+       
         $('#navbarDropdown').on('click', function() {
             if (!categoriesLoaded) {
                 loadCategories();
             }
         });
 
-        // Actualizar automáticamente cada 5 minutos
+       
         setInterval(function() {
             categoriesCache = null;
             categoriesLoaded = false;
-        }, 300000); // 5 minutos
+        }, 300000);
     });
 </script>

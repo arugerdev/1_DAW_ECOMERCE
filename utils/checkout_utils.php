@@ -19,13 +19,11 @@ function getCustomerInfo($pdo)
     try {
         if (isset($_SESSION['customer'])) {
 
-            // Return the customer info stored in db because need all of them
-
             $query = $pdo->prepare("SELECT * FROM customers WHERE id = ?");
             $query->execute([$_SESSION['customer']['id']]);
             $data = $query->fetch(PDO::FETCH_ASSOC);
 
-            // Evitar informacion sesnible como password
+
             unset($data['password']);
 
             return json_encode([
@@ -51,7 +49,7 @@ function createOrder($pdo)
     $shipping = $_POST['shipping_method'];
     $payment = $_POST['payment_method'];
 
-    // Agrupar productos por ID
+
     $groupedProducts = [];
     $subtotal = 0;
 
@@ -92,7 +90,7 @@ function createOrder($pdo)
 
         $orderId = $pdo->lastInsertId();
 
-        // Insertar productos agrupados
+
         foreach ($groupedProducts as $product) {
             $stmt = $pdo->prepare("
                 INSERT INTO prodToOrder (orderId, productId, quantity, unit_price, total_price)
@@ -101,9 +99,9 @@ function createOrder($pdo)
             $stmt->execute([
                 $orderId,
                 $product['id'],
-                $product['quantity'],  // ← Cantidad correcta
+                $product['quantity'],
                 $product['price'],
-                $product['total_price'] 
+                $product['total_price']
             ]);
 
             $stmt = $pdo->prepare("

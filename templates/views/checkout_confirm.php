@@ -189,7 +189,7 @@
             if (res.cart.length <= 0) window.location.replace('/cart')
         })
 
-        // Cargar información del cliente
+
         loadCustomerInfo((res) => {
             if (res.success) {
                 const customer = res.customer;
@@ -207,14 +207,14 @@
 
         })
 
-        // Cargar resumen del carrito
+
         loadOrderSummary((res) => {
             const cartItems = res.cart || [];
 
             let html = '';
             let subtotal = 0;
 
-            // Agrupar productos
+
             const groupedProducts = {};
             cartItems.forEach(product => {
                 const id = product.id;
@@ -222,19 +222,19 @@
                     groupedProducts[id] = {
                         product: product,
                         quantity: 0,
-                        price: (parseFloat(product.w_tax_price)).toFixed(2)
+                        price: (parseFloat(product.w_tax_price) - parseFloat(product.w_tax_price) * product.sale_discound / 100).toFixed(2)
                     };
                 }
                 groupedProducts[id].quantity++;
             });
 
-            // Generar filas de productos
+
             Object.values(groupedProducts).forEach(item => {
                 const product = item.product;
                 const quantity = item.quantity;
                 let price = parseFloat(item.price).toFixed(2);
 
-                // Aplicar descuento si existe
+
                 if (product.on_sale === '1' && product.sale_discound) {
                     price = price * (1 - parseFloat(product.sale_discound) / 100);
                 }
@@ -270,11 +270,15 @@
 
         })
 
-        // Actualizar total según método de envío
-        let shipping = 5.00; // estándar
+
+        let shipping = 5.00;
+
         function updateOrderTotal(subtotal) {
             const shippingMethod = $('input[name="shipping_method"]:checked').val();
 
+            if (shippingMethod === 'standard') {
+                shipping = 5.00;
+            }
             if (shippingMethod === 'express') {
                 shipping = 10.00;
             }
@@ -286,13 +290,13 @@
             $('#order-total').text(total.toFixed(2) + '<?php echo SHOP_DATA->currency_symbol ?>');
         }
 
-        // Evento para cambiar método de envío
+
         $('input[name="shipping_method"]').on('change', function() {
             const subtotal = parseFloat($('#order-subtotal').text().replace('<?php echo SHOP_DATA->currency_symbol ?>', ''));
             updateOrderTotal(subtotal);
         });
 
-        // Confirmar pedido
+
         $('#confirm-order-btn').on('click', function() {
             if (!$('#accept_terms').is(':checked')) {
                 alert('Debes aceptar los términos y condiciones');
@@ -323,7 +327,7 @@
             });
         });
 
-        // Inicializar
+
         loadCustomerInfo();
         loadOrderSummary();
     });

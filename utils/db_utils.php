@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
 
 $option = $_REQUEST["action"];
 
@@ -165,6 +165,7 @@ function loginAdmin()
 
         $username = $_POST["username"];
         $password = $_POST["password"];
+        $rememberMe = isset($_POST["remember_me"]);
 
         $maxCharactersUsername = "20";
         $maxCharactersPassword = "60";
@@ -192,12 +193,33 @@ function loginAdmin()
         if (count($result) > 0) {
             $userBD = $result[0]->username;
             $passwordBD = $result[0]->password;
+            $userId = $result[0]->id;
 
             if ($userBD == $username && password_verify($password, $passwordBD)) {
-
+                
+               
+                require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
+                $tokenCreated = createDatabaseAuthSession($userId);
+                
+                if (!$tokenCreated && $rememberMe) {
+                   
+                    error_log("No se pudo crear token en BD, usando sesión PHP");
+                }
+                
+               
                 $_SESSION['user'] = $result[0]->username;
+                $_SESSION['user_id'] = $userId;
                 $_SESSION['state'] = 'authenticated';
                 $_SESSION['last_activity'] = time();
+                
+               
+                $updateQuery = $pdo->prepare("
+                    UPDATE users 
+                    SET last_login = NOW() 
+                    WHERE id = :id
+                ");
+                $updateQuery->bindParam(':id', $userId);
+                $updateQuery->execute();
 
                 http_response_code(200);
                 return json_encode([
@@ -208,16 +230,20 @@ function loginAdmin()
             }
         }
 
+       
+        sleep(1);
+        
         http_response_code(401);
         return json_encode([
             "success" => false,
             "error" => "Los datos de acceso son incorrectos"
         ]);
     } catch (PDOException $e) {
+        error_log("Login error: " . $e->getMessage());
         http_response_code(500);
         return json_encode([
             "success" => false,
-            "error" => $e->getMessage()
+            "error" => "Error:" . $e->getMessage()
         ]);
     }
 }
@@ -329,24 +355,12 @@ function createUser()
 
 function clearSession()
 {
-    $_SESSION = [];
-
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
-        );
-    }
-
-    session_destroy();
-
-    header("Location: /admin/");
+   
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/utils/sessions.php';
+    logoutDatabaseSession();
+    
+   
+    header("Location: /admin/login");
     exit;
 }
 
