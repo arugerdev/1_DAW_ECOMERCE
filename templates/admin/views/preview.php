@@ -29,15 +29,15 @@ function process_links($buffer)
             strpos($href, 'javascript:') !== 0
         ) {
 
-           
+
             $parsed_url = parse_url($href);
             $path = $parsed_url['path'] ?? $href;
             $query = isset($parsed_url['query']) ? '&' . $parsed_url['query'] : '';
 
-           
+
             $new_href = '/admin/preview?url=' . urlencode($path) . $query;
 
-           
+
             if (isset($parsed_url['fragment'])) {
                 $new_href .= '#' . $parsed_url['fragment'];
             }
@@ -106,6 +106,10 @@ function process_links($buffer)
         color: var(--accent-color);
     }
 
+    .dropdown-item {
+        color: var(--text-color);
+    }
+
     .dropdown-item:active {
         background-color: var(--primary-color);
 
@@ -136,7 +140,7 @@ function process_links($buffer)
     .nav-tabs .nav-item.show .nav-link,
     .nav-tabs .nav-link.active,
     .nav-tabs>li>.active {
-        background-color: var(--secondary-color);
+        background-color: var(--accent-color);
         border-color: var(--primary-color);
         border-radius: 4px;
     }
@@ -172,7 +176,7 @@ function process_links($buffer)
 
     .dropdown-menu,
     .card {
-        background-color: var(--secondary-color);
+        background-color: var(--bg-color);
         color: var(--text-color);
     }
 

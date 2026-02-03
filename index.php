@@ -45,8 +45,6 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
         $(document).ready(function() {
             updateContrast();
         });
-
-
     </script>
 
     <style>
@@ -104,6 +102,10 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
             color: var(--accent-color);
         }
 
+        .dropdown-item {
+            color: var(--text-color);
+        }
+
         .dropdown-item:active {
             background-color: var(--primary-color);
 
@@ -134,7 +136,7 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
         .nav-tabs .nav-item.show .nav-link,
         .nav-tabs .nav-link.active,
         .nav-tabs>li>.active {
-            background-color: var(--secondary-color);
+            background-color: var(--accent-color);
             border-color: var(--primary-color);
             border-radius: 4px;
         }
@@ -170,7 +172,7 @@ define("SHOP_DATA", json_decode(getShopData())->data[0]);
 
         .dropdown-menu,
         .card {
-            background-color: var(--secondary-color);
+            background-color: var(--bg-color);
             color: var(--text-color);
         }
 
