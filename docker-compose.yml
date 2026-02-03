@@ -11,6 +11,8 @@ services:
       DB_NAME: evimerce
       DB_USER: evimerce
       DB_PASS: evimerce
+    volumes:
+      - evimerce_uploads:/usr/src/evimerce/uploads
 
   db:
     image: aruger/evimerce-db
@@ -20,4 +22,5 @@ services:
 
 volumes:
   evimerce_db_data:
+  evimerce_uploads:
 
