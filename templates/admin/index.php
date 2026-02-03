@@ -22,6 +22,7 @@ $routes = [
     '/config' => 'config.php',
     '/export/products' => '/export/products_csv.php',
     '/preview' => 'preview.php',
+    '/chat' => '/chat.php',
 ];
 
 $view = $routes[$adminRoute] ?? '404.php';

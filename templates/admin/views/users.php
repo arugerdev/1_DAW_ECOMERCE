@@ -58,6 +58,9 @@
             if (data.length > 0) {
 
                 $('#users-table').DataTable({
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
+                    },
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)

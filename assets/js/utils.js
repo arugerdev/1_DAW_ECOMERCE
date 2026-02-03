@@ -212,3 +212,20 @@ function calculateTax(price, taxPercent) {
     return parseFloat(price + (price * taxPercent) / 100).toFixed(2)
 
 }
+
+function shippingMethod(value) {
+    const texts = {
+        'standard': 'Estándar',
+        'express': 'Express (Rapido)',
+    }
+    return texts[value] ?? value
+}
+
+function paymentMethod(value) {
+    const texts = {
+        'card': 'Tarjeta',
+        'transfer': 'Transferencia bancaria',
+        'paypal': 'PayPal',
+    }
+    return texts[value] ?? value
+}

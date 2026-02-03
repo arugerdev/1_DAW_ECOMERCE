@@ -50,13 +50,13 @@
     }
 
     function downloadProductsCSV() {
-       
+
         const btn = $('.btn-download-products');
         const originalHTML = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i>');
         btn.prop('disabled', true);
 
-       
+
         const params = new URLSearchParams({
             action: 'downloadCSV',
             table: 'products p LEFT JOIN categories c ON p.category = c.id',
@@ -64,10 +64,10 @@
             extra: 'ORDER BY p.id DESC'
         });
 
-       
+
         const downloadUrl = '/utils/db_utils.php?' + params.toString();
 
-       
+
         fetch(downloadUrl)
             .then(response => {
                 if (response.ok) {
@@ -76,7 +76,7 @@
                 throw new Error('Error en la descarga');
             })
             .then(blob => {
-               
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -91,13 +91,13 @@
                 alert('Error al descargar el CSV');
             })
             .finally(() => {
-               
+
                 btn.html(originalHTML);
                 btn.prop('disabled', false);
             });
     }
 
-   
+
     $('.btn-download-products').on('click', function(e) {
         e.preventDefault();
         downloadProductsCSV();
@@ -123,6 +123,9 @@
             if (data.length > 0) {
 
                 const productTable = $('#products-table').DataTable({
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
+                    },
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -196,7 +199,7 @@
         const editId = getQueryParam('edit')
 
         if (editId) {
-           
+
             setTimeout(() => {
                 editProduct(parseInt(editId))
             }, 0)

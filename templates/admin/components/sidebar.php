@@ -50,6 +50,12 @@
                       </a>
                   </li>
                   <li class="nav-item">
+                      <a href="/admin/chat" class="text nav-link">
+                          <i class="fa-solid fa-comment-dots nav-icon"></i>
+                          <p>Chat</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
                       <a href="/admin/products" class="text nav-link">
                           <i class="fa-solid fa-boxes-stacked nav-icon"></i>
                           <p>Productos</p>

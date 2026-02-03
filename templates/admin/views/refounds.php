@@ -40,13 +40,13 @@
 
 <script defer>
     function downloadRefoundsCSV() {
-       
+
         const btn = $('.btn-download-refounds');
         const originalHTML = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i>');
         btn.prop('disabled', true);
 
-       
+
         const params = new URLSearchParams({
             action: 'downloadCSV',
             table: 'refounds',
@@ -54,10 +54,10 @@
             extra: 'ORDER BY id DESC'
         });
 
-       
+
         const downloadUrl = '/utils/db_utils.php?' + params.toString();
 
-       
+
         fetch(downloadUrl)
             .then(response => {
                 if (response.ok) {
@@ -66,7 +66,7 @@
                 throw new Error('Error en la descarga');
             })
             .then(blob => {
-               
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -81,13 +81,13 @@
                 alert('Error al descargar el CSV');
             })
             .finally(() => {
-               
+
                 btn.html(originalHTML);
                 btn.prop('disabled', false);
             });
     }
 
-   
+
     $('.btn-download-refounds').on('click', function(e) {
         e.preventDefault();
         downloadRefoundsCSV();
@@ -101,6 +101,9 @@
             if (data.length > 0) {
 
                 $('#refounds-table').DataTable({
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
+                    },
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -140,12 +143,12 @@
                                     `editRefound(${id})`, `deleteRefound(${id})`);
                             }
                         }
-                       
-                       
-                       
-                       
-                       
-                       
+
+
+
+
+
+
                     ],
                     ordering: true,
                     searchable: true,

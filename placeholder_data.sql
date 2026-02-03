@@ -79,3 +79,22 @@ VALUES
 'Relé electromecánico para aplicaciones de control eléctrico y automatización básica.',180,FALSE,0,8);
 
 INSERT INTO shop (name, description ) VALUES ('EviMerce', "A 	shop");
+
+
+-- INSERTS para probar el sistema de chat
+INSERT INTO customers (name, email, phone_number, address, city) 
+VALUES 
+('Juan Pérez', 'juan@ejemplo.com', '600123456', 'Calle Principal 123', 'Madrid'),
+('María Gómez', 'maria@ejemplo.com', '600654321', 'Avenida Central 45', 'Barcelona');
+
+-- Crear chats
+INSERT INTO chat (customerId) VALUES (1), (2);
+
+-- Crear mensajes no leídos
+INSERT INTO msg (chatId, from_admin, text) 
+VALUES 
+(1, FALSE, 'Hola, tengo una pregunta sobre mi pedido #123'),
+(1, FALSE, '¿Cuándo llegará mi pedido?'),
+(2, FALSE, 'Buenos días, necesito ayuda con una devolución'),
+(1, TRUE, 'Hola Juan, revisaremos tu pedido ahora mismo'),
+(2, FALSE, '¿Me podrían decir el estado de mi reembolso?');

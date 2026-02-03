@@ -124,14 +124,14 @@
         const id = $('#modal-order-details').data('id')
 
         getOrderData(id, (order) => {
-           
+
             $('#details-order-number').val(order.order_number)
             $('#details-order-status').val(order.status)
-            $('#details-shipping-method').val(order.shipping_method)
-            $('#details-payment-method').val(order.payment_method)
+            $('#details-shipping-method').val(shippingMethod(order.shipping_method))
+            $('#details-payment-method').val(paymentMethod(order.payment_method))
             $('#details-order-received').prop('checked', order.received == 1)
 
-           
+
             $('#details-customer-name').text(order.name || '-')
             $('#details-customer-email').text(order.email || '-')
             $('#details-customer-phone').text(order.phone_number || '-')
@@ -139,7 +139,7 @@
             $('#details-customer-city').text(order.city || '-')
             $('#details-customer-cp').text(order.cp || '-')
 
-           
+
             displayOrderProducts(order)
         })
 
@@ -147,7 +147,7 @@
             const tableBody = $('#products-table-body');
             tableBody.empty();
 
-           
+
             if (!order.product_ids || order.product_ids === null) {
                 tableBody.append(`
                 <tr>
@@ -157,7 +157,7 @@
                 return;
             }
 
-           
+
             const productIds = order.product_ids.split(',');
             const productNames = order.product_names.split(',');
             const productPrices = order.w_tax_prices.split(',');
@@ -166,14 +166,14 @@
 
             let total = 0;
 
-           
+
             productIds.forEach((productId, index) => {
                 const price = parseFloat(productPrices[index]);
                 const quantity = parseInt(productQuantities[index]);
                 const subtotal = price * quantity;
                 total += subtotal;
 
-               
+
                 let imageHtml = '<td>-</td>';
                 if (productImages[index] && productImages[index] !== 'null') {
                     imageHtml = `
@@ -210,7 +210,7 @@
                 })
             });
 
-           
+
             tableBody.append(`
             <tr class="table-active">
                 <td colspan="2" class="text-end"><strong>Total:</strong></td>
@@ -219,9 +219,9 @@
         `);
         }
 
-       
+
         window.viewProduct = function(productId) {
-           
+
             window.location.href = `/admin/products?edit=${productId}`
         }
 

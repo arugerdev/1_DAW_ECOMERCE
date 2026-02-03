@@ -28,12 +28,20 @@
 
                     <div class="form-group">
                         <label>Método de envío</label>
-                        <input type="text" id="editor-shipping-method" class="form-control">
+                        <select id="editor-shipping-method" class="form-control">
+                            <option value="standard">Estandar</option>
+                            <option value="express">Express (Rapido)</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label>Método de pago</label>
-                        <input type="text" id="editor-payment-method" class="form-control">
+                        <select id="editor-payment-method" class="form-control">
+                            <option value="card">Tarjeta</option>
+                            <option value="transfer">Transferencia Bancaria</option>
+                            <option value="paypal">Paypal</option>
+                            <option value="e">Efectivo</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

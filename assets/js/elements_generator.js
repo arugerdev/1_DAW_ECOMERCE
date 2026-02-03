@@ -75,3 +75,52 @@ function autoLoader(promise, callback, element) {
         callback(e)
     })
 }
+
+function timeAgo(time) {
+
+    let value = ''
+    let now = new Date()
+
+    var seconds = Math.floor((now - time) / 1000);
+
+    var interval = seconds / 31536000;
+    if (interval > 1) {
+        value = Math.floor(interval) + " años.";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+        value = Math.floor(interval) + " meses.";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+        value = Math.floor(interval) + " dias.";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+        value = Math.floor(interval) + " horas.";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+        value = Math.floor(interval) + " minutos.";
+    }
+    else {
+        value = Math.floor(seconds) + " segundos.";
+    }
+
+    return `<p class="text-sm text-muted" style="margin:0;"><i class="far fa-clock mr-1"></i>Hace ${value}</p>`
+
+}
+
+function getMessageNotification(msg, displayName) {
+    return `
+            <a href="/admin/chat?id=${msg.chatId}" id="msg-${msg.id}" class="dropdown-item">
+                <div class="media">
+                    <div class="media-body">
+                        ${(displayName) ? `<h3 class="dropdown-item-title">${msg.author}</h3>` : ''}
+                        <p class="text-sm" >${msg.text}</p>
+                        ${timeAgo(new Date(msg.created_at))}
+                    </div >
+                </div >
+            </a >
+    `
+}

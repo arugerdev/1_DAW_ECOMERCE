@@ -41,13 +41,13 @@
 
 <script defer>
     function downloadOrdersCSV() {
-       
+
         const btn = $('.btn-download-orders');
         const originalHTML = btn.html();
         btn.html('<i class="fas fa-spinner fa-spin"></i>');
         btn.prop('disabled', true);
 
-       
+
         const params = new URLSearchParams({
             action: 'downloadCSV',
             table: 'orders',
@@ -55,10 +55,10 @@
             extra: 'ORDER BY id DESC'
         });
 
-       
+
         const downloadUrl = '/utils/db_utils.php?' + params.toString();
 
-       
+
         fetch(downloadUrl)
             .then(response => {
                 if (response.ok) {
@@ -67,7 +67,7 @@
                 throw new Error('Error en la descarga');
             })
             .then(blob => {
-               
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -82,13 +82,13 @@
                 alert('Error al descargar el CSV');
             })
             .finally(() => {
-               
+
                 btn.html(originalHTML);
                 btn.prop('disabled', false);
             });
     }
 
-   
+
     $('.btn-download-orders').on('click', function(e) {
         e.preventDefault();
         downloadOrdersCSV();
@@ -102,6 +102,9 @@
             if (data.length > 0) {
 
                 let orders = $('#orders-table').DataTable({
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/es-ES.json',
+                    },
                     columns: Object.keys(data[0]).map((key) => {
                         return {
                             title: capitalizeFirstLetter(key)
@@ -141,15 +144,16 @@
                         {
                             targets: 6,
                             render: (data) => {
-                                const colors = {
-                                    pending: 'warning',
-                                    paid: 'info',
-                                    sent: 'primary',
-                                    completed: 'success',
-                                    cancelled: 'danger'
-                                }
-                                return `<span class="badge badge-${colors[data] || 'secondary'}">${data}</span>`
+                                return getStatus(data)
                             }
+                        },
+                        {
+                            targets: 7,
+                            render: (data) => shippingMethod(data)
+                        },
+                        {
+                            targets: 8,
+                            render: (data) => paymentMethod(data)
                         }
                     ],
                     ordering: true,
@@ -163,7 +167,7 @@
                 const editId = getQueryParam('edit')
 
                 if (editId) {
-                   
+
                     setTimeout(() => {
                         editOrder(parseInt(editId))
                     }, 0)
@@ -179,7 +183,7 @@
                 const viewId = getQueryParam('view')
 
                 if (viewId) {
-                   
+
                     setTimeout(() => {
                         viewDetails(parseInt(viewId))
                     }, 0)
