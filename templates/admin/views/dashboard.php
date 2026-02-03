@@ -372,6 +372,7 @@
         function loadSalesChart(days) {
            
             const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 1);
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - days);
 
